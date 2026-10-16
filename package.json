@@ -1,0 +1,15 @@
+{
+  "name": "todo-pro",
+  "version": "1.0.0",
+  "description": "Quản trị Công việc & Mini Project Khoa học",
+  "scripts": {
+    "start": "serve ."
+  },
+  "keywords": [
+    "todo",
+    "productivity",
+    "project-management"
+  ],
+  "author": "",
+  "license": "MIT"
+}
