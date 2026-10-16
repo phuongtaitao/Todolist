@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>To-Do Pro Team - Quản trị Công việc, Dự án & Nhân sự</title>
-  <meta name="description" content="Hệ thống quản lý công việc nhóm khoa học: phân công nhân sự, nhắc nhở hạn chót, xuất báo cáo Excel và Dashboard toàn cảnh.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <title>Seta Longevity - Quản Trị Tiến Độ Triển Khai & Lâm Sàng</title>
+  <meta name="description" content="Hệ thống quản lý tiến độ triển khai dự án Seta Longevity tại 3 khoa lâm sàng, phân tầng tình huống P0-P3 và theo dõi KPI 5 nhóm chỉ số.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏥</text></svg>">
 
   <style>
     :root {
@@ -14,37 +14,50 @@
       --bg-sidebar: #0f172a;
       --bg-sidebar-card: #1e293b;
       --bg-sidebar-hover: #334155;
-      --primary: #4f46e5;
-      --primary-hover: #4338ca;
-      --primary-light: #eef2ff;
+      --primary: #0284c7;           /* Medical Sky Blue */
+      --primary-hover: #0369a1;
+      --primary-light: #e0f2fe;
       --text-dark: #0f172a;
       --text-secondary: #64748b;
       --text-muted: #94a3b8;
       --text-white: #ffffff;
       --border: #e2e8f0;
       
-      --prio-high: #dc2626;
-      --prio-high-bg: #fee2e2;
-      --prio-med: #d97706;
-      --prio-med-bg: #fef3c7;
-      --prio-low: #16a34a;
-      --prio-low-bg: #dcfce7;
+      /* Medical Triage Levels */
+      --p0-danger: #dc2626;         /* P0 - Khẩn cấp / Đỏ */
+      --p0-bg: #fee2e2;
+      --p1-warning: #d97706;        /* P1 - Cảnh báo / Vàng */
+      --p1-bg: #fef3c7;
+      --p2-routine: #2563eb;        /* P2 - Thường quy / Xanh */
+      --p2-bg: #dbeafe;
+      --p3-info: #059669;           /* P3 - Hỗ trợ / Xanh lá */
+      --p3-bg: #d1fae5;
+
+      /* Special Departments */
+      --dept-cardio: #e11d48;       /* Tim mạch */
+      --dept-cardio-bg: #ffe4e6;
+      --dept-endo: #16a34a;         /* Nội tiết */
+      --dept-endo-bg: #dcfce7;
+      --dept-onco: #9333ea;         /* Ung bướu */
+      --dept-onco-bg: #f3e8ff;
+      --dept-control: #0284c7;      /* Central Control */
+      --dept-control-bg: #e0f2fe;
       
       --type-planned: #2563eb;
       --type-planned-bg: #dbeafe;
       --type-emergent: #ea580c;
       --type-emergent-bg: #ffedd5;
-      --radius: 10px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; }
     body { background: var(--bg-main); color: var(--text-dark); display: flex; height: 100vh; overflow: hidden; }
 
     /* Sidebar */
-    .sidebar { width: 290px; background: var(--bg-sidebar); color: var(--text-white); display: flex; flex-direction: column; flex-shrink: 0; transition: transform 0.25s ease; z-index: 50; }
+    .sidebar { width: 300px; background: var(--bg-sidebar); color: var(--text-white); display: flex; flex-direction: column; flex-shrink: 0; transition: transform 0.25s ease; z-index: 50; }
     .sidebar-header { padding: 18px 18px 14px; border-bottom: 1px solid var(--bg-sidebar-hover); display: flex; justify-content: space-between; align-items: center; }
-    .logo-title { font-size: 1.15rem; font-weight: 800; display: flex; align-items: center; gap: 8px; letter-spacing: -0.02em; }
-    .logo-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 3px; }
+    .logo-box { display: flex; align-items: center; gap: 8px; }
+    .logo-title { font-size: 1.15rem; font-weight: 800; letter-spacing: -0.02em; color: #38bdf8; }
+    .logo-sub { font-size: 0.7rem; color: var(--text-muted); margin-top: 3px; }
     .btn-close-sidebar { display: none; background: transparent; border: none; color: white; font-size: 1.2rem; cursor: pointer; }
 
     .sidebar-scroll { flex: 1; overflow-y: auto; padding-bottom: 10px; }
@@ -62,8 +75,8 @@
     .project-card-item:hover, .member-card-item:hover { background: var(--bg-sidebar-hover); color: white; }
     .project-card-item.active, .member-card-item.active { background: var(--bg-sidebar-card); color: white; border-left: 3px solid var(--primary); font-weight: 600; }
     
-    .btn-add-mini { background: transparent; border: 1px dashed #64748b; color: #a5b4fc; padding: 2px 8px; font-size: 0.72rem; border-radius: 4px; cursor: pointer; font-weight: 600; }
-    .btn-add-mini:hover { border-color: #a5b4fc; background: rgba(165,180,252,0.1); color: white; }
+    .btn-add-mini { background: transparent; border: 1px dashed #64748b; color: #38bdf8; padding: 2px 8px; font-size: 0.72rem; border-radius: 4px; cursor: pointer; font-weight: 600; }
+    .btn-add-mini:hover { border-color: #38bdf8; background: rgba(56,189,248,0.1); color: white; }
 
     .member-avatar { width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: bold; color: white; margin-right: 8px; flex-shrink: 0; }
 
@@ -77,16 +90,16 @@
     .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 12px; }
     .btn-menu-mobile { display: none; background: transparent; border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; font-size: 1.1rem; cursor: pointer; }
     .header-title-box { display: flex; align-items: center; gap: 10px; }
-    .header-title { font-size: 1.25rem; font-weight: 700; color: var(--text-dark); }
+    .header-title { font-size: 1.22rem; font-weight: 700; color: var(--text-dark); }
     
     .header-actions { display: flex; align-items: center; gap: 8px; }
     .search-box { display: flex; align-items: center; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; width: 240px; transition: 0.2s; }
-    .search-box:focus-within { border-color: var(--primary); background: white; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
+    .search-box:focus-within { border-color: var(--primary); background: white; box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1); }
     .search-box input { border: none; background: transparent; outline: none; margin-left: 6px; font-size: 0.85rem; width: 100%; color: var(--text-dark); }
 
     .btn-header-tool { background: white; border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.15s; }
     .btn-header-tool:hover { background: #f8fafc; border-color: #cbd5e1; }
-    .btn-header-tool.highlight { background: var(--primary-light); color: var(--primary); border-color: #c7d2fe; }
+    .btn-header-tool.highlight { background: var(--primary-light); color: var(--primary); border-color: #bae6fd; }
 
     /* Notification Bell */
     .btn-bell { position: relative; background: white; border: 1px solid var(--border); border-radius: 6px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem; }
@@ -116,10 +129,12 @@
 
     /* Task List View */
     .task-list { flex: 1; overflow-y: auto; padding: 8px 24px 24px; display: flex; flex-direction: column; gap: 8px; }
-    .task-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; gap: 6px; transition: 0.15s; }
+    .task-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; gap: 6px; transition: 0.15s; position: relative; }
     .task-card:hover { border-color: #cbd5e1; box-shadow: 0 3px 6px rgba(0,0,0,0.04); }
     .task-card.completed { opacity: 0.65; background: #f8fafc; }
-    
+    .task-card.is-p0 { border-left: 4px solid var(--p0-danger); }
+    .task-card.is-p1 { border-left: 4px solid var(--p1-warning); }
+
     .card-top { display: flex; align-items: center; justify-content: space-between; }
     .card-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .chk-box { width: 19px; height: 19px; cursor: pointer; accent-color: #10b981; }
@@ -128,18 +143,24 @@
     .badge { font-size: 0.72rem; font-weight: 600; padding: 2px 7px; border-radius: 5px; display: inline-flex; align-items: center; gap: 3px; }
     .badge-planned { background: var(--type-planned-bg); color: var(--type-planned); }
     .badge-emergent { background: var(--type-emergent-bg); color: var(--type-emergent); }
-    .badge-high { background: var(--prio-high-bg); color: var(--prio-high); }
-    .badge-med { background: var(--prio-med-bg); color: var(--prio-med); }
-    .badge-low { background: var(--prio-low-bg); color: var(--prio-low); }
-    .badge-project { background: #f1f5f9; color: var(--text-secondary); }
-    .badge-assignee { background: #e0e7ff; color: #4338ca; }
+    
+    .badge-p0 { background: var(--p0-bg); color: var(--p0-danger); font-weight: 800; border: 1px solid #fca5a5; }
+    .badge-p1 { background: var(--p1-bg); color: var(--p1-warning); font-weight: 700; }
+    .badge-p2 { background: var(--p2-bg); color: var(--p2-routine); }
+    .badge-p3 { background: var(--p3-bg); color: var(--p3-info); }
+
+    .badge-dept-cardio { background: var(--dept-cardio-bg); color: var(--dept-cardio); font-weight: 600; }
+    .badge-dept-endo { background: var(--dept-endo-bg); color: var(--dept-endo); font-weight: 600; }
+    .badge-dept-onco { background: var(--dept-onco-bg); color: var(--dept-onco); font-weight: 600; }
+    .badge-dept-control { background: var(--dept-control-bg); color: var(--dept-control); font-weight: 600; }
+    .badge-assignee { background: #f1f5f9; color: var(--text-dark); border: 1px solid #e2e8f0; }
 
     .task-title { font-size: 0.95rem; font-weight: 600; margin-left: 28px; line-height: 1.35; }
     .task-card.completed .task-title { text-decoration: line-through; color: var(--text-secondary); }
     .task-desc { font-size: 0.82rem; color: var(--text-secondary); margin-left: 28px; line-height: 1.4; white-space: pre-line; }
     
     .card-bottom { display: flex; align-items: center; gap: 14px; margin-left: 28px; font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px; flex-wrap: wrap; }
-    .deadline-overdue { color: var(--prio-high); font-weight: 700; }
+    .deadline-overdue { color: var(--p0-danger); font-weight: 700; }
     .deadline-today { color: var(--type-emergent); font-weight: 700; }
 
     .card-actions { display: flex; gap: 4px; }
@@ -155,10 +176,11 @@
     /* Dashboard View Mode */
     .dashboard-view { flex: 1; overflow-y: auto; padding: 20px 24px; display: none; flex-direction: column; gap: 18px; }
     .dashboard-view.show { display: flex; }
-    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
-    .kpi-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 4px; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+    .kpi-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 4px; position: relative; }
+    .kpi-tag { position: absolute; top: 12px; right: 12px; font-size: 0.7rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
     .kpi-title { font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; }
-    .kpi-val { font-size: 1.8rem; font-weight: 800; color: var(--text-dark); }
+    .kpi-val { font-size: 1.8rem; font-weight: 800; color: var(--text-dark); margin: 4px 0 2px; }
     .kpi-sub { font-size: 0.78rem; color: var(--text-secondary); }
 
     .dash-section { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
@@ -167,13 +189,13 @@
     .team-table, .warning-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
     .team-table th, .warning-table th { background: #f8fafc; text-align: left; padding: 10px; font-weight: 600; color: var(--text-secondary); border-bottom: 1px solid var(--border); }
     .team-table td, .warning-table td { padding: 10px; border-bottom: 1px solid #f1f5f9; }
-    .prog-pill { display: inline-block; width: 100px; height: 8px; background: #e2e8f0; border-radius: 99px; overflow: hidden; vertical-align: middle; margin-right: 6px; }
+    .prog-pill { display: inline-block; width: 90px; height: 8px; background: #e2e8f0; border-radius: 99px; overflow: hidden; vertical-align: middle; margin-right: 6px; }
     .prog-pill-fill { height: 100%; background: var(--primary); }
 
     /* Modals */
     .modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.6); backdrop-filter: blur(2px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 16px; }
     .modal-overlay.open { display: flex; }
-    .modal-card { background: white; border-radius: 12px; width: 560px; max-width: 100%; max-height: 90vh; overflow-y: auto; padding: 24px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 14px; }
+    .modal-card { background: white; border-radius: 12px; width: 620px; max-width: 100%; max-height: 90vh; overflow-y: auto; padding: 24px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 14px; }
     .modal-title { font-size: 1.15rem; font-weight: 700; color: var(--text-dark); }
     .form-group { display: flex; flex-direction: column; gap: 5px; }
     .form-group label { font-size: 0.8rem; font-weight: 600; color: var(--text-dark); }
@@ -189,7 +211,7 @@
 
     /* Mobile Responsive */
     @media (max-width: 768px) {
-      .sidebar { position: fixed; top: 0; bottom: 0; left: 0; transform: translateX(-100%); width: 290px; }
+      .sidebar { position: fixed; top: 0; bottom: 0; left: 0; transform: translateX(-100%); width: 300px; }
       .sidebar.open { transform: translateX(0); }
       .sidebar-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 40; display: none; }
       .sidebar-backdrop.open { display: block; }
@@ -211,9 +233,12 @@
   <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
-      <div>
-        <div class="logo-title">⚡ TO-DO TEAM PRO</div>
-        <div class="logo-sub">Quản trị công việc & Đội ngũ</div>
+      <div class="logo-box">
+        <span>🏥</span>
+        <div>
+          <div class="logo-title">SETA LONGEVITY</div>
+          <div class="logo-sub">Quản trị tiến độ & Lâm sàng AI</div>
+        </div>
       </div>
       <button class="btn-close-sidebar" onclick="toggleMobileSidebar()">✕</button>
     </div>
@@ -222,24 +247,28 @@
       <!-- Quick View Toggle: Tasks vs Dashboard -->
       <div class="nav-section">
         <button class="nav-item active" id="btn-view-tasks" onclick="switchView('tasks')">
-          <span>📋 Danh sách công việc</span>
+          <span>📋 Bảng công việc chi tiết</span>
         </button>
         <button class="nav-item" id="btn-view-dashboard" onclick="switchView('dashboard')">
-          <span>📊 Dashboard toàn cảnh</span>
-          <span class="badge-count" style="background:#4f46e5; color:white;">Mới</span>
+          <span>📊 Dashboard & 5 Nhóm KPI</span>
+          <span class="badge-count" style="background:#0284c7; color:white;">Pilot</span>
         </button>
       </div>
 
       <!-- Filters -->
       <div class="nav-section">
-        <div class="nav-label">Bộ lọc trạng thái</div>
+        <div class="nav-label">Phân tầng tình huống & Bộ lọc</div>
         <button class="nav-item" onclick="setFilter('all')">
-          <span>📋 Tất cả công việc</span>
+          <span>📋 Toàn bộ nhiệm vụ</span>
           <span class="badge-count" id="count-all">0</span>
         </button>
-        <button class="nav-item" onclick="setFilter('today')">
-          <span>📅 Hạn hôm nay</span>
-          <span class="badge-count" id="count-today">0</span>
+        <button class="nav-item" onclick="setFilter('p0')">
+          <span>🚨 Tình huống P0 (Khẩn cấp)</span>
+          <span class="badge-count" id="count-p0" style="background:#dc2626; color:white;">0</span>
+        </button>
+        <button class="nav-item" onclick="setFilter('p1')">
+          <span>⚠️ Tình huống P1 (Cảnh báo)</span>
+          <span class="badge-count" id="count-p1" style="background:#d97706; color:white;">0</span>
         </button>
         <button class="nav-item" onclick="setFilter('overdue')">
           <span>⏳ Quá hạn cần gấp</span>
@@ -249,41 +278,59 @@
           <span>⚡ Việc mới phát sinh</span>
           <span class="badge-count" id="count-emergent">0</span>
         </button>
-        <button class="nav-item" onclick="setFilter('high')">
-          <span>🔥 Ưu tiên cao</span>
-          <span class="badge-count" id="count-high">0</span>
-        </button>
         <button class="nav-item" onclick="setFilter('completed')">
           <span>✅ Đã hoàn thành</span>
           <span class="badge-count" id="count-completed">0</span>
         </button>
       </div>
 
-      <!-- Team Members Section -->
+      <!-- 3 Khoa Lâm Sàng Section -->
       <div class="nav-section">
-        <div class="nav-label">
-          <span>NHÂN SỰ TRONG NHÓM</span>
-          <button class="btn-add-mini" onclick="openMemberModal()">+ Thêm</button>
+        <div class="nav-label">KHOA LÂM SÀNG & ĐƠN VỊ</div>
+        <div class="project-card-item" onclick="filterByDept('cardio')">
+          <span>🫀 Khoa Tim Mạch</span>
+          <span class="badge-count" id="count-dept-cardio">0</span>
         </div>
-        <div class="members-container" id="members-container"></div>
+        <div class="project-card-item" onclick="filterByDept('endo')">
+          <span>🩺 Khoa Nội Tiết</span>
+          <span class="badge-count" id="count-dept-endo">0</span>
+        </div>
+        <div class="project-card-item" onclick="filterByDept('onco')">
+          <span>🎗️ Khoa Ung Bướu</span>
+          <span class="badge-count" id="count-dept-onco">0</span>
+        </div>
+        <div class="project-card-item" onclick="filterByDept('control')">
+          <span>🎛️ Central Control & KHTH</span>
+          <span class="badge-count" id="count-dept-control">0</span>
+        </div>
       </div>
 
-      <!-- Mini Projects Section -->
+      <!-- 5 Mini Projects Section (Roadmap) -->
       <div class="nav-section">
         <div class="nav-label">
-          <span>MINI PROJECTS</span>
+          <span>LỘ TRÌNH 5 GIAI ĐOẠN</span>
           <button class="btn-add-mini" onclick="openNewProjectModal()">+ Thêm</button>
         </div>
         <div class="projects-container" id="projects-container"></div>
+      </div>
+
+      <!-- Team Members Section -->
+      <div class="nav-section">
+        <div class="nav-label">
+          <span>ĐỘI NGŨ THỰC HIỆN</span>
+          <button class="btn-add-mini" onclick="openMemberModal()">+ Thêm</button>
+        </div>
+        <div class="members-container" id="members-container"></div>
       </div>
     </div>
 
     <!-- Sidebar Footer -->
     <div class="sidebar-footer">
-      <button class="btn-side-action" onclick="exportToExcel()">📥 Xuất báo cáo Excel</button>
+      <button class="btn-side-action" onclick="exportToExcel()">📥 Xuất báo cáo Excel y tế</button>
+      <button class="btn-side-action" style="font-size:0.75rem; background:#0369a1;" onclick="resetSetaLongevityTemplate()">🔄 Nạp lại dữ liệu Seta Longevity</button>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
-        <button class="btn-side-action" style="font-size: 0.75rem;" onclick="exportData()">💾 Sao lưu</button>
-        <button class="btn-side-action" style="font-size: 0.75rem;" onclick="document.getElementById('import-file-input').click()">📂 Phục hồi</button>
+        <button class="btn-side-action" style="font-size: 0.72rem;" onclick="exportData()">💾 Sao lưu</button>
+        <button class="btn-side-action" style="font-size: 0.72rem;" onclick="document.getElementById('import-file-input').click()">📂 Phục hồi</button>
       </div>
       <input type="file" id="import-file-input" style="display: none;" accept=".json" onchange="importData(event)">
     </div>
@@ -295,7 +342,7 @@
     <div class="urgent-alert-bar" id="urgent-alert-bar">
       <div style="display: flex; align-items: center; gap: 8px;">
         <span>🚨</span>
-        <strong id="urgent-alert-text">Cảnh báo: Có 0 công việc quá hạn cần xử lý ngay!</strong>
+        <strong id="urgent-alert-text">Cảnh báo: Có công việc quá hạn hoặc tình huống P0 cần xử lý ngay!</strong>
       </div>
       <button style="background: transparent; border: none; color: #991b1b; font-weight: bold; cursor: pointer; text-decoration: underline;" onclick="setFilter('overdue')">Xem ngay</button>
     </div>
@@ -306,18 +353,18 @@
         <div class="header-title-box">
           <button class="btn-menu-mobile" onclick="toggleMobileSidebar()">☰</button>
           <div>
-            <h1 class="header-title" id="view-title">📋 Tất cả công việc</h1>
-            <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px;" id="view-sub">Quản lý toàn bộ nhiệm vụ</div>
+            <h1 class="header-title" id="view-title">📋 Toàn bộ nhiệm vụ</h1>
+            <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px;" id="view-sub">Quản lý lộ trình triển khai đề án Seta Longevity</div>
           </div>
         </div>
 
         <div class="header-actions">
           <div class="search-box">
             <span>🔍</span>
-            <input type="text" id="search-input" placeholder="Tìm theo tên, mã việc hoặc nhân sự..." oninput="render()">
+            <input type="text" id="search-input" placeholder="Tìm theo tên, mã việc, khoa hoặc nhân sự..." oninput="render()">
           </div>
 
-          <button class="btn-header-tool" onclick="exportToExcel()" title="Tải file Excel báo cáo tiến độ">
+          <button class="btn-header-tool" onclick="exportToExcel()" title="Tải file Excel báo cáo tiến độ chuẩn y tế">
             <span>📊</span> Xuất Excel
           </button>
 
@@ -330,6 +377,22 @@
 
       <!-- Filters Row -->
       <div class="filters-bar" id="filters-bar-row">
+        <span>Khoa:</span>
+        <select id="filter-dept" onchange="render()">
+          <option value="all">Tất cả khoa / đơn vị</option>
+          <option value="cardio">🫀 Khoa Tim Mạch</option>
+          <option value="endo">🩺 Khoa Nội Tiết</option>
+          <option value="onco">🎗️ Khoa Ung Bướu</option>
+          <option value="control">🎛️ Central Control & KHTH</option>
+        </select>
+        <span>Tình huống:</span>
+        <select id="filter-triage" onchange="render()">
+          <option value="all">Tất cả cấp độ</option>
+          <option value="P0">🚨 P0 - Khẩn cấp (SLA &lt; 5p)</option>
+          <option value="P1">⚠️ P1 - Cảnh báo (Trong ngày)</option>
+          <option value="P2">📋 P2 - Thường quy</option>
+          <option value="P3">💬 P3 - Hỗ trợ chung</option>
+        </select>
         <span>Nhân sự:</span>
         <select id="filter-assignee" onchange="render()">
           <option value="all">Tất cả nhân sự</option>
@@ -340,16 +403,10 @@
           <option value="active">Chưa xong</option>
           <option value="completed">Đã xong</option>
         </select>
-        <span>Phân loại:</span>
-        <select id="filter-type" onchange="render()">
-          <option value="all">Tất cả</option>
-          <option value="planned">📋 Kế hoạch gốc</option>
-          <option value="emergent">⚡ Việc phát sinh</option>
-        </select>
         <span>Sắp xếp:</span>
         <select id="filter-sort" onchange="render()">
-          <option value="priority">Độ ưu tiên</option>
-          <option value="due">Hạn chót</option>
+          <option value="priority">Cấp độ khẩn cấp (P0 -&gt; P3)</option>
+          <option value="due">Hạn chót (Deadline)</option>
           <option value="newest">Mới nhất</option>
         </select>
       </div>
@@ -358,16 +415,22 @@
     <!-- Quick Add Bar -->
     <div class="quick-add-wrap" id="quick-add-section">
       <div class="quick-add-card">
-        <input type="text" class="quick-input" id="quick-title" placeholder="Gõ việc mới cần làm... (Nhấn Enter)" onkeydown="if(event.key==='Enter') quickAddTask()">
+        <input type="text" class="quick-input" id="quick-title" placeholder="Thêm nhanh công việc / tình huống lâm sàng mới... (Nhấn Enter)" onkeydown="if(event.key==='Enter') quickAddTask()">
         
-        <!-- Quick Assignee Selector -->
-        <select id="quick-assignee" style="border: 1px solid var(--border); border-radius: 6px; padding: 7px 8px; font-size: 0.8rem; outline: none; background: white;">
+        <!-- Quick Dept Selector -->
+        <select id="quick-dept" style="border: 1px solid var(--border); border-radius: 6px; padding: 7px 8px; font-size: 0.8rem; outline: none; background: white;">
+          <option value="control">🎛️ Central Control</option>
+          <option value="cardio">🫀 Khoa Tim Mạch</option>
+          <option value="endo">🩺 Khoa Nội Tiết</option>
+          <option value="onco">🎗️ Khoa Ung Bướu</option>
         </select>
 
-        <select id="quick-prio" style="border: 1px solid var(--border); border-radius: 6px; padding: 7px 8px; font-size: 0.8rem; outline: none; background: white;">
-          <option value="high">🔴 Cao</option>
-          <option value="medium" selected>🟡 Vừa</option>
-          <option value="low">🟢 Thấp</option>
+        <!-- Quick Triage Level Selector -->
+        <select id="quick-prio" style="border: 1px solid var(--border); border-radius: 6px; padding: 7px 8px; font-size: 0.8rem; outline: none; background: white; font-weight: bold;">
+          <option value="P0" style="color:#dc2626;">🚨 P0 - Khẩn cấp</option>
+          <option value="P1" style="color:#d97706;" selected>⚠️ P1 - Cảnh báo</option>
+          <option value="P2" style="color:#2563eb;">📋 P2 - Thường quy</option>
+          <option value="P3" style="color:#059669;">💬 P3 - Hỗ trợ</option>
         </select>
 
         <button type="button" class="btn-toggle-type planned" id="quick-type-btn" onclick="toggleQuickType()">📋 Kế hoạch</button>
@@ -379,36 +442,67 @@
     <!-- Mode 1: Task Cards List -->
     <div class="task-list" id="task-list"></div>
 
-    <!-- Mode 2: Full Dashboard View -->
+    <!-- Mode 2: Full Dashboard View & 5 KPI Groups -->
     <div class="dashboard-view" id="dashboard-view">
-      <!-- Top KPIs -->
+      <!-- 5 KPI Groups Cards Banner -->
+      <div style="font-size:0.75rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.05em;">
+        HỆ THỐNG 5 NHÓM CHỈ SỐ THEO DÕI & ĐÁNH GIÁ (KPI PILOT)
+      </div>
+
       <div class="kpi-grid">
-        <div class="kpi-card">
-          <div class="kpi-title">Tiến độ chung cả nhóm</div>
-          <div class="kpi-val" style="color: var(--primary);" id="dash-kpi-progress">0%</div>
-          <div class="kpi-sub" id="dash-kpi-progress-sub">0/0 công việc đã hoàn thành</div>
+        <!-- 1. Patient KPI -->
+        <div class="kpi-card" style="border-top: 3px solid #0284c7;">
+          <span class="kpi-tag" style="background:#e0f2fe; color:#0369a1;">1. PATIENT</span>
+          <div class="kpi-title">Bệnh nhân hoạt động</div>
+          <div class="kpi-val" id="dash-kpi-patient">85 ca</div>
+          <div class="kpi-sub">Số BN onboard trên 3 khoa</div>
         </div>
-        <div class="kpi-card">
-          <div class="kpi-title">Cảnh báo quá hạn</div>
-          <div class="kpi-val" style="color: var(--prio-high);" id="dash-kpi-overdue">0</div>
-          <div class="kpi-sub">Công việc trễ hạn cần đôn đốc</div>
+
+        <!-- 2. Engagement KPI -->
+        <div class="kpi-card" style="border-top: 3px solid #16a34a;">
+          <span class="kpi-tag" style="background:#dcfce7; color:#15803d;">2. ENGAGEMENT</span>
+          <div class="kpi-title">Tỷ lệ tuân thủ đo chỉ số</div>
+          <div class="kpi-val" id="dash-kpi-engagement">92%</div>
+          <div class="kpi-sub">Lượt nhập dữ liệu / ngày</div>
         </div>
-        <div class="kpi-card">
-          <div class="kpi-title">Việc mới phát sinh</div>
-          <div class="kpi-val" style="color: var(--type-emergent);" id="dash-kpi-emergent">0%</div>
-          <div class="kpi-sub" id="dash-kpi-emergent-sub">Tỉ trọng công việc đột xuất</div>
+
+        <!-- 3. Clinical KPI -->
+        <div class="kpi-card" style="border-top: 3px solid #9333ea;">
+          <span class="kpi-tag" style="background:#f3e8ff; color:#7e22ce;">3. CLINICAL</span>
+          <div class="kpi-title">Phát hiện sớm bất thường</div>
+          <div class="kpi-val" id="dash-kpi-clinical">14 ca</div>
+          <div class="kpi-sub">Can thiệp kịp thời trước biến chứng</div>
         </div>
-        <div class="kpi-card">
-          <div class="kpi-title">Quy mô nhân sự</div>
-          <div class="kpi-val" style="color: #059669;" id="dash-kpi-members">0</div>
-          <div class="kpi-sub">Thành viên đang quản lý việc</div>
+
+        <!-- 4. Operation KPI -->
+        <div class="kpi-card" style="border-top: 3px solid #ea580c;">
+          <span class="kpi-tag" style="background:#ffedd5; color:#c2410c;">4. OPERATION</span>
+          <div class="kpi-title">Thời gian phản hồi SLA</div>
+          <div class="kpi-val" id="dash-kpi-operation">&lt; 4.2p</div>
+          <div class="kpi-sub">Xử lý cảnh báo P0 & P1</div>
         </div>
+
+        <!-- 5. Safety KPI -->
+        <div class="kpi-card" style="border-top: 3px solid #dc2626;">
+          <span class="kpi-tag" style="background:#fee2e2; color:#b91c1c;">5. SAFETY</span>
+          <div class="kpi-title">Mức độ an toàn người bệnh</div>
+          <div class="kpi-val" id="dash-kpi-safety">100%</div>
+          <div class="kpi-sub">Không có sự cố bỏ sót ca đỏ</div>
+        </div>
+      </div>
+
+      <!-- Roadmap Phases Progress -->
+      <div class="dash-section">
+        <div class="dash-title">
+          <span>🚩 Tiến Độ 5 Giai Đoạn Triển Khai (Tuần 1 ➔ Tuần 26)</span>
+        </div>
+        <div id="dash-phases-container" style="display: flex; flex-direction: column; gap: 10px;"></div>
       </div>
 
       <!-- Team Members Workload Table -->
       <div class="dash-section">
         <div class="dash-title">
-          <span>👥 Bảng Theo Dõi Khối Lượng & Hiệu Suất Nhân Sự</span>
+          <span>👥 Bảng Phân Công & Hiệu Suất Đội Ngũ Thực Hiện</span>
           <button class="btn-header-tool" onclick="openMemberModal()">+ Thêm nhân sự</button>
         </div>
         <table class="team-table">
@@ -416,30 +510,31 @@
             <tr>
               <th>Nhân sự</th>
               <th>Vai trò</th>
-              <th>Tổng việc</th>
+              <th>Tổng nhiệm vụ</th>
               <th>Đã xong</th>
-              <th>Chưa xong</th>
+              <th>Đang xử lý</th>
               <th>Quá hạn</th>
-              <th>Tỉ lệ hoàn thành</th>
+              <th>Tiến độ</th>
             </tr>
           </thead>
           <tbody id="dash-team-tbody"></tbody>
         </table>
       </div>
 
-      <!-- Warning Table (Overdue tasks) -->
-      <div class="dash-section" style="border-left: 4px solid var(--prio-high);">
-        <div class="dash-title" style="color: var(--prio-high);">
-          <span>⚠️ Danh Sách Công Việc Cần Cảnh Báo (Quá Hạn & Khẩn Cấp)</span>
+      <!-- Warning Table (P0 and Overdue tasks) -->
+      <div class="dash-section" style="border-left: 4px solid var(--p0-danger);">
+        <div class="dash-title" style="color: var(--p0-danger);">
+          <span>🚨 Cảnh Báo Khẩn Cấp (Tình Huống P0 & Công Việc Trễ Hạn)</span>
         </div>
         <table class="warning-table">
           <thead>
             <tr>
               <th>Mã</th>
-              <th>Công việc</th>
-              <th>Nhân sự phụ trách</th>
+              <th>Nhiệm vụ / Tình huống</th>
+              <th>Khoa</th>
+              <th>Phụ trách</th>
+              <th>Cấp độ</th>
               <th>Hạn chót</th>
-              <th>Độ trễ</th>
               <th>Thao tác</th>
             </tr>
           </thead>
@@ -452,22 +547,43 @@
   <!-- Modal Task -->
   <div class="modal-overlay" id="task-modal">
     <div class="modal-card">
-      <h2 class="modal-title" id="modal-task-title">Thêm Công Việc Mới</h2>
+      <h2 class="modal-title" id="modal-task-title">Thêm Nhiệm Vụ / Tình Huống Mới</h2>
       <div class="warn-duplicate" id="duplicate-warning"></div>
       
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
         <div class="form-group">
-          <label>Thuộc Mini Project (*)</label>
+          <label>Giai đoạn triển khai (*)</label>
           <select id="task-modal-project"></select>
         </div>
         <div class="form-group">
-          <label>Người phụ trách (Nhân sự) (*)</label>
+          <label>Khoa / Đơn vị phụ trách (*)</label>
+          <select id="task-modal-dept">
+            <option value="control">🎛️ Central Control & KHTH</option>
+            <option value="cardio">🫀 Khoa Tim Mạch</option>
+            <option value="endo">🩺 Khoa Nội Tiết</option>
+            <option value="onco">🎗️ Khoa Ung Bướu</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="form-group">
+          <label>Người phụ trách chính (*)</label>
           <select id="task-modal-assignee"></select>
+        </div>
+        <div class="form-group">
+          <label>Phân cấp tình huống (Triage Level) (*)</label>
+          <select id="task-modal-prio">
+            <option value="P0">🚨 P0 - Khẩn cấp / Cấp cứu (SLA &lt; 5p)</option>
+            <option value="P1" selected>⚠️ P1 - Cảnh báo vàng (Trong ngày)</option>
+            <option value="P2">📋 P2 - Thường quy (Theo lịch)</option>
+            <option value="P3">💬 P3 - Hỗ trợ chung</option>
+          </select>
         </div>
       </div>
 
       <div class="form-group">
-        <label>Tên công việc (*)</label>
+        <label>Tên nhiệm vụ / Tình huống (*)</label>
         <input type="text" id="task-modal-name" oninput="checkDuplicateInModal()">
       </div>
 
@@ -475,33 +591,24 @@
         <div class="form-group">
           <label>Bản chất công việc</label>
           <select id="task-modal-type">
-            <option value="planned">📋 Kế hoạch gốc</option>
-            <option value="emergent">⚡ Việc mới phát sinh</option>
+            <option value="planned">📋 Kế hoạch gốc (Planned)</option>
+            <option value="emergent">⚡ Việc mới phát sinh (Emergent)</option>
           </select>
         </div>
         <div class="form-group">
-          <label>Mức độ ưu tiên</label>
-          <select id="task-modal-prio">
-            <option value="high">🔴 Cao</option>
-            <option value="medium" selected>🟡 Vừa</option>
-            <option value="low">🟢 Thấp</option>
-          </select>
+          <label>Hạn chót hoàn thành (Deadline)</label>
+          <input type="date" id="task-modal-due">
         </div>
       </div>
 
       <div class="form-group">
-        <label>Hạn chót (Deadline)</label>
-        <input type="date" id="task-modal-due">
-      </div>
-
-      <div class="form-group">
-        <label>Ghi chú chi tiết</label>
-        <textarea id="task-modal-desc" rows="3"></textarea>
+        <label>Ghi chú chi tiết & Hướng dẫn xử lý SOP</label>
+        <textarea id="task-modal-desc" rows="3" placeholder="Nhập tiêu chí nghiệm thu (DoD), kịch bản lâm sàng hoặc quy trình xử lý..."></textarea>
       </div>
 
       <!-- Subtasks builder in modal -->
       <div class="form-group">
-        <label>Danh sách việc con (Checklist)</label>
+        <label>Checklist việc con / Các bước xử lý cụ thể</label>
         <div style="display: flex; gap: 6px;">
           <input type="text" id="modal-subtask-input" placeholder="Thêm bước thực hiện..." onkeydown="if(event.key==='Enter'){event.preventDefault();addModalSubtask();}">
           <button type="button" class="btn-secondary" onclick="addModalSubtask()">+ Thêm</button>
@@ -511,7 +618,7 @@
 
       <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
         <button class="btn-secondary" onclick="closeTaskModal()">Hủy</button>
-        <button class="btn-primary" onclick="saveTaskModal()">💾 Lưu công việc</button>
+        <button class="btn-primary" onclick="saveTaskModal()">💾 Lưu nhiệm vụ</button>
       </div>
     </div>
   </div>
@@ -519,55 +626,52 @@
   <!-- Modal Project -->
   <div class="modal-overlay" id="project-modal">
     <div class="modal-card" style="width: 440px;">
-      <h2 class="modal-title">Tạo Mini Project Mới</h2>
+      <h2 class="modal-title">Tạo Giai Đoạn Mới</h2>
       <div class="form-group">
-        <label>Tên Mini Project (*)</label>
+        <label>Tên giai đoạn (*)</label>
         <input type="text" id="proj-name">
       </div>
       <div class="form-group">
-        <label>Mô tả ngắn</label>
-        <input type="text" id="proj-desc">
+        <label>Mô tả & Thời gian triển khai</label>
+        <input type="text" id="proj-desc" placeholder="Ví dụ: Tuần 1 - 4...">
       </div>
       <div class="form-group">
         <label>Biểu tượng (Icon)</label>
         <select id="proj-icon">
-          <option value="🚀">🚀 Khởi nghiệp / Ra mắt</option>
-          <option value="📁" selected>📁 Quản lý chung</option>
-          <option value="⚡">⚡ Việc khẩn cấp</option>
-          <option value="🎯">🎯 Mục tiêu quan trọng</option>
-          <option value="📊">📊 Báo cáo & Tài chính</option>
-          <option value="🌟">🌟 Cá nhân & Phát triển</option>
-          <option value="🛠️">🛠️ Kỹ thuật & Dự án</option>
+          <option value="📋">📋 Chuẩn bị & Kế hoạch</option>
+          <option value="🏥">🏥 Triển khai lâm sàng</option>
+          <option value="⚡">⚡ Vận hành AI</option>
+          <option value="📊">📊 Báo cáo KPI</option>
+          <option value="🚀">🚀 Nhân rộng toàn viện</option>
         </select>
       </div>
       <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
         <button class="btn-secondary" onclick="closeProjectModal()">Hủy</button>
-        <button class="btn-primary" onclick="saveProjectModal()">💾 Lưu Dự án</button>
+        <button class="btn-primary" onclick="saveProjectModal()">💾 Lưu Giai Đoạn</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal Member (Quản lý Nhân sự) -->
+  <!-- Modal Member -->
   <div class="modal-overlay" id="member-modal">
     <div class="modal-card" style="width: 440px;">
-      <h2 class="modal-title" id="modal-member-title">Thêm Nhân Sự Mới Vào Nhóm</h2>
+      <h2 class="modal-title" id="modal-member-title">Thêm Nhân Sự Vào Đội Ngũ</h2>
       <div class="form-group">
         <label>Họ và tên nhân sự (*)</label>
-        <input type="text" id="member-name" placeholder="Ví dụ: Nguyễn Văn A">
+        <input type="text" id="member-name" placeholder="Ví dụ: BS. Nguyễn Văn A">
       </div>
       <div class="form-group">
         <label>Vai trò / Chức danh</label>
-        <input type="text" id="member-role" placeholder="Ví dụ: Kế toán, Lập trình viên, Marketing...">
+        <input type="text" id="member-role" placeholder="Ví dụ: Bác sĩ Trưởng khoa Tim Mạch, Điều dưỡng...">
       </div>
       <div class="form-group">
         <label>Màu đại diện</label>
         <select id="member-color">
-          <option value="#4f46e5">Màu Tím Indigo</option>
-          <option value="#059669">Màu Xanh Lá Emerald</option>
-          <option value="#d97706">Màu Hổ Phách Amber</option>
-          <option value="#dc2626">Màu Đỏ Rose</option>
-          <option value="#2563eb">Màu Xanh Dương Blue</option>
-          <option value="#7c3aed">Màu Tím Purple</option>
+          <option value="#0284c7">Màu Xanh Y Tế (Sky Blue)</option>
+          <option value="#e11d48">Màu Đỏ Tim Mạch (Rose)</option>
+          <option value="#16a34a">Màu Xanh Nội Tiết (Green)</option>
+          <option value="#9333ea">Màu Tím Ung Bướu (Purple)</option>
+          <option value="#ea580c">Màu Cam Điều Phối (Orange)</option>
         </select>
       </div>
       <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
@@ -581,32 +685,141 @@
   <div class="toast-container" id="toast-container"></div>
 
   <script>
-    const STORAGE_KEY = "todo_team_pro_v3";
+    const STORAGE_KEY = "seta_longevity_pro_v4";
     let currentView = "tasks"; // 'tasks' or 'dashboard'
-    
-    let state = {
+
+    // Template default derived directly from the diagram
+    const SETA_DEFAULT_TEMPLATE = {
       activeFilter: "all",
       selectedProjectId: null,
       selectedMemberId: null,
+      selectedDept: null,
       quickType: "planned",
       editingTaskId: null,
       modalSubtasksCache: [],
       members: [
-        { id: 1, name: "Phương (Quản lý)", role: "Trưởng nhóm", color: "#4f46e5" },
-        { id: 2, name: "Nhân sự A", role: "Vận hành", color: "#059669" },
-        { id: 3, name: "Nhân sự B", role: "Kỹ thuật", color: "#d97706" }
+        { id: 1, name: "Seta Project Lead", role: "Quản lý Dự án & AI", color: "#0284c7" },
+        { id: 2, name: "Phòng KHTH", role: "Điều phối & Pháp chế Viện", color: "#059669" },
+        { id: 3, name: "Bác sĩ Trưởng Khoa", role: "Chuyên môn Lâm sàng (3 Khoa)", color: "#e11d48" },
+        { id: 4, name: "Điều dưỡng Điều phối", role: "Trực ca vàng & Hỗ trợ BN", color: "#d97706" },
+        { id: 5, name: "Đội CSKH & Kỹ thuật", role: "Hỗ trợ App & Onboarding", color: "#2563eb" },
+        { id: 6, name: "Ban Giám Đốc (BGD)", role: "Giám sát & Phê duyệt", color: "#9333ea" }
       ],
       projects: [
-        { id: 1, code: "PRJ-01", name: "Dự án: Phát triển Ứng dụng", desc: "Xây dựng và hoàn thiện app v1.0", icon: "🚀" },
-        { id: 2, code: "PRJ-02", name: "Vận hành & Cá nhân", desc: "Nhiệm vụ thường nhật", icon: "⚡" }
+        { id: 1, code: "GĐ-01", name: "GĐ 0 & 1: Chuẩn Bị & Chuẩn Hóa", desc: "10 nhóm đầu vào bắt buộc & Cẩm nang 6 nhóm (Tuần 1 - 4)", icon: "📋" },
+        { id: 2, code: "GĐ-02", name: "GĐ 2: Thí Điểm Tại 3 Khoa", desc: "Tim mạch, Nội tiết, Ung bướu & Central Control (Tuần 5 - 8)", icon: "🏥" },
+        { id: 3, code: "GĐ-03", name: "GĐ 3: Vận Hành Lâm Sàng & AI", desc: "Phân luồng Triage (Xanh-Vàng-Đỏ) & Cảnh báo thời gian thực (Tuần 9 - 24)", icon: "⚡" },
+        { id: 4, code: "GĐ-04", name: "GĐ 4: Báo Cáo & Đánh Giá 5 KPI", desc: "Theo dõi 5 nhóm chỉ số: Patient, Engagement, Clinical, Operation, Safety (Tuần 25 - 26)", icon: "📊" },
+        { id: 5, code: "GĐ-05", name: "GĐ 5: Cải Tiến & Nhân Rộng", desc: "Nâng cấp App v2 + SOP v2 và mở rộng toàn viện", icon: "🚀" }
       ],
       tasks: [
-        { id: 1, projectId: 1, memberId: 1, code: "TSK-001", title: "Thiết kế cơ sở dữ liệu và cấu trúc", desc: "Phân chia bảng khoa học, không trùng lặp", type: "planned", priority: "high", completed: true, due: "", subtasks: [] },
-        { id: 2, projectId: 1, memberId: 2, code: "TSK-002", title: "Xây dựng giao diện Web responsive", desc: "Tương thích cả điện thoại và máy tính", type: "planned", priority: "high", completed: false, due: getTodayStr(), subtasks: [{title: "Tạo sidebar menu", done: true}, {title: "Thiết kế card công việc", done: false}] },
-        { id: 3, projectId: 1, memberId: 3, code: "TSK-003", title: "Xử lý yêu cầu phát sinh khẩn cấp", desc: "Khách hàng yêu cầu kiểm tra tài liệu gấp", type: "emergent", priority: "high", completed: false, due: getPastDateStr(2), subtasks: [] },
-        { id: 4, projectId: 2, memberId: 1, code: "TSK-004", title: "Họp giao ban định kỳ đầu tuần", desc: "Báo cáo tiến độ các bộ phận", type: "planned", priority: "medium", completed: true, due: "", subtasks: [] }
+        {
+          id: 1, projectId: 1, memberId: 1, dept: "control", code: "TSK-001",
+          title: "Hoàn thiện 10 nhóm tài liệu đầu vào bắt buộc",
+          desc: "Bao gồm kịch bản P0-P3, biểu mẫu form, bộ chỉ số theo dõi và kho tri thức AI có kiểm duyệt y khoa.",
+          type: "planned", priority: "P0", completed: true, due: getTodayStr(),
+          subtasks: [
+            { title: "Xây dựng danh mục tình huống P0-P3", done: true },
+            { title: "Soạn thảo kịch bản xử lý chi tiết từng tình huống", done: true },
+            { title: "Thiết lập kho tri thức AI có bác sĩ thẩm định", done: true },
+            { title: "Khảo sát đặc thù bệnh lý 3 khoa (Tim mạch, Nội tiết, Ung bướu)", done: true }
+          ]
+        },
+        {
+          id: 2, projectId: 1, memberId: 2, dept: "control", code: "TSK-002",
+          title: "Biên soạn Cẩm nang hướng dẫn cho 6 nhóm đối tượng",
+          desc: "Tài liệu riêng cho: Bác sĩ, Điều dưỡng, CSKH, KHTH, Bệnh nhân và Người nhà người bệnh.",
+          type: "planned", priority: "P1", completed: true, due: getTodayStr(),
+          subtasks: [
+            { title: "Tài liệu cho Bác sĩ đánh giá & can thiệp", done: true },
+            { title: "Tài liệu cho Điều dưỡng theo dõi & hỗ trợ", done: true },
+            { title: "Cẩm nang cho Bệnh nhân cài app và đo chỉ số hàng ngày", done: true }
+          ]
+        },
+        {
+          id: 3, projectId: 1, memberId: 1, dept: "control", code: "TSK-003",
+          title: "Test toàn bộ luồng tích hợp: App -> Dữ liệu -> AI -> Cảnh báo -> Xử lý",
+          desc: "Giả lập các tình huống P0 (nguy kịch) để đảm bảo chuông cảnh báo tới Bác sĩ và Điều dưỡng trong dưới 3 phút.",
+          type: "planned", priority: "P0", completed: false, due: getTodayStr(),
+          subtasks: [
+            { title: "Test luồng cảnh báo đỏ Tim mạch (Đau thắt ngực cấp, loạn nhịp)", done: true },
+            { title: "Test luồng cảnh báo hạ đường huyết cấp Nội tiết", done: true },
+            { title: "Test phản hồi AI với tác dụng phụ Ung bướu", done: false }
+          ]
+        },
+        {
+          id: 4, projectId: 2, memberId: 3, dept: "cardio", code: "TSK-004",
+          title: "Triển khai thí điểm tại Khoa Tim Mạch",
+          desc: "Theo dõi huyết áp, nhịp tim, cảnh báo cơn đau thắt ngực và giám sát tuân thủ dùng thuốc.",
+          type: "planned", priority: "P0", completed: false, due: "",
+          subtasks: [
+            { title: "Onboarding nhóm 30 bệnh nhân tim mạch đầu tiên", done: false },
+            { title: "Cài đặt ngưỡng huyết áp cá nhân hóa cho từng bệnh nhân", done: false }
+          ]
+        },
+        {
+          id: 5, projectId: 2, memberId: 3, dept: "endo", code: "TSK-005",
+          title: "Triển khai thí điểm tại Khoa Nội Tiết",
+          desc: "Theo dõi đường huyết trước/sau ăn, tuân thủ tiêm insulin, thực đơn dinh dưỡng và cảnh báo tụt đường huyết.",
+          type: "planned", priority: "P1", completed: false, due: "",
+          subtasks: [
+            { title: "Onboarding nhóm bệnh nhân tiểu đường Type 2", done: false },
+            { title: "Kiểm thử form nhập chỉ số đường huyết qua app", done: false }
+          ]
+        },
+        {
+          id: 6, projectId: 2, memberId: 3, dept: "onco", code: "TSK-006",
+          title: "Triển khai thí điểm tại Khoa Ung Bướu",
+          desc: "Theo dõi tác dụng phụ hóa xạ trị, nâng đỡ tâm lý, dinh dưỡng chuyên biệt và phát hiện sớm sốt nhiễm trùng.",
+          type: "planned", priority: "P1", completed: false, due: "",
+          subtasks: [
+            { title: "Bộ câu hỏi đánh giá mệt mỏi & nôn ói sau truyền hóa chất", done: false },
+            { title: "Kênh kết nối chuyên gia tâm lý và dinh dưỡng", done: false }
+          ]
+        },
+        {
+          id: 7, projectId: 2, memberId: 1, dept: "control", code: "TSK-007",
+          title: "Vận hành Trung tâm Seta Longevity Central Control",
+          desc: "Màn hình trực Dashboard trung tâm: tích hợp dữ liệu, điều phối báo động và giám sát thời gian thực.",
+          type: "planned", priority: "P1", completed: false, due: "",
+          subtasks: []
+        },
+        {
+          id: 8, projectId: 3, memberId: 4, dept: "control", code: "TSK-008",
+          title: "Trực theo dõi ca bệnh & Phân luồng AI hằng ngày (Triage)",
+          desc: "Xanh: Bình thường -> AI hướng dẫn tiếp | Vàng: Cần theo dõi -> Điều dưỡng hỗ trợ | Đỏ: Cảnh báo -> Bác sĩ can thiệp ngay.",
+          type: "planned", priority: "P0", completed: false, due: "",
+          subtasks: []
+        },
+        {
+          id: 9, projectId: 3, memberId: 5, dept: "control", code: "TSK-009",
+          title: "Xử lý các tình huống phát sinh từ phía người bệnh",
+          desc: "Bệnh nhân quên mật khẩu, nhập sai dữ liệu huyết áp, thiết bị Bluetooth không kết nối được.",
+          type: "emergent", priority: "P2", completed: false, due: "",
+          subtasks: []
+        },
+        {
+          id: 10, projectId: 4, memberId: 2, dept: "control", code: "TSK-010",
+          title: "Tổng hợp báo cáo định kỳ theo 5 nhóm chỉ số KPI",
+          desc: "Patient, Engagement, Clinical, Operation, Safety gửi Ban Giám Đốc và Hội đồng chuyên môn.",
+          type: "planned", priority: "P1", completed: false, due: "",
+          subtasks: [
+            { title: "Báo cáo xung nhịp hằng ngày (Daily pulse)", done: false },
+            { title: "Báo cáo xu hướng & bất thường hằng tuần", done: false },
+            { title: "Báo cáo tổng kết tháng gửi BGD", done: false }
+          ]
+        },
+        {
+          id: 11, projectId: 5, memberId: 6, dept: "control", code: "TSK-011",
+          title: "Đánh giá hiệu quả pilot và xây dựng kế hoạch nhân rộng",
+          desc: "Đóng gói mô hình chuẩn, nâng cấp App v2 + SOP v2 và lập lộ trình nhân rộng toàn viện.",
+          type: "planned", priority: "P2", completed: false, due: "",
+          subtasks: []
+        }
       ]
     };
+
+    let state = JSON.parse(JSON.stringify(SETA_DEFAULT_TEMPLATE));
 
     function showToast(msg) {
       const box = document.getElementById("toast-container");
@@ -624,12 +837,6 @@
 
     function getTodayStr() {
       const d = new Date();
-      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    }
-
-    function getPastDateStr(daysAgo) {
-      const d = new Date();
-      d.setDate(d.getDate() - daysAgo);
       return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     }
 
@@ -656,6 +863,15 @@
       renderCounters();
     }
 
+    function resetSetaLongevityTemplate() {
+      if (confirm("Bạn có muốn nạp lại dữ liệu chuẩn Seta Longevity theo sơ đồ không?")) {
+        state = JSON.parse(JSON.stringify(SETA_DEFAULT_TEMPLATE));
+        saveState();
+        render();
+        showToast("Đã nạp toàn bộ cấu trúc Seta Longevity!");
+      }
+    }
+
     function switchView(view) {
       currentView = view;
       if (view === 'tasks') {
@@ -673,8 +889,8 @@
         document.getElementById("dashboard-view").classList.add("show");
         document.getElementById("btn-view-tasks").classList.remove("active");
         document.getElementById("btn-view-dashboard").classList.add("active");
-        document.getElementById("view-title").innerText = "📊 Dashboard Toàn Cảnh & Báo Cáo Nhóm";
-        document.getElementById("view-sub").innerText = "Tổng hợp toàn diện tiến độ, nhân sự và cảnh báo trễ hạn";
+        document.getElementById("view-title").innerText = "📊 Dashboard 5 Nhóm Chỉ Số & Tiến Độ Pilot";
+        document.getElementById("view-sub").innerText = "Giám sát Patient, Engagement, Clinical, Operation và Safety";
         renderDashboard();
       }
       if (window.innerWidth <= 768) toggleMobileSidebar();
@@ -698,19 +914,40 @@
       state.activeFilter = key;
       state.selectedProjectId = null;
       state.selectedMemberId = null;
+      state.selectedDept = null;
       document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
       event?.currentTarget?.classList.add("active");
       
       const titles = {
-        all: "📋 Tất cả công việc",
-        today: "📅 Hạn hôm nay",
-        overdue: "⏳ Quá hạn cần gấp",
+        all: "📋 Toàn bộ nhiệm vụ",
+        p0: "🚨 Tình huống P0 - Khẩn cấp (SLA < 5p)",
+        p1: "⚠️ Tình huống P1 - Cảnh báo vàng",
+        overdue: "⏳ Công việc quá hạn chót",
         emergent: "⚡ Việc mới phát sinh",
-        high: "🔥 Ưu tiên cao",
         completed: "✅ Đã hoàn thành"
       };
-      document.getElementById("view-title").innerText = titles[key] || "📋 Tất cả công việc";
+      document.getElementById("view-title").innerText = titles[key] || "📋 Toàn bộ nhiệm vụ";
       document.getElementById("view-sub").innerText = "Danh sách nhiệm vụ theo bộ lọc đã chọn";
+      if (window.innerWidth <= 768) toggleMobileSidebar();
+      render();
+    }
+
+    function filterByDept(deptKey) {
+      if (currentView !== 'tasks') switchView('tasks');
+      state.activeFilter = "dept";
+      state.selectedDept = deptKey;
+      state.selectedProjectId = null;
+      state.selectedMemberId = null;
+      document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
+      
+      const deptNames = {
+        cardio: "🫀 Khoa Tim Mạch",
+        endo: "🩺 Khoa Nội Tiết",
+        onco: "🎗️ Khoa Ung Bướu",
+        control: "🎛️ Central Control & KHTH"
+      };
+      document.getElementById("view-title").innerText = deptNames[deptKey] || "Khoa Lâm Sàng";
+      document.getElementById("view-sub").innerText = "Tiến độ triển khai và các ca bệnh thuộc đơn vị này";
       if (window.innerWidth <= 768) toggleMobileSidebar();
       render();
     }
@@ -720,6 +957,7 @@
       state.activeFilter = "project";
       state.selectedProjectId = pid;
       state.selectedMemberId = null;
+      state.selectedDept = null;
       document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
       const p = state.projects.find(x => x.id === pid);
       if (p) {
@@ -735,11 +973,12 @@
       state.activeFilter = "member";
       state.selectedMemberId = mid;
       state.selectedProjectId = null;
+      state.selectedDept = null;
       document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
       const m = state.members.find(x => x.id === mid);
       if (m) {
-        document.getElementById("view-title").innerText = `👤 To-Do List của: ${m.name}`;
-        document.getElementById("view-sub").innerText = `Vai trò: ${m.role} - Toàn bộ công việc được giao`;
+        document.getElementById("view-title").innerText = `👤 Nhiệm vụ của: ${m.name}`;
+        document.getElementById("view-sub").innerText = `Vai trò: ${m.role} - Toàn bộ công việc phụ trách`;
       }
       if (window.innerWidth <= 768) toggleMobileSidebar();
       render();
@@ -751,29 +990,31 @@
       if (!title) return;
 
       const targetPid = state.selectedProjectId || (state.projects[0] ? state.projects[0].id : 1);
-      const targetMid = parseInt(document.getElementById("quick-assignee").value) || state.selectedMemberId || (state.members[0] ? state.members[0].id : 1);
+      const targetMid = state.selectedMemberId || (state.members[0] ? state.members[0].id : 1);
+      const targetDept = document.getElementById("quick-dept").value;
+      const targetPrio = document.getElementById("quick-prio").value;
 
-      // Check duplicates
+      // Duplicate check
       const dup = state.tasks.find(t => checkSimilarity(t.title, title) >= 0.85);
       if (dup) {
         const m = state.members.find(x => x.id === dup.memberId);
         const who = m ? `(giao cho ${m.name})` : '';
-        if (!confirm(`⚠️ CẢNH BÁO TRÙNG LẶP:\nĐã có công việc tương tự: "${dup.title}" (${dup.code}) ${who}.\n\nBạn có chắc chắn vẫn muốn tạo thêm không?`)) {
+        if (!confirm(`⚠️ CẢNH BÁO TRÙNG LẶP:\nĐã có công việc tương tự: "${dup.title}" (${dup.code}) ${who}.\n\nBạn có chắc chắn muốn tạo thêm không?`)) {
           return;
         }
       }
 
-      const prio = document.getElementById("quick-prio").value;
       const newId = state.tasks.length ? Math.max(...state.tasks.map(t=>t.id)) + 1 : 1;
       state.tasks.push({
         id: newId,
         projectId: targetPid,
         memberId: targetMid,
+        dept: targetDept,
         code: `TSK-${String(newId).padStart(3,'0')}`,
         title,
         desc: "",
         type: state.quickType,
-        priority: prio,
+        priority: targetPrio,
         completed: false,
         due: "",
         subtasks: []
@@ -782,7 +1023,7 @@
       input.value = "";
       saveState();
       render();
-      showToast(`Đã thêm: "${title}"`);
+      showToast(`Đã thêm nhiệm vụ: "${title}"`);
     }
 
     function toggleTask(id) {
@@ -791,7 +1032,7 @@
         t.completed = !t.completed;
         saveState();
         render();
-        showToast(t.completed ? `Đã xong: ${t.code}` : `Chưa xong: ${t.code}`);
+        showToast(t.completed ? `Đã hoàn thành: ${t.code}` : `Chưa xong: ${t.code}`);
       }
     }
 
@@ -806,7 +1047,7 @@
 
     function deleteTask(id) {
       const t = state.tasks.find(x => x.id === id);
-      if (t && confirm(`Bạn có chắc chắn muốn xóa công việc:\n"${t.title}" (${t.code})?`)) {
+      if (t && confirm(`Bạn có chắc chắn muốn xóa nhiệm vụ:\n"${t.title}" (${t.code})?`)) {
         state.tasks = state.tasks.filter(x => x.id !== id);
         saveState();
         render();
@@ -816,21 +1057,29 @@
 
     function renderCounters() {
       const today = getTodayStr();
+      const p0Count = state.tasks.filter(t => t.priority === 'P0' && !t.completed).length;
+      const p1Count = state.tasks.filter(t => t.priority === 'P1' && !t.completed).length;
       const overdueCount = state.tasks.filter(t => t.due && t.due < today && !t.completed).length;
 
       document.getElementById("count-all").innerText = state.tasks.length;
-      document.getElementById("count-today").innerText = state.tasks.filter(t => t.due === today && !t.completed).length;
+      document.getElementById("count-p0").innerText = p0Count;
+      document.getElementById("count-p1").innerText = p1Count;
       document.getElementById("count-overdue").innerText = overdueCount;
       document.getElementById("count-emergent").innerText = state.tasks.filter(t => t.type === "emergent" && !t.completed).length;
-      document.getElementById("count-high").innerText = state.tasks.filter(t => t.priority === "high" && !t.completed).length;
       document.getElementById("count-completed").innerText = state.tasks.filter(t => t.completed).length;
+
+      // Department counters
+      document.getElementById("count-dept-cardio").innerText = state.tasks.filter(t => t.dept === 'cardio').length;
+      document.getElementById("count-dept-endo").innerText = state.tasks.filter(t => t.dept === 'endo').length;
+      document.getElementById("count-dept-onco").innerText = state.tasks.filter(t => t.dept === 'onco').length;
+      document.getElementById("count-dept-control").innerText = state.tasks.filter(t => t.dept === 'control' || !t.dept).length;
 
       // Urgent Alert Bar
       const alertBar = document.getElementById("urgent-alert-bar");
-      if (overdueCount > 0) {
+      if (p0Count > 0 || overdueCount > 0) {
         alertBar.classList.add("show");
-        document.getElementById("urgent-alert-text").innerText = `Cảnh báo: Có ${overdueCount} công việc đã quá hạn chót!`;
-        document.getElementById("bell-badge").innerText = overdueCount;
+        document.getElementById("urgent-alert-text").innerText = `Cảnh báo: Có ${p0Count} tình huống P0 (Khẩn cấp) và ${overdueCount} công việc quá hạn!`;
+        document.getElementById("bell-badge").innerText = p0Count + overdueCount;
         document.getElementById("bell-badge").style.display = "flex";
       } else {
         alertBar.classList.remove("show");
@@ -841,12 +1090,8 @@
     function renderMembers() {
       const box = document.getElementById("members-container");
       box.innerHTML = "";
-      
-      const qSel = document.getElementById("quick-assignee");
       const fSel = document.getElementById("filter-assignee");
       const curFVal = fSel.value;
-
-      qSel.innerHTML = "";
       fSel.innerHTML = `<option value="all">Tất cả nhân sự</option>`;
 
       state.members.forEach(m => {
@@ -866,8 +1111,6 @@
         el.onclick = () => selectMember(m.id);
         box.appendChild(el);
 
-        // Populate dropdowns
-        qSel.innerHTML += `<option value="${m.id}">${m.name}</option>`;
         fSel.innerHTML += `<option value="${m.id}" ${curFVal == m.id ? 'selected' : ''}>${m.name}</option>`;
       });
     }
@@ -891,6 +1134,20 @@
       });
     }
 
+    function getDeptBadge(dept) {
+      if (dept === 'cardio') return `<span class="badge badge-dept-cardio">🫀 Tim Mạch</span>`;
+      if (dept === 'endo') return `<span class="badge badge-dept-endo">🩺 Nội Tiết</span>`;
+      if (dept === 'onco') return `<span class="badge badge-dept-onco">🎗️ Ung Bướu</span>`;
+      return `<span class="badge badge-dept-control">🎛️ Central Control</span>`;
+    }
+
+    function getPrioBadge(prio) {
+      if (prio === 'P0') return `<span class="badge badge-p0">🚨 P0 - Khẩn cấp</span>`;
+      if (prio === 'P1') return `<span class="badge badge-p1">⚠️ P1 - Cảnh báo</span>`;
+      if (prio === 'P2') return `<span class="badge badge-p2">📋 P2 - Thường quy</span>`;
+      return `<span class="badge badge-p3">💬 P3 - Hỗ trợ</span>`;
+    }
+
     function render() {
       renderMembers();
       renderProjects();
@@ -903,7 +1160,8 @@
 
       const search = document.getElementById("search-input").value.toLowerCase().trim();
       const statusF = document.getElementById("filter-status").value;
-      const typeF = document.getElementById("filter-type").value;
+      const deptF = document.getElementById("filter-dept").value;
+      const triageF = document.getElementById("filter-triage").value;
       const sortF = document.getElementById("filter-sort").value;
       const assigneeF = document.getElementById("filter-assignee").value;
       const today = getTodayStr();
@@ -911,15 +1169,17 @@
       let list = state.tasks.filter(t => {
         if (state.activeFilter === "project" && t.projectId !== state.selectedProjectId) return false;
         if (state.activeFilter === "member" && t.memberId !== state.selectedMemberId) return false;
-        if (state.activeFilter === "today" && (t.due !== today || t.completed)) return false;
+        if (state.activeFilter === "dept" && t.dept !== state.selectedDept) return false;
+        if (state.activeFilter === "p0" && t.priority !== 'P0') return false;
+        if (state.activeFilter === "p1" && t.priority !== 'P1') return false;
         if (state.activeFilter === "overdue" && (!t.due || t.due >= today || t.completed)) return false;
         if (state.activeFilter === "emergent" && (t.type !== "emergent")) return false;
-        if (state.activeFilter === "high" && t.priority !== "high") return false;
         if (state.activeFilter === "completed" && !t.completed) return false;
 
         if (statusF === "active" && t.completed) return false;
         if (statusF === "completed" && !t.completed) return false;
-        if (typeF !== "all" && t.type !== typeF) return false;
+        if (deptF !== "all" && t.dept !== deptF) return false;
+        if (triageF !== "all" && t.priority !== triageF) return false;
         if (assigneeF !== "all" && t.memberId != assigneeF) return false;
 
         if (search) {
@@ -934,8 +1194,8 @@
 
       // Sorting
       if (sortF === "priority") {
-        const order = { high: 1, medium: 2, low: 3 };
-        list.sort((a,b) => (a.completed ? 1 : 0) - (b.completed ? 1 : 0) || order[a.priority] - order[b.priority]);
+        const order = { 'P0': 1, 'P1': 2, 'P2': 3, 'P3': 4 };
+        list.sort((a,b) => (a.completed ? 1 : 0) - (b.completed ? 1 : 0) || (order[a.priority]||3) - (order[b.priority]||3));
       } else if (sortF === "due") {
         list.sort((a,b) => (a.completed ? 1 : 0) - (b.completed ? 1 : 0) || (a.due||"9999").localeCompare(b.due||"9999"));
       } else {
@@ -949,8 +1209,8 @@
         container.innerHTML = `
           <div style="text-align: center; padding: 60px 20px; color: var(--text-secondary);">
             <div style="font-size: 2.5rem; margin-bottom: 8px;">🎉</div>
-            <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-dark);">Không có công việc nào!</div>
-            <div style="font-size: 0.85rem; margin-top: 4px;">Gõ vào ô nhập ở trên để thêm nhiệm vụ mới.</div>
+            <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-dark);">Không có nhiệm vụ nào!</div>
+            <div style="font-size: 0.85rem; margin-top: 4px;">Nhập ở thanh trên để thêm mới nhiệm vụ hoặc tình huống lâm sàng.</div>
           </div>
         `;
         return;
@@ -960,7 +1220,7 @@
         const p = state.projects.find(x => x.id === t.projectId);
         const m = state.members.find(x => x.id === t.memberId);
         const card = document.createElement("div");
-        card.className = `task-card ${t.completed ? "completed" : ""}`;
+        card.className = `task-card ${t.completed ? "completed" : ""} ${t.priority === 'P0' ? 'is-p0' : (t.priority === 'P1' ? 'is-p1' : '')}`;
         
         let dueClass = "";
         let dueText = t.due ? `📅 Hạn: ${t.due}` : "";
@@ -969,8 +1229,9 @@
           else if (t.due === today && !t.completed) { dueClass = "deadline-today"; dueText = `📅 Hôm nay`; }
         }
 
-        const prioText = t.priority === "high" ? "🔴 Cao" : (t.priority === "medium" ? "🟡 Vừa" : "🟢 Thấp");
         const typeBadge = t.type === "emergent" ? `<span class="badge badge-emergent">⚡ Phát sinh</span>` : `<span class="badge badge-planned">📋 Kế hoạch</span>`;
+        const prioBadge = getPrioBadge(t.priority);
+        const deptBadge = getDeptBadge(t.dept);
 
         // Subtask preview
         let subHtml = "";
@@ -979,7 +1240,7 @@
           subHtml = `
             <div class="subtask-box">
               <div style="font-size: 0.72rem; font-weight: bold; color: var(--text-secondary); margin-bottom: 2px;">
-                Checklist việc con (${compSubs}/${t.subtasks.length}):
+                Checklist các bước hoàn thành (${compSubs}/${t.subtasks.length}):
               </div>
               ${t.subtasks.map((s, idx) => `
                 <div class="subtask-row ${s.done ? 'done' : ''}">
@@ -996,10 +1257,11 @@
             <div class="card-left">
               <input type="checkbox" class="chk-box" ${t.completed ? "checked" : ""} onclick="toggleTask(${t.id})">
               <span class="task-code">${t.code}</span>
+              ${deptBadge}
+              ${prioBadge}
               ${typeBadge}
-              <span class="badge badge-${t.priority === 'high' ? 'high' : (t.priority === 'medium' ? 'med' : 'low')}">${prioText}</span>
               ${m ? `<span class="badge badge-assignee">👤 ${m.name}</span>` : ""}
-              ${p && state.activeFilter !== 'project' ? `<span class="badge badge-project">${p.icon} ${p.name}</span>` : ""}
+              ${p && state.activeFilter !== 'project' ? `<span class="badge" style="background:#f1f5f9; color:var(--text-secondary);">${p.icon} ${p.code}</span>` : ""}
             </div>
             <div class="card-actions">
               <button class="btn-icon" title="Sửa chi tiết" onclick="openEditTaskModal(${t.id})">✏️</button>
@@ -1020,19 +1282,27 @@
     /* Render Dashboard */
     function renderDashboard() {
       const today = getTodayStr();
-      const total = state.tasks.length;
-      const comp = state.tasks.filter(t => t.completed).length;
-      const overdue = state.tasks.filter(t => t.due && t.due < today && !t.completed).length;
-      const emergent = state.tasks.filter(t => t.type === 'emergent').length;
-      const pct = total ? Math.round((comp / total) * 100) : 0;
-      const ePct = total ? Math.round((emergent / total) * 100) : 0;
 
-      document.getElementById("dash-kpi-progress").innerText = `${pct}%`;
-      document.getElementById("dash-kpi-progress-sub").innerText = `${comp}/${total} công việc đã hoàn thành`;
-      document.getElementById("dash-kpi-overdue").innerText = overdue;
-      document.getElementById("dash-kpi-emergent").innerText = `${ePct}%`;
-      document.getElementById("dash-kpi-emergent-sub").innerText = `${emergent} việc đột xuất ngoài kế hoạch`;
-      document.getElementById("dash-kpi-members").innerText = state.members.length;
+      // Render Phases Progress Bars
+      const phasesBox = document.getElementById("dash-phases-container");
+      phasesBox.innerHTML = "";
+      state.projects.forEach(p => {
+        const pTasks = state.tasks.filter(t => t.projectId === p.id);
+        const comp = pTasks.filter(t => t.completed).length;
+        const pct = pTasks.length ? Math.round((comp / pTasks.length) * 100) : 0;
+
+        phasesBox.innerHTML += `
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:0.83rem; margin-bottom:4px;">
+              <strong>${p.icon} ${p.name}</strong>
+              <span style="color:var(--primary); font-weight:bold;">${comp}/${pTasks.length} việc (${pct}%)</span>
+            </div>
+            <div style="height:8px; background:#e2e8f0; border-radius:99px; overflow:hidden;">
+              <div style="height:100%; width:${pct}%; background:var(--primary); border-radius:99px;"></div>
+            </div>
+          </div>
+        `;
+      });
 
       // Render Team Table
       const teamTbody = document.getElementById("dash-team-tbody");
@@ -1065,23 +1335,27 @@
         `;
       });
 
-      // Render Warning Table
+      // Render Warning Table (P0 and Overdue)
       const warnTbody = document.getElementById("dash-warning-tbody");
       warnTbody.innerHTML = "";
-      const overdueTasks = state.tasks.filter(t => t.due && t.due < today && !t.completed);
-      if (!overdueTasks.length) {
-        warnTbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:18px; color:#16a34a;">🎉 Tuyệt vời! Hiện tại không có công việc nào bị quá hạn.</td></tr>`;
+      const urgentTasks = state.tasks.filter(t => (!t.completed && (t.priority === 'P0' || (t.due && t.due < today))));
+      
+      if (!urgentTasks.length) {
+        warnTbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:18px; color:#16a34a;">🎉 Tuyệt vời! Toàn bộ tình huống P0 và công việc đều đang trong tầm kiểm soát.</td></tr>`;
       } else {
-        overdueTasks.forEach(t => {
+        urgentTasks.forEach(t => {
           const m = state.members.find(x => x.id === t.memberId);
-          const diffDays = Math.ceil((new Date(today) - new Date(t.due)) / (1000 * 60 * 60 * 24));
+          const deptNames = { cardio: "🫀 Tim Mạch", endo: "🩺 Nội Tiết", onco: "🎗️ Ung Bướu", control: "🎛️ Control" };
+          const pBadge = getPrioBadge(t.priority);
+
           warnTbody.innerHTML += `
             <tr>
               <td><code>${t.code}</code></td>
               <td><strong>${t.title}</strong></td>
+              <td>${deptNames[t.dept] || 'Control'}</td>
               <td>${m ? m.name : 'Chưa gán'}</td>
-              <td style="color:#dc2626; font-weight:600;">${t.due}</td>
-              <td style="color:#dc2626; font-weight:bold;">Trễ ${diffDays} ngày</td>
+              <td>${pBadge}</td>
+              <td style="color:#dc2626; font-weight:bold;">${t.due || 'Cần xử lý ngay'}</td>
               <td>
                 <button class="btn-header-tool" style="padding:3px 8px; font-size:0.75rem;" onclick="openEditTaskModal(${t.id})">Xử lý ngay</button>
               </td>
@@ -1095,7 +1369,7 @@
     function openNewTaskModal() {
       state.editingTaskId = null;
       state.modalSubtasksCache = [];
-      document.getElementById("modal-task-title").innerText = "Thêm Công Việc Mới";
+      document.getElementById("modal-task-title").innerText = "Thêm Nhiệm Vụ / Tình Huống Mới";
       document.getElementById("task-modal-name").value = "";
       document.getElementById("task-modal-desc").value = "";
       document.getElementById("task-modal-due").value = "";
@@ -1114,8 +1388,9 @@
       document.getElementById("modal-task-title").innerText = `Chỉnh sửa: ${t.code}`;
       document.getElementById("task-modal-name").value = t.title;
       document.getElementById("task-modal-desc").value = t.desc || "";
+      document.getElementById("task-modal-dept").value = t.dept || "control";
+      document.getElementById("task-modal-prio").value = t.priority || "P1";
       document.getElementById("task-modal-type").value = t.type;
-      document.getElementById("task-modal-prio").value = t.priority;
       document.getElementById("task-modal-due").value = t.due || "";
       document.getElementById("duplicate-warning").classList.remove("show");
       populateModalSelects(t.projectId, t.memberId);
@@ -1130,7 +1405,7 @@
       const dup = state.tasks.find(t => t.id !== state.editingTaskId && checkSimilarity(t.title, val) >= 0.85);
       if (dup) {
         const m = state.members.find(x => x.id === dup.memberId);
-        warn.innerHTML = `⚠️ <strong>Cảnh báo trùng lặp:</strong> Đã có việc "<em>${dup.title}</em>" (${dup.code}) phụ trách bởi <strong>${m ? m.name : 'người khác'}</strong>.`;
+        warn.innerHTML = `⚠️ <strong>Cảnh báo trùng lặp:</strong> Đã có nhiệm vụ "<em>${dup.title}</em>" (${dup.code}) giao cho <strong>${m ? m.name : 'người khác'}</strong>.`;
         warn.classList.add("show");
       } else {
         warn.classList.remove("show");
@@ -1186,6 +1461,7 @@
       if (!title) { alert("Vui lòng nhập tên công việc!"); return; }
       const pid = parseInt(document.getElementById("task-modal-project").value);
       const mid = parseInt(document.getElementById("task-modal-assignee").value);
+      const dept = document.getElementById("task-modal-dept").value;
       const desc = document.getElementById("task-modal-desc").value.trim();
       const type = document.getElementById("task-modal-type").value;
       const prio = document.getElementById("task-modal-prio").value;
@@ -1194,14 +1470,14 @@
       if (state.editingTaskId) {
         const t = state.tasks.find(x => x.id === state.editingTaskId);
         if (t) {
-          t.projectId = pid; t.memberId = mid; t.title = title; t.desc = desc; t.type = type; t.priority = prio; t.due = due;
+          t.projectId = pid; t.memberId = mid; t.dept = dept; t.title = title; t.desc = desc; t.type = type; t.priority = prio; t.due = due;
           t.subtasks = state.modalSubtasksCache;
         }
         showToast(`Đã cập nhật: ${t.code}`);
       } else {
         const newId = state.tasks.length ? Math.max(...state.tasks.map(t=>t.id)) + 1 : 1;
         state.tasks.push({
-          id: newId, projectId: pid, memberId: mid, code: `TSK-${String(newId).padStart(3,'0')}`,
+          id: newId, projectId: pid, memberId: mid, dept: dept, code: `TSK-${String(newId).padStart(3,'0')}`,
           title, desc, type, priority: prio, completed: false, due,
           subtasks: state.modalSubtasksCache
         });
@@ -1242,17 +1518,17 @@
     function closeProjectModal() { document.getElementById("project-modal").classList.remove("open"); }
     function saveProjectModal() {
       const name = document.getElementById("proj-name").value.trim();
-      if (!name) { alert("Vui lòng nhập tên Mini Project!"); return; }
+      if (!name) { alert("Vui lòng nhập tên giai đoạn!"); return; }
       const desc = document.getElementById("proj-desc").value.trim();
       const icon = document.getElementById("proj-icon").value;
       const newId = state.projects.length ? Math.max(...state.projects.map(p=>p.id)) + 1 : 1;
       state.projects.push({
-        id: newId, code: `PRJ-${String(newId).padStart(2,'0')}`, name, desc, icon
+        id: newId, code: `GĐ-${String(newId).padStart(2,'0')}`, name, desc, icon
       });
       closeProjectModal();
       saveState();
       selectProject(newId);
-      showToast(`Đã tạo dự án mới: ${name}`);
+      showToast(`Đã tạo giai đoạn mới: ${name}`);
     }
 
     // Notification Popover & Permission
@@ -1265,14 +1541,14 @@
         });
       }
       const today = getTodayStr();
-      const urgent = state.tasks.filter(t => t.due && t.due <= today && !t.completed);
+      const urgent = state.tasks.filter(t => (!t.completed && (t.priority === 'P0' || (t.due && t.due <= today))));
       if (urgent.length === 0) {
-        alert("🔔 Thông báo: Bạn không có công việc nào bị quá hạn hoặc đến hạn hôm nay!");
+        alert("🔔 Thông báo: Hiện tại không có tình huống P0 nào cần cấp cứu hoặc công việc quá hạn!");
       } else {
-        let msg = `🔔 Bạn có ${urgent.length} công việc cần lưu ý:\n\n`;
+        let msg = `🔔 Báo cáo: Có ${urgent.length} nhiệm vụ/tình huống cần lưu ý ngay:\n\n`;
         urgent.forEach(t => {
           const m = state.members.find(x => x.id === t.memberId);
-          msg += `• [${t.code}] ${t.title} (Giao cho: ${m?m.name:'chưa rõ'}, Hạn: ${t.due})\n`;
+          msg += `• [${t.priority}] [${t.code}] ${t.title} (Khoa: ${t.dept||'Central'}, Phụ trách: ${m?m.name:'chưa rõ'})\n`;
         });
         alert(msg);
       }
@@ -1282,15 +1558,17 @@
     function exportToExcel() {
       const today = getTodayStr();
       let csvContent = "\uFEFF"; // UTF-8 BOM
-      csvContent += "Mã việc,Tên công việc,Nhân sự phụ trách,Dự án,Loại việc,Độ ưu tiên,Hạn chót,Trạng thái,Số việc con,Ghi chú\n";
+      csvContent += "Mã việc,Nhiệm vụ / Tình huống,Khoa / Đơn vị,Phụ trách chính,Giai đoạn lộ trình,Cấp độ (Triage),Loại việc,Hạn chót,Trạng thái,Checklist con,Ghi chú SOP\n";
+
+      const deptNames = { cardio: "Khoa Tim Mạch", endo: "Khoa Nội Tiết", onco: "Khoa Ung Bướu", control: "Central Control & KHTH" };
 
       state.tasks.forEach(t => {
         const p = state.projects.find(x => x.id === t.projectId);
         const m = state.members.find(x => x.id === t.memberId);
         const pName = p ? p.name : "";
         const mName = m ? m.name : "";
+        const deptName = deptNames[t.dept] || "Central Control";
         const tType = t.type === 'emergent' ? 'Phát sinh' : 'Kế hoạch gốc';
-        const tPrio = t.priority === 'high' ? 'Cao' : (t.priority === 'medium' ? 'Vừa' : 'Thấp');
         const tStat = t.completed ? 'Đã hoàn thành' : 'Chưa hoàn thành';
         const subCount = t.subtasks ? `${t.subtasks.filter(s=>s.done).length}/${t.subtasks.length}` : '0/0';
         
@@ -1298,15 +1576,15 @@
         const titleSafe = `"${(t.title || "").replace(/"/g, '""')}"`;
         const descSafe = `"${(t.desc || "").replace(/"/g, '""')}"`;
 
-        csvContent += `${t.code},${titleSafe},"${mName}","${pName}",${tType},${tPrio},${t.due||""},${tStat},${subCount},${descSafe}\n`;
+        csvContent += `${t.code},${titleSafe},"${deptName}","${mName}","${pName}",${t.priority||"P2"},${tType},${t.due||""},${tStat},${subCount},${descSafe}\n`;
       });
 
       const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = `Bao_Cao_Tien_Do_Cong_Viec_${today}.csv`;
+      a.download = `Seta_Longevity_Bao_Cao_Tien_Do_${today}.csv`;
       a.click();
-      showToast("Đã xuất báo cáo Excel (.CSV) thành công!");
+      showToast("Đã xuất báo cáo Excel dự án Seta Longevity thành công!");
     }
 
     // Export & Import JSON
@@ -1315,7 +1593,7 @@
       const blob = new Blob([str], { type: "application/json" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = `todo_team_backup_${getTodayStr()}.json`;
+      a.download = `seta_longevity_backup_${getTodayStr()}.json`;
       a.click();
       showToast("Đã tải về bản sao lưu JSON!");
     }
@@ -1333,7 +1611,7 @@
             if (Array.isArray(parsed.members)) state.members = parsed.members;
             saveState();
             render();
-            showToast("Đã khôi phục dữ liệu thành công!");
+            showToast("Đã khôi phục dữ liệu dự án thành công!");
           } else {
             alert("File sao lưu không đúng định dạng!");
           }
