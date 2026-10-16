@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>To-Do Pro - Quản trị Công việc & Mini Project Khoa học</title>
-  <meta name="description" content="Ứng dụng quản lý công việc và Mini Project khoa học, phân loại việc phát sinh và tự động cảnh báo trùng lặp.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+  <title>To-Do Pro Team - Quản trị Công việc, Dự án & Nhân sự</title>
+  <meta name="description" content="Hệ thống quản lý công việc nhóm khoa học: phân công nhân sự, nhắc nhở hạn chót, xuất báo cáo Excel và Dashboard toàn cảnh.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 
   <style>
     :root {
@@ -14,7 +14,6 @@
       --bg-sidebar: #0f172a;
       --bg-sidebar-card: #1e293b;
       --bg-sidebar-hover: #334155;
-      --bg-sidebar-active: #4f46e5;
       --primary: #4f46e5;
       --primary-hover: #4338ca;
       --primary-light: #eef2ff;
@@ -42,13 +41,14 @@
     body { background: var(--bg-main); color: var(--text-dark); display: flex; height: 100vh; overflow: hidden; }
 
     /* Sidebar */
-    .sidebar { width: 280px; background: var(--bg-sidebar); color: var(--text-white); display: flex; flex-direction: column; flex-shrink: 0; transition: transform 0.25s ease; z-index: 50; }
-    .sidebar-header { padding: 20px 18px 16px; border-bottom: 1px solid var(--bg-sidebar-hover); display: flex; justify-content: space-between; align-items: center; }
+    .sidebar { width: 290px; background: var(--bg-sidebar); color: var(--text-white); display: flex; flex-direction: column; flex-shrink: 0; transition: transform 0.25s ease; z-index: 50; }
+    .sidebar-header { padding: 18px 18px 14px; border-bottom: 1px solid var(--bg-sidebar-hover); display: flex; justify-content: space-between; align-items: center; }
     .logo-title { font-size: 1.15rem; font-weight: 800; display: flex; align-items: center; gap: 8px; letter-spacing: -0.02em; }
     .logo-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 3px; }
     .btn-close-sidebar { display: none; background: transparent; border: none; color: white; font-size: 1.2rem; cursor: pointer; }
 
-    .nav-section { padding: 12px 12px 4px; }
+    .sidebar-scroll { flex: 1; overflow-y: auto; padding-bottom: 10px; }
+    .nav-section { padding: 10px 12px 2px; }
     .nav-label { font-size: 0.68rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; padding: 0 8px 6px; display: flex; justify-content: space-between; align-items: center; }
     
     .nav-item { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 8px 10px; border-radius: 6px; background: transparent; border: none; color: #cbd5e1; font-size: 0.85rem; cursor: pointer; transition: 0.15s; margin-bottom: 2px; text-align: left; }
@@ -57,12 +57,15 @@
     .badge-count { font-size: 0.7rem; font-weight: 600; padding: 2px 7px; border-radius: 12px; background: var(--bg-sidebar-card); color: #cbd5e1; }
     .nav-item.active .badge-count { background: rgba(255,255,255,0.25); color: white; }
 
-    .projects-container { flex: 1; overflow-y: auto; padding: 0 12px; }
-    .project-card-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-bottom: 3px; color: #cbd5e1; transition: 0.15s; }
-    .project-card-item:hover { background: var(--bg-sidebar-hover); color: white; }
-    .project-card-item.active { background: var(--bg-sidebar-card); color: white; border-left: 3px solid var(--primary); font-weight: 600; }
-    .btn-add-proj { background: transparent; border: 1px dashed #64748b; color: #a5b4fc; padding: 2px 8px; font-size: 0.72rem; border-radius: 4px; cursor: pointer; font-weight: 600; }
-    .btn-add-proj:hover { border-color: #a5b4fc; background: rgba(165,180,252,0.1); color: white; }
+    .projects-container, .members-container { padding: 0 12px; }
+    .project-card-item, .member-card-item { display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-bottom: 3px; color: #cbd5e1; transition: 0.15s; }
+    .project-card-item:hover, .member-card-item:hover { background: var(--bg-sidebar-hover); color: white; }
+    .project-card-item.active, .member-card-item.active { background: var(--bg-sidebar-card); color: white; border-left: 3px solid var(--primary); font-weight: 600; }
+    
+    .btn-add-mini { background: transparent; border: 1px dashed #64748b; color: #a5b4fc; padding: 2px 8px; font-size: 0.72rem; border-radius: 4px; cursor: pointer; font-weight: 600; }
+    .btn-add-mini:hover { border-color: #a5b4fc; background: rgba(165,180,252,0.1); color: white; }
+
+    .member-avatar { width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: bold; color: white; margin-right: 8px; flex-shrink: 0; }
 
     .sidebar-footer { padding: 12px 14px; border-top: 1px solid var(--bg-sidebar-hover); display: flex; flex-direction: column; gap: 6px; }
     .btn-side-action { background: var(--bg-sidebar-card); color: white; border: none; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 8px; font-weight: 500; transition: 0.15s; }
@@ -70,29 +73,37 @@
 
     /* Content Area */
     .content { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
-    .header { background: var(--bg-card); padding: 14px 24px; border-bottom: 1px solid var(--border); }
-    .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 12px; }
+    .header { background: var(--bg-card); padding: 12px 24px; border-bottom: 1px solid var(--border); }
+    .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 12px; }
     .btn-menu-mobile { display: none; background: transparent; border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; font-size: 1.1rem; cursor: pointer; }
     .header-title-box { display: flex; align-items: center; gap: 10px; }
     .header-title { font-size: 1.25rem; font-weight: 700; color: var(--text-dark); }
     
-    .search-box { display: flex; align-items: center; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; width: 280px; transition: 0.2s; }
+    .header-actions { display: flex; align-items: center; gap: 8px; }
+    .search-box { display: flex; align-items: center; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; width: 240px; transition: 0.2s; }
     .search-box:focus-within { border-color: var(--primary); background: white; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
     .search-box input { border: none; background: transparent; outline: none; margin-left: 6px; font-size: 0.85rem; width: 100%; color: var(--text-dark); }
 
-    /* Project progress bar */
-    .project-progress-wrap { margin-bottom: 12px; display: none; align-items: center; gap: 12px; }
-    .progress-bar-bg { flex: 1; height: 8px; background: #e2e8f0; border-radius: 99px; overflow: hidden; }
-    .progress-bar-fill { height: 100%; background: var(--primary); border-radius: 99px; transition: width 0.3s ease; }
-    .progress-pct-label { font-size: 0.78rem; font-weight: 700; color: var(--primary); }
+    .btn-header-tool { background: white; border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.15s; }
+    .btn-header-tool:hover { background: #f8fafc; border-color: #cbd5e1; }
+    .btn-header-tool.highlight { background: var(--primary-light); color: var(--primary); border-color: #c7d2fe; }
 
+    /* Notification Bell */
+    .btn-bell { position: relative; background: white; border: 1px solid var(--border); border-radius: 6px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem; }
+    .bell-badge { position: absolute; top: -4px; right: -4px; background: #dc2626; color: white; font-size: 0.65rem; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+    /* Top Alerts Bar (Warning Overdue / Urgent) */
+    .urgent-alert-bar { background: #fee2e2; border-bottom: 1px solid #fecaca; color: #991b1b; padding: 8px 24px; font-size: 0.82rem; display: none; align-items: center; justify-content: space-between; }
+    .urgent-alert-bar.show { display: flex; }
+
+    /* Filters Bar */
     .filters-bar { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: var(--text-secondary); flex-wrap: wrap; }
     .filters-bar select { border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; font-size: 0.8rem; outline: none; background: white; color: var(--text-dark); cursor: pointer; }
 
     /* Quick Add Bar */
-    .quick-add-wrap { padding: 14px 24px 6px; }
+    .quick-add-wrap { padding: 12px 24px 6px; }
     .quick-add-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px; display: flex; align-items: center; gap: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.03); flex-wrap: wrap; }
-    .quick-input { flex: 1; min-width: 220px; border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font-size: 0.88rem; outline: none; transition: 0.2s; }
+    .quick-input { flex: 1; min-width: 200px; border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font-size: 0.88rem; outline: none; }
     .quick-input:focus { border-color: var(--primary); }
     
     .btn-toggle-type { padding: 6px 12px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; cursor: pointer; border: 1px solid transparent; transition: 0.15s; }
@@ -103,8 +114,8 @@
     .btn-primary:hover { background: var(--primary-hover); }
     .btn-secondary { background: #f1f5f9; border: 1px solid var(--border); color: var(--text-dark); border-radius: 6px; padding: 8px 12px; font-size: 0.85rem; cursor: pointer; font-weight: 500; }
 
-    /* Task List */
-    .task-list { flex: 1; overflow-y: auto; padding: 10px 24px 24px; display: flex; flex-direction: column; gap: 8px; }
+    /* Task List View */
+    .task-list { flex: 1; overflow-y: auto; padding: 8px 24px 24px; display: flex; flex-direction: column; gap: 8px; }
     .task-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; gap: 6px; transition: 0.15s; }
     .task-card:hover { border-color: #cbd5e1; box-shadow: 0 3px 6px rgba(0,0,0,0.04); }
     .task-card.completed { opacity: 0.65; background: #f8fafc; }
@@ -121,6 +132,7 @@
     .badge-med { background: var(--prio-med-bg); color: var(--prio-med); }
     .badge-low { background: var(--prio-low-bg); color: var(--prio-low); }
     .badge-project { background: #f1f5f9; color: var(--text-secondary); }
+    .badge-assignee { background: #e0e7ff; color: #4338ca; }
 
     .task-title { font-size: 0.95rem; font-weight: 600; margin-left: 28px; line-height: 1.35; }
     .task-card.completed .task-title { text-decoration: line-through; color: var(--text-secondary); }
@@ -140,10 +152,28 @@
     .subtask-row { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; }
     .subtask-row.done { text-decoration: line-through; color: var(--text-muted); }
 
-    /* Modal */
+    /* Dashboard View Mode */
+    .dashboard-view { flex: 1; overflow-y: auto; padding: 20px 24px; display: none; flex-direction: column; gap: 18px; }
+    .dashboard-view.show { display: flex; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+    .kpi-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 4px; }
+    .kpi-title { font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; }
+    .kpi-val { font-size: 1.8rem; font-weight: 800; color: var(--text-dark); }
+    .kpi-sub { font-size: 0.78rem; color: var(--text-secondary); }
+
+    .dash-section { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+    .dash-title { font-size: 1rem; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+    
+    .team-table, .warning-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .team-table th, .warning-table th { background: #f8fafc; text-align: left; padding: 10px; font-weight: 600; color: var(--text-secondary); border-bottom: 1px solid var(--border); }
+    .team-table td, .warning-table td { padding: 10px; border-bottom: 1px solid #f1f5f9; }
+    .prog-pill { display: inline-block; width: 100px; height: 8px; background: #e2e8f0; border-radius: 99px; overflow: hidden; vertical-align: middle; margin-right: 6px; }
+    .prog-pill-fill { height: 100%; background: var(--primary); }
+
+    /* Modals */
     .modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.6); backdrop-filter: blur(2px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 16px; }
     .modal-overlay.open { display: flex; }
-    .modal-card { background: white; border-radius: 12px; width: 560px; max-width: 100%; max-height: 90vh; overflow-y: auto; padding: 24px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 14px; }
+    .modal-card { background: white; border-radius: 12px; width: 560px; max-width: 100%; max-height: 90vh; overflow-y: auto; padding: 24px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 14px; }
     .modal-title { font-size: 1.15rem; font-weight: 700; color: var(--text-dark); }
     .form-group { display: flex; flex-direction: column; gap: 5px; }
     .form-group label { font-size: 0.8rem; font-weight: 600; color: var(--text-dark); }
@@ -153,20 +183,19 @@
     .warn-duplicate { background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; font-size: 0.82rem; padding: 10px 12px; border-radius: 6px; display: none; line-height: 1.4; }
     .warn-duplicate.show { display: block; }
 
-    /* Toast Notification */
+    /* Toast */
     .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 200; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
-    .toast { background: #1e293b; color: white; padding: 10px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 500; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 8px; animation: slideIn 0.2s ease forwards; }
-    @keyframes slideIn { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .toast { background: #1e293b; color: white; padding: 10px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 500; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 8px; }
 
     /* Mobile Responsive */
     @media (max-width: 768px) {
-      .sidebar { position: fixed; top: 0; bottom: 0; left: 0; transform: translateX(-100%); width: 280px; }
+      .sidebar { position: fixed; top: 0; bottom: 0; left: 0; transform: translateX(-100%); width: 290px; }
       .sidebar.open { transform: translateX(0); }
       .sidebar-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 40; display: none; }
       .sidebar-backdrop.open { display: block; }
       .btn-menu-mobile { display: block; }
       .btn-close-sidebar { display: block; }
-      .search-box { width: 100%; margin-top: 8px; }
+      .search-box { width: 100%; margin-top: 6px; }
       .header-top { flex-direction: column; align-items: flex-start; }
       .quick-add-wrap { padding: 10px 14px 4px; }
       .task-list { padding: 8px 14px 20px; }
@@ -183,50 +212,75 @@
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <div>
-        <div class="logo-title">✨ TO-DO PRO</div>
-        <div class="logo-sub">Quản trị công việc khoa học</div>
+        <div class="logo-title">⚡ TO-DO TEAM PRO</div>
+        <div class="logo-sub">Quản trị công việc & Đội ngũ</div>
       </div>
       <button class="btn-close-sidebar" onclick="toggleMobileSidebar()">✕</button>
     </div>
 
-    <div class="nav-section">
-      <div class="nav-label">Bộ lọc thông minh</div>
-      <button class="nav-item active" onclick="setFilter('all')">
-        <span>📋 Tất cả công việc</span>
-        <span class="badge-count" id="count-all">0</span>
-      </button>
-      <button class="nav-item" onclick="setFilter('today')">
-        <span>📅 Hạn hôm nay</span>
-        <span class="badge-count" id="count-today">0</span>
-      </button>
-      <button class="nav-item" onclick="setFilter('overdue')">
-        <span>⏳ Quá hạn cần gấp</span>
-        <span class="badge-count" id="count-overdue">0</span>
-      </button>
-      <button class="nav-item" onclick="setFilter('emergent')">
-        <span>⚡ Việc mới phát sinh</span>
-        <span class="badge-count" id="count-emergent">0</span>
-      </button>
-      <button class="nav-item" onclick="setFilter('high')">
-        <span>🔥 Ưu tiên cao</span>
-        <span class="badge-count" id="count-high">0</span>
-      </button>
-      <button class="nav-item" onclick="setFilter('completed')">
-        <span>✅ Đã hoàn thành</span>
-        <span class="badge-count" id="count-completed">0</span>
-      </button>
-    </div>
-
-    <div class="nav-section" style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
-      <div class="nav-label">
-        <span>MINI PROJECTS</span>
-        <button class="btn-add-proj" onclick="openNewProjectModal()">+ Thêm</button>
+    <div class="sidebar-scroll">
+      <!-- Quick View Toggle: Tasks vs Dashboard -->
+      <div class="nav-section">
+        <button class="nav-item active" id="btn-view-tasks" onclick="switchView('tasks')">
+          <span>📋 Danh sách công việc</span>
+        </button>
+        <button class="nav-item" id="btn-view-dashboard" onclick="switchView('dashboard')">
+          <span>📊 Dashboard toàn cảnh</span>
+          <span class="badge-count" style="background:#4f46e5; color:white;">Mới</span>
+        </button>
       </div>
-      <div class="projects-container" id="projects-container"></div>
+
+      <!-- Filters -->
+      <div class="nav-section">
+        <div class="nav-label">Bộ lọc trạng thái</div>
+        <button class="nav-item" onclick="setFilter('all')">
+          <span>📋 Tất cả công việc</span>
+          <span class="badge-count" id="count-all">0</span>
+        </button>
+        <button class="nav-item" onclick="setFilter('today')">
+          <span>📅 Hạn hôm nay</span>
+          <span class="badge-count" id="count-today">0</span>
+        </button>
+        <button class="nav-item" onclick="setFilter('overdue')">
+          <span>⏳ Quá hạn cần gấp</span>
+          <span class="badge-count" id="count-overdue" style="background:#dc2626; color:white;">0</span>
+        </button>
+        <button class="nav-item" onclick="setFilter('emergent')">
+          <span>⚡ Việc mới phát sinh</span>
+          <span class="badge-count" id="count-emergent">0</span>
+        </button>
+        <button class="nav-item" onclick="setFilter('high')">
+          <span>🔥 Ưu tiên cao</span>
+          <span class="badge-count" id="count-high">0</span>
+        </button>
+        <button class="nav-item" onclick="setFilter('completed')">
+          <span>✅ Đã hoàn thành</span>
+          <span class="badge-count" id="count-completed">0</span>
+        </button>
+      </div>
+
+      <!-- Team Members Section -->
+      <div class="nav-section">
+        <div class="nav-label">
+          <span>NHÂN SỰ TRONG NHÓM</span>
+          <button class="btn-add-mini" onclick="openMemberModal()">+ Thêm</button>
+        </div>
+        <div class="members-container" id="members-container"></div>
+      </div>
+
+      <!-- Mini Projects Section -->
+      <div class="nav-section">
+        <div class="nav-label">
+          <span>MINI PROJECTS</span>
+          <button class="btn-add-mini" onclick="openNewProjectModal()">+ Thêm</button>
+        </div>
+        <div class="projects-container" id="projects-container"></div>
+      </div>
     </div>
 
+    <!-- Sidebar Footer -->
     <div class="sidebar-footer">
-      <button class="btn-side-action" onclick="openStatsModal()">📊 Phân tích & Báo cáo</button>
+      <button class="btn-side-action" onclick="exportToExcel()">📥 Xuất báo cáo Excel</button>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
         <button class="btn-side-action" style="font-size: 0.75rem;" onclick="exportData()">💾 Sao lưu</button>
         <button class="btn-side-action" style="font-size: 0.75rem;" onclick="document.getElementById('import-file-input').click()">📂 Phục hồi</button>
@@ -237,6 +291,16 @@
 
   <!-- Main Content Area -->
   <main class="content">
+    <!-- Urgent Alert Banner -->
+    <div class="urgent-alert-bar" id="urgent-alert-bar">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span>🚨</span>
+        <strong id="urgent-alert-text">Cảnh báo: Có 0 công việc quá hạn cần xử lý ngay!</strong>
+      </div>
+      <button style="background: transparent; border: none; color: #991b1b; font-weight: bold; cursor: pointer; text-decoration: underline;" onclick="setFilter('overdue')">Xem ngay</button>
+    </div>
+
+    <!-- Header -->
     <header class="header">
       <div class="header-top">
         <div class="header-title-box">
@@ -246,25 +310,33 @@
             <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px;" id="view-sub">Quản lý toàn bộ nhiệm vụ</div>
           </div>
         </div>
-        <div class="search-box">
-          <span>🔍</span>
-          <input type="text" id="search-input" placeholder="Tìm theo tên hoặc mã việc..." oninput="render()">
+
+        <div class="header-actions">
+          <div class="search-box">
+            <span>🔍</span>
+            <input type="text" id="search-input" placeholder="Tìm theo tên, mã việc hoặc nhân sự..." oninput="render()">
+          </div>
+
+          <button class="btn-header-tool" onclick="exportToExcel()" title="Tải file Excel báo cáo tiến độ">
+            <span>📊</span> Xuất Excel
+          </button>
+
+          <button class="btn-bell" onclick="toggleNotifications()" title="Thông báo nhắc việc">
+            <span>🔔</span>
+            <span class="bell-badge" id="bell-badge" style="display: none;">0</span>
+          </button>
         </div>
       </div>
 
-      <!-- Project Progress Bar -->
-      <div class="project-progress-wrap" id="project-progress-wrap">
-        <span style="font-size: 0.78rem; color: var(--text-secondary);">Tiến độ:</span>
-        <div class="progress-bar-bg">
-          <div class="progress-bar-fill" id="progress-bar-fill" style="width: 0%;"></div>
-        </div>
-        <span class="progress-pct-label" id="progress-pct-label">0%</span>
-      </div>
-
-      <div class="filters-bar">
+      <!-- Filters Row -->
+      <div class="filters-bar" id="filters-bar-row">
+        <span>Nhân sự:</span>
+        <select id="filter-assignee" onchange="render()">
+          <option value="all">Tất cả nhân sự</option>
+        </select>
         <span>Trạng thái:</span>
         <select id="filter-status" onchange="render()">
-          <option value="all">Tất cả</option>
+          <option value="all">Tất cả trạng thái</option>
           <option value="active">Chưa xong</option>
           <option value="completed">Đã xong</option>
         </select>
@@ -284,22 +356,97 @@
     </header>
 
     <!-- Quick Add Bar -->
-    <div class="quick-add-wrap">
+    <div class="quick-add-wrap" id="quick-add-section">
       <div class="quick-add-card">
-        <input type="text" class="quick-input" id="quick-title" placeholder="Nhập nhanh công việc mới cần làm... (Nhấn Enter)" onkeydown="if(event.key==='Enter') quickAddTask()">
+        <input type="text" class="quick-input" id="quick-title" placeholder="Gõ việc mới cần làm... (Nhấn Enter)" onkeydown="if(event.key==='Enter') quickAddTask()">
+        
+        <!-- Quick Assignee Selector -->
+        <select id="quick-assignee" style="border: 1px solid var(--border); border-radius: 6px; padding: 7px 8px; font-size: 0.8rem; outline: none; background: white;">
+        </select>
+
         <select id="quick-prio" style="border: 1px solid var(--border); border-radius: 6px; padding: 7px 8px; font-size: 0.8rem; outline: none; background: white;">
           <option value="high">🔴 Cao</option>
           <option value="medium" selected>🟡 Vừa</option>
           <option value="low">🟢 Thấp</option>
         </select>
+
         <button type="button" class="btn-toggle-type planned" id="quick-type-btn" onclick="toggleQuickType()">📋 Kế hoạch</button>
         <button class="btn-primary" onclick="quickAddTask()">+ Thêm việc</button>
         <button class="btn-secondary" onclick="openNewTaskModal()">➕ Chi tiết</button>
       </div>
     </div>
 
-    <!-- Task Cards List -->
+    <!-- Mode 1: Task Cards List -->
     <div class="task-list" id="task-list"></div>
+
+    <!-- Mode 2: Full Dashboard View -->
+    <div class="dashboard-view" id="dashboard-view">
+      <!-- Top KPIs -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-title">Tiến độ chung cả nhóm</div>
+          <div class="kpi-val" style="color: var(--primary);" id="dash-kpi-progress">0%</div>
+          <div class="kpi-sub" id="dash-kpi-progress-sub">0/0 công việc đã hoàn thành</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">Cảnh báo quá hạn</div>
+          <div class="kpi-val" style="color: var(--prio-high);" id="dash-kpi-overdue">0</div>
+          <div class="kpi-sub">Công việc trễ hạn cần đôn đốc</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">Việc mới phát sinh</div>
+          <div class="kpi-val" style="color: var(--type-emergent);" id="dash-kpi-emergent">0%</div>
+          <div class="kpi-sub" id="dash-kpi-emergent-sub">Tỉ trọng công việc đột xuất</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">Quy mô nhân sự</div>
+          <div class="kpi-val" style="color: #059669;" id="dash-kpi-members">0</div>
+          <div class="kpi-sub">Thành viên đang quản lý việc</div>
+        </div>
+      </div>
+
+      <!-- Team Members Workload Table -->
+      <div class="dash-section">
+        <div class="dash-title">
+          <span>👥 Bảng Theo Dõi Khối Lượng & Hiệu Suất Nhân Sự</span>
+          <button class="btn-header-tool" onclick="openMemberModal()">+ Thêm nhân sự</button>
+        </div>
+        <table class="team-table">
+          <thead>
+            <tr>
+              <th>Nhân sự</th>
+              <th>Vai trò</th>
+              <th>Tổng việc</th>
+              <th>Đã xong</th>
+              <th>Chưa xong</th>
+              <th>Quá hạn</th>
+              <th>Tỉ lệ hoàn thành</th>
+            </tr>
+          </thead>
+          <tbody id="dash-team-tbody"></tbody>
+        </table>
+      </div>
+
+      <!-- Warning Table (Overdue tasks) -->
+      <div class="dash-section" style="border-left: 4px solid var(--prio-high);">
+        <div class="dash-title" style="color: var(--prio-high);">
+          <span>⚠️ Danh Sách Công Việc Cần Cảnh Báo (Quá Hạn & Khẩn Cấp)</span>
+        </div>
+        <table class="warning-table">
+          <thead>
+            <tr>
+              <th>Mã</th>
+              <th>Công việc</th>
+              <th>Nhân sự phụ trách</th>
+              <th>Hạn chót</th>
+              <th>Độ trễ</th>
+              <th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody id="dash-warning-tbody"></tbody>
+        </table>
+      </div>
+    </div>
   </main>
 
   <!-- Modal Task -->
@@ -308,14 +455,22 @@
       <h2 class="modal-title" id="modal-task-title">Thêm Công Việc Mới</h2>
       <div class="warn-duplicate" id="duplicate-warning"></div>
       
-      <div class="form-group">
-        <label>Thuộc Mini Project (*)</label>
-        <select id="task-modal-project"></select>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="form-group">
+          <label>Thuộc Mini Project (*)</label>
+          <select id="task-modal-project"></select>
+        </div>
+        <div class="form-group">
+          <label>Người phụ trách (Nhân sự) (*)</label>
+          <select id="task-modal-assignee"></select>
+        </div>
       </div>
+
       <div class="form-group">
         <label>Tên công việc (*)</label>
         <input type="text" id="task-modal-name" oninput="checkDuplicateInModal()">
       </div>
+
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
         <div class="form-group">
           <label>Bản chất công việc</label>
@@ -333,10 +488,12 @@
           </select>
         </div>
       </div>
+
       <div class="form-group">
         <label>Hạn chót (Deadline)</label>
         <input type="date" id="task-modal-due">
       </div>
+
       <div class="form-group">
         <label>Ghi chú chi tiết</label>
         <textarea id="task-modal-desc" rows="3"></textarea>
@@ -390,13 +547,32 @@
     </div>
   </div>
 
-  <!-- Modal Stats -->
-  <div class="modal-overlay" id="stats-modal">
-    <div class="modal-card" style="width: 600px;">
-      <h2 class="modal-title">📊 Báo Cáo & Phân Tích Khoa Học</h2>
-      <div id="stats-content"></div>
-      <div style="display: flex; justify-content: flex-end; margin-top: 14px;">
-        <button class="btn-primary" onclick="document.getElementById('stats-modal').classList.remove('open')">Đóng</button>
+  <!-- Modal Member (Quản lý Nhân sự) -->
+  <div class="modal-overlay" id="member-modal">
+    <div class="modal-card" style="width: 440px;">
+      <h2 class="modal-title" id="modal-member-title">Thêm Nhân Sự Mới Vào Nhóm</h2>
+      <div class="form-group">
+        <label>Họ và tên nhân sự (*)</label>
+        <input type="text" id="member-name" placeholder="Ví dụ: Nguyễn Văn A">
+      </div>
+      <div class="form-group">
+        <label>Vai trò / Chức danh</label>
+        <input type="text" id="member-role" placeholder="Ví dụ: Kế toán, Lập trình viên, Marketing...">
+      </div>
+      <div class="form-group">
+        <label>Màu đại diện</label>
+        <select id="member-color">
+          <option value="#4f46e5">Màu Tím Indigo</option>
+          <option value="#059669">Màu Xanh Lá Emerald</option>
+          <option value="#d97706">Màu Hổ Phách Amber</option>
+          <option value="#dc2626">Màu Đỏ Rose</option>
+          <option value="#2563eb">Màu Xanh Dương Blue</option>
+          <option value="#7c3aed">Màu Tím Purple</option>
+        </select>
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
+        <button class="btn-secondary" onclick="closeMemberModal()">Hủy</button>
+        <button class="btn-primary" onclick="saveMemberModal()">💾 Lưu Nhân Sự</button>
       </div>
     </div>
   </div>
@@ -405,22 +581,30 @@
   <div class="toast-container" id="toast-container"></div>
 
   <script>
-    const STORAGE_KEY = "todo_pro_data_v2";
+    const STORAGE_KEY = "todo_team_pro_v3";
+    let currentView = "tasks"; // 'tasks' or 'dashboard'
+    
     let state = {
       activeFilter: "all",
       selectedProjectId: null,
+      selectedMemberId: null,
       quickType: "planned",
       editingTaskId: null,
       modalSubtasksCache: [],
+      members: [
+        { id: 1, name: "Phương (Quản lý)", role: "Trưởng nhóm", color: "#4f46e5" },
+        { id: 2, name: "Nhân sự A", role: "Vận hành", color: "#059669" },
+        { id: 3, name: "Nhân sự B", role: "Kỹ thuật", color: "#d97706" }
+      ],
       projects: [
         { id: 1, code: "PRJ-01", name: "Dự án: Phát triển Ứng dụng", desc: "Xây dựng và hoàn thiện app v1.0", icon: "🚀" },
         { id: 2, code: "PRJ-02", name: "Vận hành & Cá nhân", desc: "Nhiệm vụ thường nhật", icon: "⚡" }
       ],
       tasks: [
-        { id: 1, projectId: 1, code: "TSK-001", title: "Thiết kế cơ sở dữ liệu và cấu trúc", desc: "Phân chia bảng khoa học, không trùng lặp", type: "planned", priority: "high", completed: true, due: "", subtasks: [] },
-        { id: 2, projectId: 1, code: "TSK-002", title: "Xây dựng giao diện Web responsive", desc: "Tương thích cả điện thoại và máy tính", type: "planned", priority: "high", completed: false, due: getTodayStr(), subtasks: [{title: "Tạo sidebar menu", done: true}, {title: "Thiết kế card công việc", done: false}] },
-        { id: 3, projectId: 1, code: "TSK-003", title: "Xử lý yêu cầu phát sinh khẩn cấp", desc: "Khách hàng yêu cầu kiểm tra tài liệu gấp", type: "emergent", priority: "high", completed: false, due: getTodayStr(), subtasks: [] },
-        { id: 4, projectId: 2, code: "TSK-004", title: "Họp giao ban định kỳ đầu tuần", desc: "Báo cáo tiến độ các bộ phận", type: "planned", priority: "medium", completed: true, due: "", subtasks: [] }
+        { id: 1, projectId: 1, memberId: 1, code: "TSK-001", title: "Thiết kế cơ sở dữ liệu và cấu trúc", desc: "Phân chia bảng khoa học, không trùng lặp", type: "planned", priority: "high", completed: true, due: "", subtasks: [] },
+        { id: 2, projectId: 1, memberId: 2, code: "TSK-002", title: "Xây dựng giao diện Web responsive", desc: "Tương thích cả điện thoại và máy tính", type: "planned", priority: "high", completed: false, due: getTodayStr(), subtasks: [{title: "Tạo sidebar menu", done: true}, {title: "Thiết kế card công việc", done: false}] },
+        { id: 3, projectId: 1, memberId: 3, code: "TSK-003", title: "Xử lý yêu cầu phát sinh khẩn cấp", desc: "Khách hàng yêu cầu kiểm tra tài liệu gấp", type: "emergent", priority: "high", completed: false, due: getPastDateStr(2), subtasks: [] },
+        { id: 4, projectId: 2, memberId: 1, code: "TSK-004", title: "Họp giao ban định kỳ đầu tuần", desc: "Báo cáo tiến độ các bộ phận", type: "planned", priority: "medium", completed: true, due: "", subtasks: [] }
       ]
     };
 
@@ -440,6 +624,12 @@
 
     function getTodayStr() {
       const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+
+    function getPastDateStr(daysAgo) {
+      const d = new Date();
+      d.setDate(d.getDate() - daysAgo);
       return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     }
 
@@ -466,6 +656,30 @@
       renderCounters();
     }
 
+    function switchView(view) {
+      currentView = view;
+      if (view === 'tasks') {
+        document.getElementById("task-list").style.display = "flex";
+        document.getElementById("quick-add-section").style.display = "block";
+        document.getElementById("filters-bar-row").style.display = "flex";
+        document.getElementById("dashboard-view").classList.remove("show");
+        document.getElementById("btn-view-tasks").classList.add("active");
+        document.getElementById("btn-view-dashboard").classList.remove("active");
+        render();
+      } else {
+        document.getElementById("task-list").style.display = "none";
+        document.getElementById("quick-add-section").style.display = "none";
+        document.getElementById("filters-bar-row").style.display = "none";
+        document.getElementById("dashboard-view").classList.add("show");
+        document.getElementById("btn-view-tasks").classList.remove("active");
+        document.getElementById("btn-view-dashboard").classList.add("active");
+        document.getElementById("view-title").innerText = "📊 Dashboard Toàn Cảnh & Báo Cáo Nhóm";
+        document.getElementById("view-sub").innerText = "Tổng hợp toàn diện tiến độ, nhân sự và cảnh báo trễ hạn";
+        renderDashboard();
+      }
+      if (window.innerWidth <= 768) toggleMobileSidebar();
+    }
+
     function toggleQuickType() {
       const btn = document.getElementById("quick-type-btn");
       if (state.quickType === "planned") {
@@ -480,8 +694,10 @@
     }
 
     function setFilter(key) {
+      if (currentView !== 'tasks') switchView('tasks');
       state.activeFilter = key;
       state.selectedProjectId = null;
+      state.selectedMemberId = null;
       document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
       event?.currentTarget?.classList.add("active");
       
@@ -495,15 +711,15 @@
       };
       document.getElementById("view-title").innerText = titles[key] || "📋 Tất cả công việc";
       document.getElementById("view-sub").innerText = "Danh sách nhiệm vụ theo bộ lọc đã chọn";
-      document.getElementById("project-progress-wrap").style.display = "none";
-
       if (window.innerWidth <= 768) toggleMobileSidebar();
       render();
     }
 
     function selectProject(pid) {
+      if (currentView !== 'tasks') switchView('tasks');
       state.activeFilter = "project";
       state.selectedProjectId = pid;
+      state.selectedMemberId = null;
       document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
       const p = state.projects.find(x => x.id === pid);
       if (p) {
@@ -514,20 +730,35 @@
       render();
     }
 
+    function selectMember(mid) {
+      if (currentView !== 'tasks') switchView('tasks');
+      state.activeFilter = "member";
+      state.selectedMemberId = mid;
+      state.selectedProjectId = null;
+      document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
+      const m = state.members.find(x => x.id === mid);
+      if (m) {
+        document.getElementById("view-title").innerText = `👤 To-Do List của: ${m.name}`;
+        document.getElementById("view-sub").innerText = `Vai trò: ${m.role} - Toàn bộ công việc được giao`;
+      }
+      if (window.innerWidth <= 768) toggleMobileSidebar();
+      render();
+    }
+
     function quickAddTask() {
       const input = document.getElementById("quick-title");
       const title = input.value.trim();
       if (!title) return;
 
-      const targetPid = state.selectedProjectId || (state.projects[0] ? state.projects[0].id : null);
-      if (!targetPid) { alert("Vui lòng tạo một Mini Project trước!"); return; }
+      const targetPid = state.selectedProjectId || (state.projects[0] ? state.projects[0].id : 1);
+      const targetMid = parseInt(document.getElementById("quick-assignee").value) || state.selectedMemberId || (state.members[0] ? state.members[0].id : 1);
 
       // Check duplicates
       const dup = state.tasks.find(t => checkSimilarity(t.title, title) >= 0.85);
       if (dup) {
-        const p = state.projects.find(x => x.id === dup.projectId);
-        const loc = p ? `trong dự án '${p.name}'` : "";
-        if (!confirm(`⚠️ CẢNH BÁO TRÙNG LẶP:\nĐã có công việc tương tự: "${dup.title}" (${dup.code}) ${loc}.\n\nBạn có chắc chắn vẫn muốn tạo thêm không?`)) {
+        const m = state.members.find(x => x.id === dup.memberId);
+        const who = m ? `(giao cho ${m.name})` : '';
+        if (!confirm(`⚠️ CẢNH BÁO TRÙNG LẶP:\nĐã có công việc tương tự: "${dup.title}" (${dup.code}) ${who}.\n\nBạn có chắc chắn vẫn muốn tạo thêm không?`)) {
           return;
         }
       }
@@ -537,6 +768,7 @@
       state.tasks.push({
         id: newId,
         projectId: targetPid,
+        memberId: targetMid,
         code: `TSK-${String(newId).padStart(3,'0')}`,
         title,
         desc: "",
@@ -559,7 +791,7 @@
         t.completed = !t.completed;
         saveState();
         render();
-        showToast(t.completed ? `Đã hoàn thành: ${t.code}` : `Chưa xong: ${t.code}`);
+        showToast(t.completed ? `Đã xong: ${t.code}` : `Chưa xong: ${t.code}`);
       }
     }
 
@@ -584,12 +816,60 @@
 
     function renderCounters() {
       const today = getTodayStr();
+      const overdueCount = state.tasks.filter(t => t.due && t.due < today && !t.completed).length;
+
       document.getElementById("count-all").innerText = state.tasks.length;
       document.getElementById("count-today").innerText = state.tasks.filter(t => t.due === today && !t.completed).length;
-      document.getElementById("count-overdue").innerText = state.tasks.filter(t => t.due && t.due < today && !t.completed).length;
+      document.getElementById("count-overdue").innerText = overdueCount;
       document.getElementById("count-emergent").innerText = state.tasks.filter(t => t.type === "emergent" && !t.completed).length;
       document.getElementById("count-high").innerText = state.tasks.filter(t => t.priority === "high" && !t.completed).length;
       document.getElementById("count-completed").innerText = state.tasks.filter(t => t.completed).length;
+
+      // Urgent Alert Bar
+      const alertBar = document.getElementById("urgent-alert-bar");
+      if (overdueCount > 0) {
+        alertBar.classList.add("show");
+        document.getElementById("urgent-alert-text").innerText = `Cảnh báo: Có ${overdueCount} công việc đã quá hạn chót!`;
+        document.getElementById("bell-badge").innerText = overdueCount;
+        document.getElementById("bell-badge").style.display = "flex";
+      } else {
+        alertBar.classList.remove("show");
+        document.getElementById("bell-badge").style.display = "none";
+      }
+    }
+
+    function renderMembers() {
+      const box = document.getElementById("members-container");
+      box.innerHTML = "";
+      
+      const qSel = document.getElementById("quick-assignee");
+      const fSel = document.getElementById("filter-assignee");
+      const curFVal = fSel.value;
+
+      qSel.innerHTML = "";
+      fSel.innerHTML = `<option value="all">Tất cả nhân sự</option>`;
+
+      state.members.forEach(m => {
+        const total = state.tasks.filter(t => t.memberId === m.id).length;
+        const comp = state.tasks.filter(t => t.memberId === m.id && t.completed).length;
+        const isActive = (state.activeFilter === "member" && state.selectedMemberId === m.id);
+
+        const el = document.createElement("div");
+        el.className = `member-card-item ${isActive ? "active" : ""}`;
+        el.innerHTML = `
+          <div style="display:flex; align-items:center;">
+            <span class="member-avatar" style="background:${m.color}">${m.name.charAt(0)}</span>
+            <span>${m.name}</span>
+          </div>
+          <span class="badge-count">${comp}/${total}</span>
+        `;
+        el.onclick = () => selectMember(m.id);
+        box.appendChild(el);
+
+        // Populate dropdowns
+        qSel.innerHTML += `<option value="${m.id}">${m.name}</option>`;
+        fSel.innerHTML += `<option value="${m.id}" ${curFVal == m.id ? 'selected' : ''}>${m.name}</option>`;
+      });
     }
 
     function renderProjects() {
@@ -612,29 +892,25 @@
     }
 
     function render() {
+      renderMembers();
       renderProjects();
       renderCounters();
+
+      if (currentView === 'dashboard') {
+        renderDashboard();
+        return;
+      }
 
       const search = document.getElementById("search-input").value.toLowerCase().trim();
       const statusF = document.getElementById("filter-status").value;
       const typeF = document.getElementById("filter-type").value;
       const sortF = document.getElementById("filter-sort").value;
+      const assigneeF = document.getElementById("filter-assignee").value;
       const today = getTodayStr();
-
-      // Show project progress bar if in project mode
-      if (state.activeFilter === "project" && state.selectedProjectId) {
-        const pTasks = state.tasks.filter(t => t.projectId === state.selectedProjectId);
-        const comp = pTasks.filter(t => t.completed).length;
-        const pct = pTasks.length ? Math.round((comp / pTasks.length) * 100) : 0;
-        document.getElementById("project-progress-wrap").style.display = "flex";
-        document.getElementById("progress-bar-fill").style.width = `${pct}%`;
-        document.getElementById("progress-pct-label").innerText = `${pct}%`;
-      } else {
-        document.getElementById("project-progress-wrap").style.display = "none";
-      }
 
       let list = state.tasks.filter(t => {
         if (state.activeFilter === "project" && t.projectId !== state.selectedProjectId) return false;
+        if (state.activeFilter === "member" && t.memberId !== state.selectedMemberId) return false;
         if (state.activeFilter === "today" && (t.due !== today || t.completed)) return false;
         if (state.activeFilter === "overdue" && (!t.due || t.due >= today || t.completed)) return false;
         if (state.activeFilter === "emergent" && (t.type !== "emergent")) return false;
@@ -643,14 +919,15 @@
 
         if (statusF === "active" && t.completed) return false;
         if (statusF === "completed" && !t.completed) return false;
-
         if (typeF !== "all" && t.type !== typeF) return false;
+        if (assigneeF !== "all" && t.memberId != assigneeF) return false;
 
         if (search) {
+          const m = state.members.find(x => x.id === t.memberId);
           const matchTitle = t.title.toLowerCase().includes(search);
           const matchCode = t.code.toLowerCase().includes(search);
-          const matchDesc = t.desc && t.desc.toLowerCase().includes(search);
-          if (!matchTitle && !matchCode && !matchDesc) return false;
+          const matchMember = m && m.name.toLowerCase().includes(search);
+          if (!matchTitle && !matchCode && !matchMember) return false;
         }
         return true;
       });
@@ -681,6 +958,7 @@
 
       list.forEach(t => {
         const p = state.projects.find(x => x.id === t.projectId);
+        const m = state.members.find(x => x.id === t.memberId);
         const card = document.createElement("div");
         card.className = `task-card ${t.completed ? "completed" : ""}`;
         
@@ -720,6 +998,7 @@
               <span class="task-code">${t.code}</span>
               ${typeBadge}
               <span class="badge badge-${t.priority === 'high' ? 'high' : (t.priority === 'medium' ? 'med' : 'low')}">${prioText}</span>
+              ${m ? `<span class="badge badge-assignee">👤 ${m.name}</span>` : ""}
               ${p && state.activeFilter !== 'project' ? `<span class="badge badge-project">${p.icon} ${p.name}</span>` : ""}
             </div>
             <div class="card-actions">
@@ -738,6 +1017,80 @@
       });
     }
 
+    /* Render Dashboard */
+    function renderDashboard() {
+      const today = getTodayStr();
+      const total = state.tasks.length;
+      const comp = state.tasks.filter(t => t.completed).length;
+      const overdue = state.tasks.filter(t => t.due && t.due < today && !t.completed).length;
+      const emergent = state.tasks.filter(t => t.type === 'emergent').length;
+      const pct = total ? Math.round((comp / total) * 100) : 0;
+      const ePct = total ? Math.round((emergent / total) * 100) : 0;
+
+      document.getElementById("dash-kpi-progress").innerText = `${pct}%`;
+      document.getElementById("dash-kpi-progress-sub").innerText = `${comp}/${total} công việc đã hoàn thành`;
+      document.getElementById("dash-kpi-overdue").innerText = overdue;
+      document.getElementById("dash-kpi-emergent").innerText = `${ePct}%`;
+      document.getElementById("dash-kpi-emergent-sub").innerText = `${emergent} việc đột xuất ngoài kế hoạch`;
+      document.getElementById("dash-kpi-members").innerText = state.members.length;
+
+      // Render Team Table
+      const teamTbody = document.getElementById("dash-team-tbody");
+      teamTbody.innerHTML = "";
+      state.members.forEach(m => {
+        const mTasks = state.tasks.filter(t => t.memberId === m.id);
+        const mComp = mTasks.filter(t => t.completed).length;
+        const mPending = mTasks.length - mComp;
+        const mOverdue = mTasks.filter(t => t.due && t.due < today && !t.completed).length;
+        const mPct = mTasks.length ? Math.round((mComp / mTasks.length) * 100) : 0;
+
+        teamTbody.innerHTML += `
+          <tr>
+            <td>
+              <div style="display:flex; align-items:center;">
+                <span class="member-avatar" style="background:${m.color}">${m.name.charAt(0)}</span>
+                <strong>${m.name}</strong>
+              </div>
+            </td>
+            <td>${m.role}</td>
+            <td><strong>${mTasks.length}</strong></td>
+            <td style="color:#16a34a; font-weight:600;">${mComp}</td>
+            <td>${mPending}</td>
+            <td style="color:${mOverdue > 0 ? '#dc2626' : 'var(--text-secondary)'}; font-weight:700;">${mOverdue}</td>
+            <td>
+              <span class="prog-pill"><span class="prog-pill-fill" style="width:${mPct}%"></span></span>
+              <strong>${mPct}%</strong>
+            </td>
+          </tr>
+        `;
+      });
+
+      // Render Warning Table
+      const warnTbody = document.getElementById("dash-warning-tbody");
+      warnTbody.innerHTML = "";
+      const overdueTasks = state.tasks.filter(t => t.due && t.due < today && !t.completed);
+      if (!overdueTasks.length) {
+        warnTbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:18px; color:#16a34a;">🎉 Tuyệt vời! Hiện tại không có công việc nào bị quá hạn.</td></tr>`;
+      } else {
+        overdueTasks.forEach(t => {
+          const m = state.members.find(x => x.id === t.memberId);
+          const diffDays = Math.ceil((new Date(today) - new Date(t.due)) / (1000 * 60 * 60 * 24));
+          warnTbody.innerHTML += `
+            <tr>
+              <td><code>${t.code}</code></td>
+              <td><strong>${t.title}</strong></td>
+              <td>${m ? m.name : 'Chưa gán'}</td>
+              <td style="color:#dc2626; font-weight:600;">${t.due}</td>
+              <td style="color:#dc2626; font-weight:bold;">Trễ ${diffDays} ngày</td>
+              <td>
+                <button class="btn-header-tool" style="padding:3px 8px; font-size:0.75rem;" onclick="openEditTaskModal(${t.id})">Xử lý ngay</button>
+              </td>
+            </tr>
+          `;
+        });
+      }
+    }
+
     // Modal Task Logic
     function openNewTaskModal() {
       state.editingTaskId = null;
@@ -748,7 +1101,7 @@
       document.getElementById("task-modal-due").value = "";
       document.getElementById("modal-subtask-input").value = "";
       document.getElementById("duplicate-warning").classList.remove("show");
-      populateModalProjects();
+      populateModalSelects();
       renderModalSubtasks();
       document.getElementById("task-modal").classList.add("open");
     }
@@ -765,7 +1118,7 @@
       document.getElementById("task-modal-prio").value = t.priority;
       document.getElementById("task-modal-due").value = t.due || "";
       document.getElementById("duplicate-warning").classList.remove("show");
-      populateModalProjects(t.projectId);
+      populateModalSelects(t.projectId, t.memberId);
       renderModalSubtasks();
       document.getElementById("task-modal").classList.add("open");
     }
@@ -776,8 +1129,8 @@
       if (val.length < 3) { warn.classList.remove("show"); return; }
       const dup = state.tasks.find(t => t.id !== state.editingTaskId && checkSimilarity(t.title, val) >= 0.85);
       if (dup) {
-        const p = state.projects.find(x => x.id === dup.projectId);
-        warn.innerHTML = `⚠️ <strong>Cảnh báo trùng lặp:</strong> Đã có công việc tương tự "<em>${dup.title}</em>" (${dup.code}) ${p ? 'trong ' + p.name : ''}.`;
+        const m = state.members.find(x => x.id === dup.memberId);
+        warn.innerHTML = `⚠️ <strong>Cảnh báo trùng lặp:</strong> Đã có việc "<em>${dup.title}</em>" (${dup.code}) phụ trách bởi <strong>${m ? m.name : 'người khác'}</strong>.`;
         warn.classList.add("show");
       } else {
         warn.classList.remove("show");
@@ -812,15 +1165,17 @@
       });
     }
 
-    function populateModalProjects(selectedId) {
-      const sel = document.getElementById("task-modal-project");
-      sel.innerHTML = "";
+    function populateModalSelects(selectedPid, selectedMid) {
+      const pSel = document.getElementById("task-modal-project");
+      pSel.innerHTML = "";
       state.projects.forEach(p => {
-        const opt = document.createElement("option");
-        opt.value = p.id;
-        opt.innerText = `${p.icon} ${p.name}`;
-        if (p.id === (selectedId || state.selectedProjectId)) opt.selected = true;
-        sel.appendChild(opt);
+        pSel.innerHTML += `<option value="${p.id}" ${p.id === (selectedPid || state.selectedProjectId) ? 'selected' : ''}>${p.icon} ${p.name}</option>`;
+      });
+
+      const mSel = document.getElementById("task-modal-assignee");
+      mSel.innerHTML = "";
+      state.members.forEach(m => {
+        mSel.innerHTML += `<option value="${m.id}" ${m.id === (selectedMid || state.selectedMemberId) ? 'selected' : ''}>👤 ${m.name}</option>`;
       });
     }
 
@@ -830,6 +1185,7 @@
       const title = document.getElementById("task-modal-name").value.trim();
       if (!title) { alert("Vui lòng nhập tên công việc!"); return; }
       const pid = parseInt(document.getElementById("task-modal-project").value);
+      const mid = parseInt(document.getElementById("task-modal-assignee").value);
       const desc = document.getElementById("task-modal-desc").value.trim();
       const type = document.getElementById("task-modal-type").value;
       const prio = document.getElementById("task-modal-prio").value;
@@ -838,14 +1194,14 @@
       if (state.editingTaskId) {
         const t = state.tasks.find(x => x.id === state.editingTaskId);
         if (t) {
-          t.projectId = pid; t.title = title; t.desc = desc; t.type = type; t.priority = prio; t.due = due;
+          t.projectId = pid; t.memberId = mid; t.title = title; t.desc = desc; t.type = type; t.priority = prio; t.due = due;
           t.subtasks = state.modalSubtasksCache;
         }
         showToast(`Đã cập nhật: ${t.code}`);
       } else {
         const newId = state.tasks.length ? Math.max(...state.tasks.map(t=>t.id)) + 1 : 1;
         state.tasks.push({
-          id: newId, projectId: pid, code: `TSK-${String(newId).padStart(3,'0')}`,
+          id: newId, projectId: pid, memberId: mid, code: `TSK-${String(newId).padStart(3,'0')}`,
           title, desc, type, priority: prio, completed: false, due,
           subtasks: state.modalSubtasksCache
         });
@@ -854,6 +1210,27 @@
       closeTaskModal();
       saveState();
       render();
+    }
+
+    // Modal Member Logic
+    function openMemberModal() {
+      document.getElementById("member-name").value = "";
+      document.getElementById("member-role").value = "";
+      document.getElementById("member-modal").classList.add("open");
+    }
+    function closeMemberModal() { document.getElementById("member-modal").classList.remove("open"); }
+    function saveMemberModal() {
+      const name = document.getElementById("member-name").value.trim();
+      if (!name) { alert("Vui lòng nhập họ tên nhân sự!"); return; }
+      const role = document.getElementById("member-role").value.trim() || "Thành viên";
+      const color = document.getElementById("member-color").value;
+      const newId = state.members.length ? Math.max(...state.members.map(m=>m.id)) + 1 : 1;
+      
+      state.members.push({ id: newId, name, role, color });
+      closeMemberModal();
+      saveState();
+      renderMembers();
+      showToast(`Đã thêm nhân sự: ${name}`);
     }
 
     // Modal Project Logic
@@ -878,44 +1255,67 @@
       showToast(`Đã tạo dự án mới: ${name}`);
     }
 
-    // Stats Modal
-    function openStatsModal() {
-      const total = state.tasks.length;
-      const comp = state.tasks.filter(t => t.completed).length;
-      const emergent = state.tasks.filter(t => t.type === 'emergent').length;
-      const planned = total - emergent;
-      const pct = total ? Math.round((comp/total)*100) : 0;
-      const ePct = total ? Math.round((emergent/total)*100) : 0;
-
-      document.getElementById("stats-content").innerHTML = `
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0;">
-          <div style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid var(--border);">
-            <div style="font-size:0.75rem; color:var(--text-secondary); font-weight:700;">TIẾN ĐỘ HOÀN THÀNH</div>
-            <div style="font-size:1.8rem; font-weight:bold; color:var(--primary);">${pct}%</div>
-            <div style="font-size:0.75rem; color:var(--text-secondary);">${comp}/${total} công việc đã xong</div>
-          </div>
-          <div style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid var(--border);">
-            <div style="font-size:0.75rem; color:var(--text-secondary); font-weight:700;">VIỆC MỚI PHÁT SINH</div>
-            <div style="font-size:1.8rem; font-weight:bold; color:var(--type-emergent);">${ePct}%</div>
-            <div style="font-size:0.75rem; color:var(--text-secondary);">${emergent} việc đột xuất ngoài kế hoạch</div>
-          </div>
-        </div>
-        <div style="background:#f1f5f9; padding:12px; border-radius:8px; font-size:0.83rem; line-height:1.5;">
-          <strong>💡 Nhận định quản trị khoa học:</strong><br>
-          • Tỉ lệ: ${100-ePct}% Kế hoạch gốc (${planned} việc) vs ${ePct}% Việc phát sinh (${emergent} việc).<br>
-          • <em>Nguyên tắc quản trị:</em> Nếu lượng việc phát sinh vượt quá 35%, bạn nên dành một khoảng đệm thời gian (buffer) trong ngày để không bị trễ hạn các dự án mục tiêu.
-        </div>
-      `;
-      document.getElementById("stats-modal").classList.add("open");
+    // Notification Popover & Permission
+    function toggleNotifications() {
+      if ("Notification" in window && Notification.permission !== "granted") {
+        Notification.requestPermission().then(perm => {
+          if (perm === "granted") {
+            showToast("Đã kích hoạt thông báo trên trình duyệt!");
+          }
+        });
+      }
+      const today = getTodayStr();
+      const urgent = state.tasks.filter(t => t.due && t.due <= today && !t.completed);
+      if (urgent.length === 0) {
+        alert("🔔 Thông báo: Bạn không có công việc nào bị quá hạn hoặc đến hạn hôm nay!");
+      } else {
+        let msg = `🔔 Bạn có ${urgent.length} công việc cần lưu ý:\n\n`;
+        urgent.forEach(t => {
+          const m = state.members.find(x => x.id === t.memberId);
+          msg += `• [${t.code}] ${t.title} (Giao cho: ${m?m.name:'chưa rõ'}, Hạn: ${t.due})\n`;
+        });
+        alert(msg);
+      }
     }
 
-    // Export & Import
+    // Export to Excel (CSV with UTF-8 BOM so Excel opens accented Vietnamese cleanly)
+    function exportToExcel() {
+      const today = getTodayStr();
+      let csvContent = "\uFEFF"; // UTF-8 BOM
+      csvContent += "Mã việc,Tên công việc,Nhân sự phụ trách,Dự án,Loại việc,Độ ưu tiên,Hạn chót,Trạng thái,Số việc con,Ghi chú\n";
+
+      state.tasks.forEach(t => {
+        const p = state.projects.find(x => x.id === t.projectId);
+        const m = state.members.find(x => x.id === t.memberId);
+        const pName = p ? p.name : "";
+        const mName = m ? m.name : "";
+        const tType = t.type === 'emergent' ? 'Phát sinh' : 'Kế hoạch gốc';
+        const tPrio = t.priority === 'high' ? 'Cao' : (t.priority === 'medium' ? 'Vừa' : 'Thấp');
+        const tStat = t.completed ? 'Đã hoàn thành' : 'Chưa hoàn thành';
+        const subCount = t.subtasks ? `${t.subtasks.filter(s=>s.done).length}/${t.subtasks.length}` : '0/0';
+        
+        // Escape quotes
+        const titleSafe = `"${(t.title || "").replace(/"/g, '""')}"`;
+        const descSafe = `"${(t.desc || "").replace(/"/g, '""')}"`;
+
+        csvContent += `${t.code},${titleSafe},"${mName}","${pName}",${tType},${tPrio},${t.due||""},${tStat},${subCount},${descSafe}\n`;
+      });
+
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `Bao_Cao_Tien_Do_Cong_Viec_${today}.csv`;
+      a.click();
+      showToast("Đã xuất báo cáo Excel (.CSV) thành công!");
+    }
+
+    // Export & Import JSON
     function exportData() {
       const str = JSON.stringify(state, null, 2);
       const blob = new Blob([str], { type: "application/json" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = `todo_pro_backup_${getTodayStr()}.json`;
+      a.download = `todo_team_backup_${getTodayStr()}.json`;
       a.click();
       showToast("Đã tải về bản sao lưu JSON!");
     }
@@ -930,6 +1330,7 @@
           if (parsed && Array.isArray(parsed.projects) && Array.isArray(parsed.tasks)) {
             state.projects = parsed.projects;
             state.tasks = parsed.tasks;
+            if (Array.isArray(parsed.members)) state.members = parsed.members;
             saveState();
             render();
             showToast("Đã khôi phục dữ liệu thành công!");
