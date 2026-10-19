@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Seta Longevity - Quản Trị Tiến Độ Dự Án (Bệnh Viện A & Nội Bộ)</title>
-  <meta name="description" content="Hệ thống theo dõi tiến độ triển khai song song: Dự án Bệnh viện A và Dự án Nội bộ Seta Longevity.">
+  <title>Thanh Phương Todolist - Quản Trị Tiến Độ</title>
+  <meta name="description" content="Thanh Phương Todolist - Hệ thống theo dõi tiến độ triển khai song song: Dự án Bệnh viện A và Dự án Nội bộ Seta Longevity.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
 
   <style>
@@ -190,6 +190,27 @@
     .prog-pill { display: inline-block; width: 80px; height: 8px; background: #e2e8f0; border-radius: 99px; overflow: hidden; vertical-align: middle; margin-right: 6px; }
     .prog-pill-fill { height: 100%; background: #16a34a; }
 
+    /* Chart Mode Tab Buttons */
+    .chart-tab-btn {
+      border: none;
+      background: transparent;
+      padding: 3px 9px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .chart-tab-btn:hover { color: var(--primary); }
+    .chart-tab-btn.active {
+      background: #ffffff;
+      color: var(--primary);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    .chart-dot { transition: r 0.15s ease; cursor: pointer; }
+    .chart-dot:hover { r: 6.5; }
+
     /* Modals */
     .modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.6); backdrop-filter: blur(2px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 16px; }
     .modal-overlay.open { display: flex; }
@@ -235,8 +256,8 @@
       <div class="logo-box">
         <span>⚡</span>
         <div>
-          <div class="logo-title">SETA LONGEVITY</div>
-          <div class="logo-sub">Theo dõi tiến độ Bệnh viện & Nội bộ</div>
+          <div class="logo-title">THANH PHƯƠNG TODOLIST</div>
+          <div class="logo-sub">Tiến độ Seta Bệnh viện & Nội bộ</div>
         </div>
       </div>
       <button class="btn-close-sidebar" onclick="toggleMobileSidebar()">✕</button>
@@ -496,6 +517,49 @@
               <div class="kpi-mini-val" style="color:#dc2626;" id="dash-internal-overdue">0</div>
               <div class="kpi-mini-lbl">Quá hạn</div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Biểu Đồ Đường Cong Tiến Độ Hoàn Thành (Spline Curve Chart) -->
+      <div class="dash-box" style="border-top: 4px solid var(--primary);">
+        <div class="dash-box-header" style="flex-wrap: wrap; gap: 8px;">
+          <div>
+            <div class="dash-box-title" style="display:flex; align-items:center; gap:8px;">
+              <span>📈 Biểu Đồ Đường Cong Tiến Độ Hoàn Thành (Progress Curve)</span>
+            </div>
+            <div style="font-size:0.78rem; color:var(--text-secondary); margin-top:2px;">
+              Đồ thị đường cong mượt mà thể hiện % hoàn thành lũy kế của 2 dự án song song qua từng giai đoạn
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; font-size:0.8rem; flex-wrap: wrap;">
+            <!-- Mode Toggle Tabs -->
+            <div style="display:flex; background:#e2e8f0; border-radius:6px; padding:2px; font-size:0.75rem;">
+              <button id="chart-mode-stage" class="chart-tab-btn active" onclick="setChartMode('stage')">📊 Từng giai đoạn</button>
+              <button id="chart-mode-scurve" class="chart-tab-btn" onclick="setChartMode('scurve')">📈 Tích lũy S-Curve</button>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span style="display:inline-block; width:12px; height:12px; border-radius:50%; background:#0284c7;"></span>
+              <span>Bệnh Viện A:</span> <strong id="chart-legend-hosp" style="color:#0284c7;">0%</strong>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span style="display:inline-block; width:12px; height:12px; border-radius:50%; background:#9333ea;"></span>
+              <span>Seta Nội Bộ:</span> <strong id="chart-legend-internal" style="color:#9333ea;">0%</strong>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span style="display:inline-block; width:12px; height:12px; border-radius:50%; background:#16a34a;"></span>
+              <span>Toàn bộ:</span> <strong id="chart-legend-avg" style="color:#16a34a;">0%</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- SVG Curve Chart Container -->
+        <div id="curve-chart-wrap" style="position:relative; width:100%; height:270px; background:#f8fafc; border-radius:8px; padding:10px 10px 4px; border:1px solid var(--border); overflow:hidden;">
+          <svg id="progress-curve-svg" viewBox="0 0 820 250" preserveAspectRatio="none" style="width:100%; height:100%; overflow:visible;">
+            <!-- Dynamically rendered by JavaScript -->
+          </svg>
+          <!-- Floating Tooltip -->
+          <div id="chart-tooltip" style="position:absolute; display:none; pointer-events:none; background:rgba(15,23,42,0.95); color:white; padding:8px 12px; border-radius:8px; font-size:0.78rem; box-shadow:0 10px 18px -3px rgba(0,0,0,0.3); z-index:20; white-space:nowrap; transform:translate(-50%, -120%); transition:opacity 0.15s, transform 0.15s;">
           </div>
         </div>
       </div>
@@ -1340,6 +1404,338 @@
           `;
         });
       }
+
+      // Render Progress Curve Chart
+      renderProgressCurveChart(hPct, iPct);
+    }
+
+    // Chart Mode State: 'stage' or 'scurve'
+    let currentChartMode = 'stage';
+
+    function setChartMode(mode) {
+      currentChartMode = mode;
+      const btnStage = document.getElementById("chart-mode-stage");
+      const btnScurve = document.getElementById("chart-mode-scurve");
+      if (btnStage && btnScurve) {
+        if (mode === 'stage') {
+          btnStage.classList.add("active");
+          btnScurve.classList.remove("active");
+        } else {
+          btnStage.classList.remove("active");
+          btnScurve.classList.add("active");
+        }
+      }
+      renderDashboard();
+    }
+
+    function getTaskStage(t, allProjTasks) {
+      const num = parseInt((t.code || '').replace(/\D/g, '')) || 0;
+      if (t.projectId === 1) {
+        if (num <= 2) return 1;
+        if (num <= 5) return 2;
+        if (num === 6) return 3;
+        return 4;
+      } else if (t.projectId === 2) {
+        if (num === 1 || num === 3) return 1;
+        if (num === 2 || num === 4) return 2;
+        if (num === 5) return 3;
+        return 4;
+      }
+      const idx = allProjTasks.indexOf(t);
+      if (idx < 0) return 2;
+      const ratio = (idx + 1) / Math.max(1, allProjTasks.length);
+      if (ratio <= 0.25) return 1;
+      if (ratio <= 0.55) return 2;
+      if (ratio <= 0.80) return 3;
+      return 4;
+    }
+
+    function getTaskScore(t) {
+      if (t.completed || t.status === 'completed') return 1.0;
+      if (t.subtasks && t.subtasks.length > 0) {
+        const doneSubs = t.subtasks.filter(s => s.done).length;
+        if (doneSubs > 0) {
+          return Math.max(0.2, doneSubs / t.subtasks.length);
+        }
+      }
+      if (t.status === 'doing') return 0.4;
+      return 0.0;
+    }
+
+    function generateSplinePath(pts) {
+      if (!pts || pts.length < 2) return "";
+      let d = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
+      for (let i = 0; i < pts.length - 1; i++) {
+        const p0 = pts[i === 0 ? 0 : i - 1];
+        const p1 = pts[i];
+        const p2 = pts[i + 1];
+        const p3 = pts[i + 2] || p2;
+
+        const cp1x = p1.x + (p2.x - p0.x) / 6;
+        let cp1y = p1.y + (p2.y - p0.y) / 6;
+        const cp2x = p2.x - (p3.x - p1.x) / 6;
+        let cp2y = p2.y - (p3.y - p1.y) / 6;
+
+        cp1y = Math.max(20, Math.min(210, cp1y));
+        cp2y = Math.max(20, Math.min(210, cp2y));
+
+        d += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+      }
+      return d;
+    }
+
+    function generateAreaPath(pts) {
+      const lineD = generateSplinePath(pts);
+      if (!lineD) return "";
+      const last = pts[pts.length - 1];
+      const first = pts[0];
+      return `${lineD} L ${last.x.toFixed(1)} 205 L ${first.x.toFixed(1)} 205 Z`;
+    }
+
+    function renderProgressCurveChart(hPct, iPct) {
+      const svg = document.getElementById("progress-curve-svg");
+      if (!svg) return;
+
+      const totalTasks = state.tasks.length;
+      const totalDone = state.tasks.filter(t => t.completed).length;
+      const avgPct = totalTasks ? Math.round((totalDone / totalTasks) * 100) : 0;
+
+      // Update Legend counters in header
+      const elHosp = document.getElementById("chart-legend-hosp");
+      const elInt = document.getElementById("chart-legend-internal");
+      const elAvg = document.getElementById("chart-legend-avg");
+      if (elHosp) elHosp.innerText = `${hPct}%`;
+      if (elInt) elInt.innerText = `${iPct}%`;
+      if (elAvg) elAvg.innerText = `${avgPct}%`;
+
+      const hTasks = state.tasks.filter(t => t.projectId === 1);
+      const iTasks = state.tasks.filter(t => t.projectId === 2);
+
+      const stagesMeta = [
+        { name: "Khởi động", sub: "Mốc số 0", target: 0 },
+        { name: "GĐ 1: Chuẩn bị", sub: "Thẩm định / Setup", target: 25 },
+        { name: "GĐ 2: Thí điểm", sub: "3 Khoa & AI", target: 50 },
+        { name: "GĐ 3: Vận hành", sub: "Giám sát & Hỗ trợ", target: 75 },
+        { name: "GĐ 4: Đánh giá", sub: "Báo cáo & Giao ban", target: 90 },
+        { name: "GĐ 5: Mở rộng", sub: "Mục tiêu toàn diện", target: 100 }
+      ];
+
+      const hVals = [0];
+      const iVals = [0];
+      const avgVals = [0];
+      const targetVals = stagesMeta.map(s => s.target);
+
+      if (currentChartMode === 'stage') {
+        // Mode 1: Individual stage completion %
+        for (let s = 1; s <= 4; s++) {
+          const sHTasks = hTasks.filter(t => getTaskStage(t, hTasks) === s);
+          const sHScore = sHTasks.reduce((acc, t) => acc + getTaskScore(t), 0);
+          const sHPct = sHTasks.length ? Math.min(100, Math.round((sHScore / sHTasks.length) * 100)) : 0;
+          hVals.push(sHPct);
+
+          const sITasks = iTasks.filter(t => getTaskStage(t, iTasks) === s);
+          const sIScore = sITasks.reduce((acc, t) => acc + getTaskScore(t), 0);
+          const sIPct = sITasks.length ? Math.min(100, Math.round((sIScore / sITasks.length) * 100)) : 0;
+          iVals.push(sIPct);
+
+          const combinedTasks = [...sHTasks, ...sITasks];
+          const combinedScore = sHScore + sIScore;
+          const combinedPct = combinedTasks.length ? Math.min(100, Math.round((combinedScore / combinedTasks.length) * 100)) : 0;
+          avgVals.push(combinedPct);
+        }
+        // Point 5: Overall project completion
+        hVals.push(hPct);
+        iVals.push(iPct);
+        avgVals.push(avgPct);
+      } else {
+        // Mode 2: S-Curve Cumulative Completion %
+        const hTotal = Math.max(1, hTasks.length);
+        const iTotal = Math.max(1, iTasks.length);
+        const allTotal = Math.max(1, state.tasks.length);
+
+        for (let s = 1; s <= 4; s++) {
+          const cumHTasks = hTasks.filter(t => getTaskStage(t, hTasks) <= s);
+          const cumHScore = cumHTasks.reduce((acc, t) => acc + getTaskScore(t), 0);
+          const cumHPct = Math.min(100, Math.round((cumHScore / hTotal) * 100));
+          hVals.push(cumHPct);
+
+          const cumITasks = iTasks.filter(t => getTaskStage(t, iTasks) <= s);
+          const cumIScore = cumITasks.reduce((acc, t) => acc + getTaskScore(t), 0);
+          const cumIPct = Math.min(100, Math.round((cumIScore / iTotal) * 100));
+          iVals.push(cumIPct);
+
+          const cumAllTasks = state.tasks.filter(t => getTaskStage(t, state.tasks.filter(x => x.projectId === t.projectId)) <= s);
+          const cumAllScore = cumAllTasks.reduce((acc, t) => acc + getTaskScore(t), 0);
+          const cumAllPct = Math.min(100, Math.round((cumAllScore / allTotal) * 100));
+          avgVals.push(cumAllPct);
+        }
+        // Point 5: Final Target 100%
+        hVals.push(100);
+        iVals.push(100);
+        avgVals.push(100);
+      }
+
+      // Coordinates mapping
+      const padLeft = 60;
+      const padRight = 35;
+      const padTop = 25;
+      const padBottom = 45;
+      const plotW = 820 - padLeft - padRight;
+      const plotH = 250 - padTop - padBottom;
+
+      const xCoords = [0, 1, 2, 3, 4, 5].map(i => padLeft + (i / 5) * plotW);
+      const getY = p => 205 - (Math.max(0, Math.min(100, p)) / 100) * 180;
+
+      const hPts = hVals.map((v, i) => ({ x: xCoords[i], y: getY(v), val: v }));
+      const iPts = iVals.map((v, i) => ({ x: xCoords[i], y: getY(v), val: v }));
+      const avgPts = avgVals.map((v, i) => ({ x: xCoords[i], y: getY(v), val: v }));
+      const targetPts = targetVals.map((v, i) => ({ x: xCoords[i], y: getY(v), val: v }));
+
+      const hLineD = generateSplinePath(hPts);
+      const hAreaD = generateAreaPath(hPts);
+      const iLineD = generateSplinePath(iPts);
+      const iAreaD = generateAreaPath(iPts);
+      const avgLineD = generateSplinePath(avgPts);
+      const targetLineD = generateSplinePath(targetPts);
+
+      // Y-axis gridlines & labels
+      const yLevels = [100, 75, 50, 25, 0];
+      let gridHtml = "";
+      yLevels.forEach(lvl => {
+        const y = getY(lvl);
+        gridHtml += `
+          <line x1="${padLeft}" y1="${y}" x2="${820 - padRight}" y2="${y}" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="${lvl === 0 ? 'none' : '4 4'}" />
+          <text x="${padLeft - 10}" y="${y + 4}" text-anchor="end" fill="#94a3b8" font-size="10.5" font-weight="600" font-family="system-ui, -apple-system, sans-serif">${lvl}%</text>
+        `;
+      });
+
+      // X-axis Milestone Ticks & Labels
+      let xHtml = "";
+      stagesMeta.forEach((m, idx) => {
+        const x = xCoords[idx];
+        xHtml += `
+          <line x1="${x}" y1="${padTop}" x2="${x}" y2="${205}" stroke="#f1f5f9" stroke-width="1" />
+          <text x="${x}" y="223" text-anchor="middle" fill="#334155" font-size="10.5" font-weight="700" font-family="system-ui, -apple-system, sans-serif">${m.name}</text>
+          <text x="${x}" y="238" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="system-ui, -apple-system, sans-serif">${m.sub}</text>
+        `;
+      });
+
+      // Render Dots
+      let dotsHtml = "";
+      stagesMeta.forEach((_, idx) => {
+        const hp = hPts[idx];
+        const ip = iPts[idx];
+        const ap = avgPts[idx];
+        dotsHtml += `
+          <circle cx="${hp.x}" cy="${hp.y}" r="4.5" fill="#ffffff" stroke="#0284c7" stroke-width="2.5" class="chart-dot" id="dot-hosp-${idx}" />
+          <circle cx="${ip.x}" cy="${ip.y}" r="4.5" fill="#ffffff" stroke="#9333ea" stroke-width="2.5" class="chart-dot" id="dot-int-${idx}" />
+          <circle cx="${ap.x}" cy="${ap.y}" r="3.5" fill="#16a34a" stroke="#ffffff" stroke-width="1.5" id="dot-avg-${idx}" />
+        `;
+      });
+
+      svg.innerHTML = `
+        <defs>
+          <linearGradient id="grad-hosp" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0284c7" stop-opacity="0.30"/>
+            <stop offset="100%" stop-color="#0284c7" stop-opacity="0.02"/>
+          </linearGradient>
+          <linearGradient id="grad-internal" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#9333ea" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#9333ea" stop-opacity="0.02"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Grid -->
+        ${gridHtml}
+        ${xHtml}
+
+        <!-- Baseline Target S-Curve (Dashed gray) -->
+        <path d="${targetLineD}" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="5 5" />
+
+        <!-- Area Fills -->
+        <path d="${iAreaD}" fill="url(#grad-internal)" />
+        <path d="${hAreaD}" fill="url(#grad-hosp)" />
+
+        <!-- Lines -->
+        <path d="${hLineD}" fill="none" stroke="#0284c7" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="${iLineD}" fill="none" stroke="#9333ea" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="${avgLineD}" fill="none" stroke="#16a34a" stroke-width="2" stroke-dasharray="4 3" stroke-linecap="round" stroke-linejoin="round" />
+
+        <!-- Dots -->
+        ${dotsHtml}
+
+        <!-- Interactive Crosshair -->
+        <line id="chart-crosshair" x1="${padLeft}" y1="${padTop}" x2="${padLeft}" y2="205" stroke="#475569" stroke-width="1.5" stroke-dasharray="3 3" style="display:none;" />
+
+        <!-- Invisible Overlay for Mouse Hover -->
+        <rect id="chart-overlay-hit" x="${padLeft}" y="${padTop}" width="${plotW}" height="${plotH}" fill="transparent" style="cursor:crosshair;" />
+      `;
+
+      // Attach Interactive Hover Event to Overlay
+      const overlay = document.getElementById("chart-overlay-hit");
+      const crosshair = document.getElementById("chart-crosshair");
+      const tooltip = document.getElementById("chart-tooltip");
+      const chartWrap = document.getElementById("curve-chart-wrap");
+
+      if (overlay && crosshair && tooltip && chartWrap) {
+        overlay.onmousemove = function(e) {
+          const rect = overlay.getBoundingClientRect();
+          const mouseXRel = e.clientX - rect.left;
+          const svgX = padLeft + (mouseXRel / rect.width) * plotW;
+
+          let closestIdx = 0;
+          let minDist = 999999;
+          xCoords.forEach((xc, idx) => {
+            const dist = Math.abs(xc - svgX);
+            if (dist < minDist) { minDist = dist; closestIdx = idx; }
+          });
+
+          const snapX = xCoords[closestIdx];
+          crosshair.setAttribute("x1", snapX);
+          crosshair.setAttribute("x2", snapX);
+          crosshair.style.display = "block";
+
+          const wrapRect = chartWrap.getBoundingClientRect();
+          const snapClientX = rect.left + ((snapX - padLeft) / plotW) * rect.width;
+          const leftPx = snapClientX - wrapRect.left;
+          const topPx = 75;
+
+          const m = stagesMeta[closestIdx];
+          const hV = hVals[closestIdx];
+          const iV = iVals[closestIdx];
+          const aV = avgVals[closestIdx];
+
+          const modeName = currentChartMode === 'stage' ? 'Tiến độ giai đoạn' : 'Tích lũy S-Curve';
+
+          tooltip.innerHTML = `
+            <div style="font-weight:700; font-size:0.83rem; margin-bottom:5px; color:#f8fafc; border-bottom:1px solid rgba(255,255,255,0.18); padding-bottom:3px; display:flex; justify-content:space-between; gap:10px;">
+              <span>🎯 ${m.name}</span>
+              <span style="font-size:0.72rem; color:#94a3b8; font-weight:normal;">(${modeName})</span>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:3px;">
+              <span style="color:#38bdf8;">🏥 Bệnh Viện A:</span>
+              <strong style="color:#ffffff;">${hV}%</strong>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:3px;">
+              <span style="color:#c084fc;">🏢 Seta Nội Bộ:</span>
+              <strong style="color:#ffffff;">${iV}%</strong>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; padding-top:4px; margin-top:3px; border-top:1px dashed rgba(255,255,255,0.2);">
+              <span style="color:#4ade80;">📊 Toàn bộ dự án:</span>
+              <strong style="color:#4ade80;">${aV}%</strong>
+            </div>
+          `;
+
+          tooltip.style.left = `${leftPx}px`;
+          tooltip.style.top = `${topPx}px`;
+          tooltip.style.display = "block";
+        };
+
+        overlay.onmouseleave = function() {
+          crosshair.style.display = "none";
+          tooltip.style.display = "none";
+        };
+      }
     }
 
     // Modal Task Logic
@@ -1557,7 +1953,12 @@
 
     // Init
     loadState();
-    render();
+    if (window.location.hash === '#dashboard') {
+      switchView('dashboard');
+    } else {
+      render();
+      renderDashboard();
+    }
   </script>
 </body>
 </html>
