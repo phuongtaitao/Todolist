@@ -243,9 +243,187 @@
       .header { padding: 12px 14px; }
       .dash-compare-grid { grid-template-columns: 1fr; }
     }
+
+    /* Lock Screen Overlay */
+    .lock-screen-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 35%, #1e293b 0%, #0f172a 100%);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      backdrop-filter: blur(12px);
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .lock-screen-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .lock-card {
+      background: rgba(30, 41, 59, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 40px rgba(37, 99, 235, 0.2);
+      border-radius: 20px;
+      padding: 34px 28px;
+      width: 390px;
+      max-width: 100%;
+      text-align: center;
+      color: #ffffff;
+      animation: lockCardPop 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes lockCardPop {
+      0% { opacity: 0; transform: scale(0.92) translateY(12px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .lock-icon-wrap {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 10px 20px rgba(37, 99, 235, 0.35);
+    }
+    .lock-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+    .lock-subtitle {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-bottom: 22px;
+      line-height: 1.4;
+    }
+    .lock-input-group {
+      position: relative;
+      margin-bottom: 14px;
+    }
+    .lock-input {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1.5px solid #334155;
+      border-radius: 10px;
+      padding: 12px 42px 12px 16px;
+      font-size: 1rem;
+      color: #ffffff;
+      outline: none;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+    .lock-input:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+    }
+    .lock-toggle-eye {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 4px;
+    }
+    .lock-toggle-eye:hover { color: #ffffff; }
+    .lock-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .lock-btn:hover {
+      background: linear-gradient(135deg, #1d4ed8, #1e40af);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.45);
+    }
+    .lock-err-msg {
+      color: #f87171;
+      font-size: 0.8rem;
+      margin-top: 10px;
+      display: none;
+      font-weight: 600;
+    }
+    .lock-err-msg.show {
+      display: block;
+      animation: shake 0.3s ease;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+    .lock-remember {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      cursor: pointer;
+      user-select: none;
+    }
+    .lock-remember input {
+      accent-color: #2563eb;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Màn hình khóa mật khẩu (Passcode Lock Screen) -->
+  <div id="lock-screen-overlay" class="lock-screen-overlay">
+    <div class="lock-card">
+      <div class="lock-icon-wrap">🔒</div>
+      <div class="lock-title">THANH PHƯƠNG TODOLIST</div>
+      <div class="lock-subtitle">Hệ thống quản trị tiến độ dự án Seta Longevity</div>
+
+      <form onsubmit="handleUnlockSubmit(event)">
+        <div class="lock-input-group">
+          <input type="password" id="lock-password-input" class="lock-input" placeholder="Nhập mật khẩu truy cập..." autocomplete="current-password" autofocus>
+          <button type="button" class="lock-toggle-eye" onclick="togglePasswordVisibility('lock-password-input', this)" title="Hiện/ẩn mật khẩu">👁️</button>
+        </div>
+
+        <button type="submit" class="lock-btn">
+          <span>Mở khóa hệ thống</span> 🔓
+        </button>
+
+        <div id="lock-error-text" class="lock-err-msg">
+          ⚠️ Mật khẩu không chính xác! Vui lòng thử lại.
+        </div>
+
+        <label class="lock-remember">
+          <input type="checkbox" id="lock-remember-check" checked>
+          <span>Ghi nhớ mở khóa trên thiết bị này</span>
+        </label>
+      </form>
+      <div style="font-size:0.75rem; color:#64748b; margin-top:20px; line-height:1.4;">
+        🔐 Trang quản trị riêng tư. Mật khẩu mặc định: <strong style="color:#cbd5e1;">seta2026</strong>
+      </div>
+    </div>
+  </div>
 
   <!-- Mobile Backdrop -->
   <div class="sidebar-backdrop" id="sidebar-backdrop" onclick="toggleMobileSidebar()"></div>
@@ -351,6 +529,10 @@
         <button class="btn-side-action" style="font-size: 0.72rem;" onclick="exportData()">💾 Sao lưu</button>
         <button class="btn-side-action" style="font-size: 0.72rem;" onclick="document.getElementById('import-file-input').click()">📂 Phục hồi</button>
       </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px;">
+        <button class="btn-side-action" style="font-size: 0.72rem; background: #334155;" onclick="lockAppNow()" title="Khóa màn hình">🔒 Khóa app</button>
+        <button class="btn-side-action" style="font-size: 0.72rem; background: #334155;" onclick="openPasswordModal()" title="Cài đặt mật khẩu">⚙️ Đổi MK</button>
+      </div>
       <input type="file" id="import-file-input" style="display: none;" accept=".json" onchange="importData(event)">
     </div>
   </aside>
@@ -385,6 +567,12 @@
 
           <button class="btn-header-tool" onclick="exportToExcel()" title="Tải file Excel tiến độ">
             <span>📊</span> Xuất Excel
+          </button>
+          <button class="btn-header-tool" onclick="lockAppNow()" title="Khóa màn hình ngay">
+            <span>🔒</span> Khóa
+          </button>
+          <button class="btn-header-tool" onclick="openPasswordModal()" title="Cài đặt mật khẩu truy cập">
+            <span>⚙️</span> Mật khẩu
           </button>
         </div>
       </div>
@@ -711,6 +899,61 @@
       <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
         <button class="btn-secondary" onclick="closeMemberModal()">Hủy</button>
         <button class="btn-primary" onclick="saveMemberModal()">💾 Lưu Nhân Sự</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Đổi Mật Khẩu (Password Settings Modal) -->
+  <div class="modal-overlay" id="password-settings-modal">
+    <div class="modal-card" style="width: 440px;">
+      <h2 class="modal-title" style="display:flex; align-items:center; gap:8px;">
+        <span>🔐</span> Cài Đặt Mật Khẩu Truy Cập
+      </h2>
+      <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:10px;">
+        Thiết lập mật khẩu bảo vệ để ngăn người ngoài xem nội dung công việc và số liệu dự án.
+      </div>
+
+      <div class="form-group" style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid var(--border); margin-bottom:12px;">
+        <label style="display:flex; align-items:center; justify-content:space-between; cursor:pointer;">
+          <span style="font-weight:700; color:var(--text-dark);">Bật chế độ khóa mật khẩu</span>
+          <input type="checkbox" id="pwd-enabled-toggle" onchange="togglePwdFields(event)" style="width:18px; height:18px; accent-color:var(--primary); cursor:pointer;">
+        </label>
+        <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:4px;">
+          Nếu tắt, bất kỳ ai có link đều có thể xem ngay mà không cần nhập mật khẩu.
+        </div>
+      </div>
+
+      <div id="pwd-fields-wrap">
+        <div class="form-group">
+          <label>Mật khẩu hiện tại (*)</label>
+          <div style="position:relative;">
+            <input type="password" id="pwd-current-input" placeholder="Nhập mật khẩu hiện tại (mặc định: seta2026)..." style="width:100%; box-sizing:border-box; padding-right:36px;">
+            <button type="button" class="lock-toggle-eye" style="color:#64748b;" onclick="togglePasswordVisibility('pwd-current-input', this)">👁️</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Mật khẩu mới (*)</label>
+          <div style="position:relative;">
+            <input type="password" id="pwd-new-input" placeholder="Tối thiểu 4 ký tự..." style="width:100%; box-sizing:border-box; padding-right:36px;">
+            <button type="button" class="lock-toggle-eye" style="color:#64748b;" onclick="togglePasswordVisibility('pwd-new-input', this)">👁️</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Xác nhận mật khẩu mới (*)</label>
+          <div style="position:relative;">
+            <input type="password" id="pwd-confirm-input" placeholder="Nhập lại mật khẩu mới..." style="width:100%; box-sizing:border-box; padding-right:36px;">
+            <button type="button" class="lock-toggle-eye" style="color:#64748b;" onclick="togglePasswordVisibility('pwd-confirm-input', this)">👁️</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="pwd-modal-msg" style="display:none; font-size:0.8rem; font-weight:600; padding:8px; border-radius:6px; margin-top:4px;"></div>
+
+      <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:16px;">
+        <button class="btn-secondary" onclick="closePasswordModal()">Hủy</button>
+        <button class="btn-primary" onclick="savePasswordSettings()">💾 Lưu Thay Đổi</button>
       </div>
     </div>
   </div>
@@ -1951,7 +2194,177 @@
       event.target.value = "";
     }
 
+    /* --- AUTHENTICATION & PASSCODE LOCK --- */
+    const AUTH_KEY_PASS = "tp_todolist_pwd";
+    const AUTH_KEY_ENABLED = "tp_todolist_auth_enabled";
+    const AUTH_SESSION_KEY = "tp_todolist_session_unlocked";
+    const AUTH_REMEMBER_KEY = "tp_todolist_remember_unlocked";
+    const DEFAULT_PASS = "seta2026";
+
+    function getStoredPassword() {
+      return localStorage.getItem(AUTH_KEY_PASS) || DEFAULT_PASS;
+    }
+
+    function isAuthEnabled() {
+      const val = localStorage.getItem(AUTH_KEY_ENABLED);
+      return val === null ? true : val === "true";
+    }
+
+    function isAppUnlocked() {
+      if (!isAuthEnabled()) return true;
+      if (sessionStorage.getItem(AUTH_SESSION_KEY) === "true") return true;
+      if (localStorage.getItem(AUTH_REMEMBER_KEY) === "true") return true;
+      return false;
+    }
+
+    function checkLockStatus() {
+      const overlay = document.getElementById("lock-screen-overlay");
+      if (!overlay) return;
+      if (isAppUnlocked()) {
+        overlay.classList.add("hidden");
+      } else {
+        overlay.classList.remove("hidden");
+        const input = document.getElementById("lock-password-input");
+        if (input) {
+          input.value = "";
+          setTimeout(() => input.focus(), 150);
+        }
+      }
+    }
+
+    function handleUnlockSubmit(e) {
+      if (e) e.preventDefault();
+      const input = document.getElementById("lock-password-input");
+      const errBox = document.getElementById("lock-error-text");
+      const remember = document.getElementById("lock-remember-check");
+      const entered = input.value.trim();
+      const realPass = getStoredPassword();
+
+      if (entered === realPass) {
+        sessionStorage.setItem(AUTH_SESSION_KEY, "true");
+        if (remember && remember.checked) {
+          localStorage.setItem(AUTH_REMEMBER_KEY, "true");
+        } else {
+          localStorage.removeItem(AUTH_REMEMBER_KEY);
+        }
+        if (errBox) errBox.classList.remove("show");
+        const overlay = document.getElementById("lock-screen-overlay");
+        if (overlay) overlay.classList.add("hidden");
+        showToast("🔓 Đã mở khóa hệ thống thành công!");
+      } else {
+        if (errBox) {
+          errBox.classList.remove("show");
+          void errBox.offsetWidth; // trigger reflow
+          errBox.classList.add("show");
+        }
+        input.select();
+      }
+    }
+
+    function lockAppNow() {
+      sessionStorage.removeItem(AUTH_SESSION_KEY);
+      localStorage.removeItem(AUTH_REMEMBER_KEY);
+      const errBox = document.getElementById("lock-error-text");
+      if (errBox) errBox.classList.remove("show");
+      const overlay = document.getElementById("lock-screen-overlay");
+      if (overlay) {
+        overlay.classList.remove("hidden");
+        const input = document.getElementById("lock-password-input");
+        if (input) {
+          input.value = "";
+          setTimeout(() => input.focus(), 150);
+        }
+      }
+      showToast("🔒 Đã khóa màn hình ứng dụng!");
+    }
+
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      if (input.type === "password") {
+        input.type = "text";
+        btn.innerText = "🙈";
+      } else {
+        input.type = "password";
+        btn.innerText = "👁️";
+      }
+    }
+
+    function openPasswordModal() {
+      const enabled = isAuthEnabled();
+      document.getElementById("pwd-enabled-toggle").checked = enabled;
+      document.getElementById("pwd-fields-wrap").style.display = enabled ? "block" : "none";
+      document.getElementById("pwd-current-input").value = "";
+      document.getElementById("pwd-new-input").value = "";
+      document.getElementById("pwd-confirm-input").value = "";
+      const msg = document.getElementById("pwd-modal-msg");
+      if (msg) msg.style.display = "none";
+      document.getElementById("password-settings-modal").classList.add("open");
+    }
+
+    function closePasswordModal() {
+      document.getElementById("password-settings-modal").classList.remove("open");
+    }
+
+    function togglePwdFields(e) {
+      document.getElementById("pwd-fields-wrap").style.display = e.target.checked ? "block" : "none";
+    }
+
+    function savePasswordSettings() {
+      const enabled = document.getElementById("pwd-enabled-toggle").checked;
+      const msg = document.getElementById("pwd-modal-msg");
+      const curPass = document.getElementById("pwd-current-input").value.trim();
+      const newPass = document.getElementById("pwd-new-input").value.trim();
+      const confirmPass = document.getElementById("pwd-confirm-input").value.trim();
+      const realPass = getStoredPassword();
+
+      if (!enabled) {
+        localStorage.setItem(AUTH_KEY_ENABLED, "false");
+        closePasswordModal();
+        showToast("Đã tắt chế độ khóa mật khẩu!");
+        return;
+      }
+
+      if (enabled && !newPass && !confirmPass) {
+        localStorage.setItem(AUTH_KEY_ENABLED, "true");
+        closePasswordModal();
+        showToast("Đã cập nhật cài đặt bảo mật!");
+        return;
+      }
+
+      if (curPass !== realPass) {
+        msg.style.display = "block";
+        msg.style.background = "#fef2f2";
+        msg.style.color = "#dc2626";
+        msg.innerText = "❌ Mật khẩu hiện tại không chính xác!";
+        return;
+      }
+
+      if (newPass.length < 4) {
+        msg.style.display = "block";
+        msg.style.background = "#fef2f2";
+        msg.style.color = "#dc2626";
+        msg.innerText = "❌ Mật khẩu mới phải có tối thiểu 4 ký tự!";
+        return;
+      }
+
+      if (newPass !== confirmPass) {
+        msg.style.display = "block";
+        msg.style.background = "#fef2f2";
+        msg.style.color = "#dc2626";
+        msg.innerText = "❌ Xác nhận mật khẩu mới không khớp!";
+        return;
+      }
+
+      localStorage.setItem(AUTH_KEY_PASS, newPass);
+      localStorage.setItem(AUTH_KEY_ENABLED, "true");
+      sessionStorage.setItem(AUTH_SESSION_KEY, "true");
+      closePasswordModal();
+      showToast("🔑 Đã đổi mật khẩu thành công!");
+    }
+
     // Init
+    checkLockStatus();
     loadState();
     if (window.location.hash === '#dashboard') {
       switchView('dashboard');
