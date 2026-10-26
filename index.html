@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Thanh Phương Todolist - Quản Trị Tiến Độ</title>
-  <meta name="description" content="Thanh Phương Todolist - Hệ thống theo dõi tiến độ triển khai song song: Dự án Bệnh viện A và Dự án Nội bộ Seta Longevity.">
+  <meta name="description" content="Thanh Phương Todolist - Hệ thống theo dõi tiến độ triển khai song song: Dự án Bệnh viện 19.8 - BCA và Dự án Nội bộ Seta Longevity.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
 
   <style>
@@ -227,6 +227,176 @@
     /* Toast */
     .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 200; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
     .toast { background: #1e293b; color: white; padding: 10px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 500; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 8px; }
+
+    /* Link Badges & Attached Documents */
+    .task-links-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed #e2e8f0;
+    }
+    .task-link-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #0284c7;
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 4px;
+      padding: 2px 7px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .task-link-badge:hover {
+      background: #e0f2fe;
+      color: #0369a1;
+      border-color: #7dd3fc;
+      transform: translateY(-1px);
+    }
+    .btn-add-link-mini {
+      background: transparent;
+      border: 1px dashed #cbd5e1;
+      color: #64748b;
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-add-link-mini:hover {
+      background: #f8fafc;
+      color: #0284c7;
+      border-color: #0284c7;
+    }
+
+    /* Weekly Table Link Pills */
+    .weekly-link-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: #6b21a8;
+      background: #faf5ff;
+      border: 1px solid #e9d5ff;
+      border-radius: 3px;
+      padding: 1px 5px;
+      margin-top: 3px;
+      margin-right: 4px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .weekly-link-pill:hover {
+      background: #f3e8ff;
+      color: #581c87;
+    }
+
+    /* Custom Right-Click Context Menu */
+    .custom-context-menu {
+      position: fixed;
+      z-index: 99999;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.18), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      padding: 6px;
+      min-width: 250px;
+      max-width: 320px;
+      display: none;
+      font-size: 0.82rem;
+      color: #0f172a;
+      animation: ctxFadeIn 0.12s ease-out;
+    }
+    @keyframes ctxFadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .context-menu-header {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: #64748b;
+      padding: 4px 8px 6px;
+      border-bottom: 1px solid #f1f5f9;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .context-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .context-menu-item:hover {
+      background: #f1f5f9;
+    }
+    .context-menu-item.primary {
+      color: #0284c7;
+      background: #f0f9ff;
+      font-weight: 700;
+    }
+    .context-menu-item.primary:hover {
+      background: #e0f2fe;
+    }
+    .context-menu-item.del {
+      color: #dc2626;
+    }
+    .context-menu-item.del:hover {
+      background: #fef2f2;
+    }
+    .context-menu-divider {
+      height: 1px;
+      background: #e2e8f0;
+      margin: 4px 0;
+    }
+    .ctx-quick-link-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 8px;
+      font-size: 0.74rem;
+      color: #0369a1;
+      background: #f8fafc;
+      border-radius: 4px;
+      margin: 2px 0;
+      text-decoration: none;
+      transition: background 0.15s ease;
+    }
+    .ctx-quick-link-item:hover {
+      background: #e0f2fe;
+      color: #0284c7;
+    }
+
+    /* Preset Tag Buttons in Link Modal */
+    .preset-tag-btn {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 20px;
+      padding: 3px 9px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .preset-tag-btn:hover {
+      border-color: #0284c7;
+      color: #0284c7;
+      background: #f0f9ff;
+    }
 
     /* Excel Weekly Plan Table Styling */
     .excel-dash-box {
@@ -785,13 +955,16 @@
       <div class="nav-section">
         <div class="nav-label">2 DỰ ÁN TRIỂN KHAI SONG SONG</div>
         
-        <!-- Project 1: Bệnh viện A -->
+        <!-- Project 1: Bệnh viện 19.8 - BCA -->
         <div class="proj-card-item active" id="proj-card-1" onclick="selectProject(1)">
           <div class="proj-top">
-            <span style="color:#38bdf8;">🏥 Dự Án Bệnh Viện A</span>
-            <span class="badge-count" id="badge-proj-1">0/0</span>
+            <span style="color:#38bdf8; font-weight:700;" id="sidebar-proj-name-1">🏥 Bệnh viện 19.8 - BCA</span>
+            <div style="display:flex; align-items:center; gap:5px;">
+              <button class="btn-icon" style="padding:1px 5px; font-size:0.7rem; color:#94a3b8; background:rgba(255,255,255,0.08); border-radius:3px;" title="Chỉnh sửa tên Bệnh viện / Dự án" onclick="event.stopPropagation(); openEditProjectModal(1)">✏️</button>
+              <span class="badge-count" id="badge-proj-1">0/0</span>
+            </div>
           </div>
-          <div style="font-size:0.75rem; color:#94a3b8;">3 Khoa: Tim mạch, Nội tiết, Ung bướu</div>
+          <div style="font-size:0.75rem; color:#94a3b8;" id="sidebar-proj-desc-1">3 Khoa: Tim mạch, Nội tiết, Ung bướu</div>
           <div class="proj-prog-bar">
             <div class="proj-prog-fill" id="fill-proj-1" style="width:0%; background:#0284c7;"></div>
           </div>
@@ -800,10 +973,13 @@
         <!-- Project 2: Nội bộ Seta -->
         <div class="proj-card-item" id="proj-card-2" onclick="selectProject(2)">
           <div class="proj-top">
-            <span style="color:#c084fc;">🏢 Dự Án Nội Bộ Seta</span>
-            <span class="badge-count" id="badge-proj-2">0/0</span>
+            <span style="color:#c084fc; font-weight:700;" id="sidebar-proj-name-2">🏢 Dự Án Nội Bộ Seta</span>
+            <div style="display:flex; align-items:center; gap:5px;">
+              <button class="btn-icon" style="padding:1px 5px; font-size:0.7rem; color:#94a3b8; background:rgba(255,255,255,0.08); border-radius:3px;" title="Chỉnh sửa tên Dự án" onclick="event.stopPropagation(); openEditProjectModal(2)">✏️</button>
+              <span class="badge-count" id="badge-proj-2">0/0</span>
+            </div>
           </div>
-          <div style="font-size:0.75rem; color:#94a3b8;">App Tech, AI, Đào tạo, CSKH</div>
+          <div style="font-size:0.75rem; color:#94a3b8;" id="sidebar-proj-desc-2">App Tech, AI, Đào tạo, CSKH</div>
           <div class="proj-prog-bar">
             <div class="proj-prog-fill" id="fill-proj-2" style="width:0%; background:#9333ea;"></div>
           </div>
@@ -883,7 +1059,10 @@
         <div class="header-title-box">
           <button class="btn-menu-mobile" onclick="toggleMobileSidebar()">☰</button>
           <div>
-            <h1 class="header-title" id="view-title">🏥 Dự Án Seta Longevity - Bệnh Viện A</h1>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <h1 class="header-title" id="view-title">🏥 Dự Án Seta Longevity - Bệnh viện 19.8 - BCA</h1>
+              <button class="btn-icon" style="font-size:0.75rem; padding:2px 7px; border:1px solid var(--border); border-radius:4px; background:#ffffff; color:#0369a1; font-weight:600;" title="Đổi tên bệnh viện / dự án này" onclick="openEditProjectModal(state.selectedProjectId || 1)">✏️ Đổi tên</button>
+            </div>
             <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px;" id="view-sub">Theo dõi tiến độ triển khai tại 3 khoa lâm sàng</div>
           </div>
         </div>
@@ -894,6 +1073,9 @@
             <input type="text" id="search-input" placeholder="Tìm theo tên việc hoặc nhân sự..." oninput="render()">
           </div>
 
+          <button class="btn-header-tool" style="background:#f0fdf4; color:#166534; border-color:#bbf7d0; font-weight:700;" onclick="openLinkManagerModal('general')" title="Kho tài liệu & link sản phẩm dự án">
+            <span>📎</span> Link Tài Liệu
+          </button>
           <button class="btn-header-tool" onclick="exportToExcel()" title="Tải file Excel tiến độ">
             <span>📊</span> Xuất Excel
           </button>
@@ -925,9 +1107,9 @@
       <div class="filters-bar" id="filters-bar-row">
         <span>Dự án:</span>
         <select id="filter-project" onchange="onProjectSelectChange()">
-          <option value="all">Tất cả (Bệnh Viện A + Nội Bộ)</option>
-          <option value="1" selected>🏥 Seta Longevity - Bệnh Viện A</option>
-          <option value="2">🏢 Seta Longevity - Nội Bộ</option>
+          <option value="all">Tất cả (Bệnh viện 19.8 - BCA + Nội Bộ)</option>
+          <option value="1" selected id="opt-filter-proj-1">🏥 Seta Longevity - Bệnh viện 19.8 - BCA</option>
+          <option value="2" id="opt-filter-proj-2">🏢 Seta Longevity - Nội Bộ</option>
         </select>
         <span>Nhân sự:</span>
         <select id="filter-assignee" onchange="render()">
@@ -956,7 +1138,7 @@
         
         <!-- Quick Project Selector -->
         <select id="quick-project" style="border: 1px solid var(--border); border-radius: 6px; padding: 7px 8px; font-size: 0.8rem; outline: none; background: white; font-weight:600;">
-          <option value="1">🏥 Viện A</option>
+          <option value="1" id="quick-opt-proj-1">🏥 Bệnh viện 19.8 - BCA</option>
           <option value="2">🏢 Nội Bộ</option>
         </select>
 
@@ -1002,12 +1184,15 @@
 
       <!-- 2 Parallel Projects Comparison Box -->
       <div class="dash-compare-grid">
-        <!-- Box 1: Bệnh Viện A -->
+        <!-- Box 1: Bệnh viện 19.8 - BCA -->
         <div class="dash-box" style="border-top: 4px solid var(--proj-hosp);">
           <div class="dash-box-header">
             <div>
-              <div class="dash-box-title" style="color:var(--proj-hosp);">🏥 Seta Longevity - Bệnh Viện A</div>
-              <div style="font-size:0.78rem; color:var(--text-secondary);">3 Khoa: Tim Mạch, Nội Tiết, Ung Bướu</div>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <div class="dash-box-title" style="color:var(--proj-hosp);" id="dash-hosp-title">🏥 Seta Longevity - Bệnh viện 19.8 - BCA</div>
+                <button class="btn-icon" style="font-size:0.75rem; padding:1px 5px; border:1px solid #bae6fd; border-radius:3px; background:#f0f9ff;" title="Chỉnh sửa thông tin bệnh viện" onclick="openEditProjectModal(1)">✏️ Sửa</button>
+              </div>
+              <div style="font-size:0.78rem; color:var(--text-secondary);" id="dash-hosp-desc">3 Khoa: Tim Mạch, Nội Tiết, Ung Bướu</div>
             </div>
             <span style="font-size:1.4rem; font-weight:800; color:var(--proj-hosp);" id="dash-hosp-pct">0%</span>
           </div>
@@ -1034,8 +1219,11 @@
         <div class="dash-box" style="border-top: 4px solid var(--proj-internal);">
           <div class="dash-box-header">
             <div>
-              <div class="dash-box-title" style="color:var(--proj-internal);">🏢 Seta Longevity - Nội Bộ</div>
-              <div style="font-size:0.78rem; color:var(--text-secondary);">Tech App, AI, Đào tạo & Vận hành CSKH</div>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <div class="dash-box-title" style="color:var(--proj-internal);" id="dash-internal-title">🏢 Seta Longevity - Nội Bộ</div>
+                <button class="btn-icon" style="font-size:0.75rem; padding:1px 5px; border:1px solid #e9d5ff; border-radius:3px; background:#faf5ff;" title="Chỉnh sửa thông tin dự án" onclick="openEditProjectModal(2)">✏️ Sửa</button>
+              </div>
+              <div style="font-size:0.78rem; color:var(--text-secondary);" id="dash-internal-desc">Tech App, AI, Đào tạo & Vận hành CSKH</div>
             </div>
             <span style="font-size:1.4rem; font-weight:800; color:var(--proj-internal);" id="dash-internal-pct">0%</span>
           </div>
@@ -1078,7 +1266,7 @@
             </div>
             <div style="display:flex; align-items:center; gap:6px;">
               <span style="display:inline-block; width:12px; height:12px; border-radius:50%; background:#0284c7;"></span>
-              <span>Bệnh Viện A:</span> <strong id="chart-legend-hosp" style="color:#0284c7;">0%</strong>
+              <span id="chart-legend-hosp-lbl">Bệnh viện 19.8 - BCA:</span> <strong id="chart-legend-hosp" style="color:#0284c7;">0%</strong>
             </div>
             <div style="display:flex; align-items:center; gap:6px;">
               <span style="display:inline-block; width:12px; height:12px; border-radius:50%; background:#9333ea;"></span>
@@ -1155,8 +1343,8 @@
             <thead>
               <tr>
                 <th style="width:42px; text-align:center;">STT</th>
-                <th style="width:190px;">Hạng mục công việc lớn</th>
-                <th style="min-width:240px;">Hạng mục nhỏ (Nhiệm vụ cụ thể)</th>
+                <th style="width:190px;">Hạng mục lớn</th>
+                <th style="min-width:240px;">Hạng mục con (Nhiệm vụ cụ thể &amp; Sản phẩm)</th>
                 <th style="width:175px;">Người / Đơn vị phối hợp</th>
                 <th style="width:115px;">Thời gian</th>
                 <th style="width:105px;">Hạn chót</th>
@@ -1228,7 +1416,7 @@
         <div class="form-group">
           <label>Thuộc dự án (*)</label>
           <select id="task-modal-project">
-            <option value="1">🏥 Seta Longevity - Bệnh Viện A</option>
+            <option value="1">🏥 Seta Longevity - Bệnh viện 19.8 - BCA</option>
             <option value="2">🏢 Seta Longevity - Nội Bộ</option>
           </select>
         </div>
@@ -1291,6 +1479,22 @@
         <div id="modal-subtasks-container" style="margin-top: 6px; display: flex; flex-direction: column; gap: 4px;"></div>
       </div>
 
+      <!-- Attached Links / Documents -->
+      <div class="form-group" style="background:#f8fafc; border:1px solid var(--border); border-radius:8px; padding:10px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <label style="font-size:0.78rem; font-weight:700; margin-bottom:0; display:flex; align-items:center; gap:6px;">
+            <span>📎</span> Link tài liệu &amp; sản phẩm đính kèm:
+          </label>
+          <span style="font-size:0.7rem; color:var(--text-secondary);">(Drive, Sheet, File, Web...)</span>
+        </div>
+        <div style="display:flex; gap:6px; margin-bottom:6px;">
+          <input type="text" id="modal-link-title" placeholder="Tên tài liệu / sản phẩm..." style="flex:1; font-size:0.8rem; padding:6px 8px;">
+          <input type="text" id="modal-link-url" placeholder="https://..." style="flex:1.5; font-size:0.8rem; padding:6px 8px;">
+          <button type="button" class="btn-secondary" style="padding:6px 10px; font-size:0.8rem;" onclick="addModalLink()">+ Gắn</button>
+        </div>
+        <div id="modal-links-container" style="display:flex; flex-direction:column; gap:4px;"></div>
+      </div>
+
       <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
         <button class="btn-secondary" onclick="closeTaskModal()">Hủy</button>
         <button class="btn-primary" onclick="saveTaskModal()">💾 Lưu nhiệm vụ</button>
@@ -1310,7 +1514,7 @@
         <label>Đơn vị / Bộ phận</label>
         <select id="member-unit">
           <option value="Seta Nội Bộ">Seta Nội Bộ</option>
-          <option value="Bệnh Viện A">Bệnh Viện A (3 Khoa / KHTH)</option>
+          <option value="Bệnh viện 19.8 - BCA">Bệnh viện 19.8 - BCA (3 Khoa / KHTH)</option>
         </select>
       </div>
       <div class="form-group">
@@ -1400,7 +1604,7 @@
       </div>
 
       <div class="form-group">
-        <label>Hạng mục nhỏ (Nhiệm vụ cụ thể & sản phẩm đầu ra) (*)</label>
+        <label>Hạng mục con (Nhiệm vụ cụ thể &amp; sản phẩm đầu ra) (*)</label>
         <textarea id="wk-item-minor" rows="2" placeholder="Mô tả cụ thể đầu việc, đối tượng bệnh nhân hoặc tính năng cần hoàn tất..."></textarea>
       </div>
 
@@ -1439,6 +1643,22 @@
           <option value="done">🟢 Đã hoàn thành</option>
           <option value="postponed">⚪ Tạm hoãn</option>
         </select>
+      </div>
+
+      <!-- Attached Links in Weekly Item Modal -->
+      <div class="form-group" style="background:#f8fafc; border:1px solid var(--border); border-radius:8px; padding:10px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <label style="font-size:0.78rem; font-weight:700; margin-bottom:0; display:flex; align-items:center; gap:6px;">
+            <span>📎</span> Link tài liệu &amp; sản phẩm liên quan:
+          </label>
+          <span style="font-size:0.7rem; color:var(--text-secondary);">(Drive, Sheet, Web, File...)</span>
+        </div>
+        <div style="display:flex; gap:6px; margin-bottom:6px;">
+          <input type="text" id="wk-modal-link-title" placeholder="Tên tài liệu / sản phẩm..." style="flex:1; font-size:0.8rem; padding:6px 8px;">
+          <input type="text" id="wk-modal-link-url" placeholder="https://..." style="flex:1.5; font-size:0.8rem; padding:6px 8px;">
+          <button type="button" class="btn-secondary" style="padding:6px 10px; font-size:0.8rem;" onclick="addModalWeeklyLink()">+ Gắn</button>
+        </div>
+        <div id="wk-modal-links-container" style="display:flex; flex-direction:column; gap:4px;"></div>
       </div>
 
       <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
@@ -1565,6 +1785,140 @@
     </div>
   </div>
 
+  <!-- Custom Right-Click Context Menu -->
+  <div id="custom-context-menu" class="custom-context-menu">
+    <div class="context-menu-header" id="ctx-header">Tác vụ công việc</div>
+    <div class="context-menu-item primary" onclick="onContextAction('attach_link')">
+      <span>📎</span> <strong>Gắn / Xem Link Tài Liệu &amp; Sản Phẩm</strong>
+    </div>
+    <div id="ctx-quick-links-box"></div>
+    <div class="context-menu-divider"></div>
+    <div class="context-menu-item" onclick="onContextAction('edit')">
+      <span>✏️</span> Chỉnh sửa chi tiết
+    </div>
+    <div class="context-menu-item" onclick="onContextAction('copy_title')">
+      <span>📋</span> Sao chép tên việc
+    </div>
+    <div class="context-menu-item" onclick="onContextAction('toggle_status')">
+      <span id="ctx-toggle-status-icon">🔄</span> <span id="ctx-toggle-status-text">Đổi trạng thái</span>
+    </div>
+    <div class="context-menu-divider"></div>
+    <div class="context-menu-item del" onclick="onContextAction('delete')">
+      <span>🗑️</span> Xóa mục này
+    </div>
+  </div>
+
+  <!-- Modal Quản Lý Link Tài Liệu & Sản Phẩm (Link & Document Manager Modal) -->
+  <div class="modal-overlay" id="link-manager-modal">
+    <div class="modal-card" style="width: 650px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:10px;">
+        <div>
+          <h2 class="modal-title" style="margin:0; display:flex; align-items:center; gap:8px;">
+            <span>📎</span> Quản Lý Link Tài Liệu &amp; Sản Phẩm
+          </h2>
+          <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:2px;" id="link-modal-target-title">
+            Đang gắn cho nhiệm vụ...
+          </div>
+        </div>
+        <button class="btn-icon" onclick="closeLinkManagerModal()">✕</button>
+      </div>
+
+      <!-- Quick Preset Tag Buttons -->
+      <div>
+        <div style="font-size:0.72rem; font-weight:700; color:#64748b; margin-bottom:5px;">GỢI Ý TÊN TÀI LIỆU NHANH (NHẤP ĐỂ ĐIỀN):</div>
+        <div style="display:flex; flex-wrap:wrap; gap:5px;">
+          <button type="button" class="preset-tag-btn" onclick="applyLinkPreset('📁 Thư mục Google Drive')">📁 Google Drive</button>
+          <button type="button" class="preset-tag-btn" onclick="applyLinkPreset('📊 Báo cáo / Google Sheet')">📊 Báo Cáo Sheet</button>
+          <button type="button" class="preset-tag-btn" onclick="applyLinkPreset('📄 File Bệnh Án Mẫu')">📄 Bệnh Án Mẫu</button>
+          <button type="button" class="preset-tag-btn" onclick="applyLinkPreset('📦 Giới Thiệu Sản Phẩm Seta')">📦 Sản Phẩm Seta</button>
+          <button type="button" class="preset-tag-btn" onclick="applyLinkPreset('💊 Cẩm Nang Thiết Bị Đo')">💊 Cẩm Nang Thiết Bị</button>
+          <button type="button" class="preset-tag-btn" onclick="applyLinkPreset('📑 Hợp Đồng / Quyết Định')">📑 Hợp Đồng</button>
+          <button type="button" class="preset-tag-btn" onclick="applyLinkPreset('💬 Nhóm Zalo Bệnh Viện 19.8')">💬 Nhóm Zalo</button>
+        </div>
+      </div>
+
+      <!-- Add New Link Form -->
+      <div style="background:#f8fafc; border:1px solid var(--border); border-radius:8px; padding:12px; display:flex; flex-direction:column; gap:8px;">
+        <div style="font-size:0.76rem; font-weight:700; color:#0f172a;">+ Thêm Đường Link Mới:</div>
+        <div style="display:grid; grid-template-columns: 1fr 1.3fr auto; gap:8px; align-items:center;">
+          <input type="text" id="link-add-title" placeholder="Tên tài liệu / sản phẩm..." style="font-size:0.8rem; padding:7px 10px;">
+          <input type="text" id="link-add-url" placeholder="Dán đường link (https://...)..." style="font-size:0.8rem; padding:7px 10px;">
+          <button class="btn-primary" style="padding:7px 14px; font-size:0.82rem; white-space:nowrap; background:#0284c7;" onclick="addNewLinkToTarget()">
+            + Gắn Link
+          </button>
+        </div>
+      </div>
+
+      <!-- Attached Links List -->
+      <div>
+        <div style="font-size:0.76rem; font-weight:700; color:#475569; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
+          <span>DANH SÁCH LINK ĐÃ GẮN (<span id="link-modal-count">0</span>):</span>
+          <span style="font-size:0.7rem; color:#64748b;">(Bấm để mở tab mới hoặc sao chép)</span>
+        </div>
+        <div id="link-modal-list-box" style="display:flex; flex-direction:column; gap:6px; max-height:220px; overflow-y:auto; padding-right:2px;">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:10px; margin-top:4px;">
+        <div style="font-size:0.72rem; color:#64748b;">
+          💡 <em>Mẹo: Bạn có thể chuột phải vào bất kỳ công việc nào để gắn hoặc mở link nhanh bất kỳ lúc nào!</em>
+        </div>
+        <button class="btn-primary" onclick="closeLinkManagerModal()">Xong</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Chỉnh Sửa Tên Dự Án / Bệnh Viện (Project & Hospital Rename Modal) -->
+  <div class="modal-overlay" id="project-edit-modal">
+    <div class="modal-card" style="width: 520px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:10px;">
+        <h2 class="modal-title" style="margin:0; display:flex; align-items:center; gap:8px;">
+          <span>🏥</span> Chỉnh Sửa Thông Tin Bệnh Viện / Dự Án
+        </h2>
+        <button class="btn-icon" onclick="closeEditProjectModal()">✕</button>
+      </div>
+
+      <input type="hidden" id="prj-edit-id" value="1">
+
+      <div class="form-group">
+        <label>Tên Bệnh viện / Đơn vị y tế (Tên ngắn gọn) (*):</label>
+        <input type="text" id="prj-edit-short" placeholder="Ví dụ: Bệnh viện 19.8 - BCA">
+        <div style="font-size:0.72rem; color:var(--text-secondary);">Tên này sẽ hiển thị trên thẻ dự án, báo cáo PDF, bộ lọc và các khoa phòng.</div>
+      </div>
+
+      <div class="form-group">
+        <label>Tên dự án đầy đủ (*):</label>
+        <input type="text" id="prj-edit-name" placeholder="Ví dụ: Seta Longevity - Bệnh viện 19.8 - BCA">
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+        <div class="form-group">
+          <label>Mã ký hiệu dự án (Code):</label>
+          <input type="text" id="prj-edit-code" placeholder="Ví dụ: PRJ-BV-198">
+        </div>
+        <div class="form-group">
+          <label>Biểu tượng (Icon):</label>
+          <input type="text" id="prj-edit-icon" placeholder="Ví dụ: 🏥">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Mô tả phạm vi / Các khoa triển khai:</label>
+        <textarea id="prj-edit-desc" rows="2" placeholder="Ví dụ: Triển khai thí điểm tại 3 khoa lâm sàng: Tim Mạch, Nội Tiết, Ung Bướu"></textarea>
+      </div>
+
+      <div style="background:#f0f9ff; border:1px solid #bae6fd; border-radius:6px; padding:10px; font-size:0.75rem; color:#0369a1; line-height:1.4;">
+        💡 <strong>Tự động đồng bộ:</strong> Khi bạn đổi tên tại đây, toàn bộ giao diện, các khoa lâm sàng, biểu đồ tiến độ và văn bản báo cáo PDF xuất ra sẽ tự động cập nhật ngay lập tức theo tên mới.
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:6px;">
+        <button class="btn-secondary" onclick="closeEditProjectModal()">Hủy</button>
+        <button class="btn-primary" style="background:#0284c7;" onclick="saveProjectModal()">💾 Lưu Thay Đổi</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Hidden Printable Container (Only visible during @media print) -->
   <div id="report-printable-area"></div>
 
@@ -1595,7 +1949,11 @@
             deadline: "29/10/2026",
             cost: 6500000,
             proposal: "Đề nghị Phòng KHTH bố trí 01 bàn hướng dẫn tiếp đón tại sảnh phòng khám Tim mạch từ 7h30 sáng",
-            status: "doing"
+            status: "doing",
+            links: [
+              { id: 1, title: "📁 Hồ sơ Onboarding 20 BN Tim Mạch", url: "https://drive.google.com/drive/folders/seta-198-tim-mach", icon: "📁" },
+              { id: 2, title: "📦 Cẩm Nang Máy Đo Huyết Áp Omron", url: "https://seta.vn/docs/omron-bluetooth-guide.pdf", icon: "📦" }
+            ]
           },
           {
             id: 2,
@@ -1606,18 +1964,25 @@
             deadline: "30/10/2026",
             cost: 3000000,
             proposal: "Cần Khoa Dược & KHTH thẩm định danh mục thuốc insulin để đồng bộ mã thuốc trên hệ thống",
-            status: "planning"
+            status: "planning",
+            links: [
+              { id: 1, title: "📊 Nhật Ký Đường Huyết Sheet", url: "https://docs.google.com/spreadsheets/d/seta-glycemic-log-198", icon: "📊" },
+              { id: 2, title: "📄 Quy Trình Báo Động Khẩn Cấp", url: "https://seta.vn/docs/ha-duong-huyet-sos.pdf", icon: "📄" }
+            ]
           },
           {
             id: 3,
             major: "🏢 Công Nghệ AI & Vận Hành App",
             minor: "Kiểm thử mô hình AI lọc báo động giả (False Alarm) cho cơn loạn nhịp tim ngoại tâm thu; phát hành bản cập nhật App v1.0.4",
-            collaborator: "Kỹ sư AI Seta + Bác sĩ Tim Mạch Viện A",
+            collaborator: "Kỹ sư AI Seta + Bác sĩ Tim Mạch Viện 19.8 - BCA",
             startDate: "26/10/2026",
             deadline: "31/10/2026",
             cost: 12000000,
             proposal: "Xin trích xuất mẫu log 50 ca lâm sàng ẩn danh để chạy benchmark đo độ chính xác",
-            status: "doing"
+            status: "doing",
+            links: [
+              { id: 1, title: "📱 Bản Dựng TestFlight App v1.0.4", url: "https://testflight.apple.com/join/seta-app", icon: "📱" }
+            ]
           },
           {
             id: 4,
@@ -1628,29 +1993,39 @@
             deadline: "28/10/2026",
             cost: 4000000,
             proposal: "Đề nghị Trưởng phòng KHTH gửi giấy triệu tập điều dưỡng 3 khoa tham gia đầy đủ",
-            status: "done"
+            status: "done",
+            links: [
+              { id: 1, title: "💬 Nhóm Zalo Điều Dưỡng Viện 19.8", url: "https://zalo.me/g/seta-bv198-dieu-duong", icon: "💬" },
+              { id: 2, title: "📄 Slide Đào Tạo Điều Dưỡng (PDF)", url: "https://seta.vn/training/dieu-duong-198.pdf", icon: "📄" }
+            ]
           },
           {
             id: 5,
             major: "🏢 Chăm Sóc Khách Hàng & CSKH",
             minor: "Vận hành Hotline kỹ thuật riêng 24/7 giải đáp thắc mắc người bệnh lớn tuổi sử dụng thiết bị đo huyết áp",
-            collaborator: "Đội CSKH Seta + Tổ Tiếp đón Viện A",
+            collaborator: "Đội CSKH Seta + Tổ Tiếp đón Viện 19.8 - BCA",
             startDate: "26/10/2026",
             deadline: "29/10/2026",
             cost: 5500000,
             proposal: "Cung cấp danh bạ số máy bàn nội bộ khoa để chuyển tiếp kịp thời khi có ca cần cấp cứu chuyên môn",
-            status: "doing"
+            status: "doing",
+            links: [
+              { id: 1, title: "📞 Kịch Bản CSKH & Hotline 24/7", url: "https://seta.vn/docs/cskh-script.pdf", icon: "📞" }
+            ]
           },
           {
             id: 6,
             major: "📊 Quản Trị & Giao Ban Tiến Độ",
-            minor: "Tổng hợp slide báo cáo tuần và bảng số liệu tuân thủ đo gửi Ban Giám Đốc Bệnh Viện A",
+            minor: "Tổng hợp slide báo cáo tuần và bảng số liệu tuân thủ đo gửi Ban Giám Đốc Bệnh viện 19.8 - BCA",
             collaborator: "Quản lý Dự án (Phương) + Phòng KHTH",
             startDate: "30/10/2026",
             deadline: "01/11/2026",
             cost: 0,
             proposal: "Đăng ký lịch họp giao ban sáng thứ 2 tuần tới vào chương trình nghị sự của Viện",
-            status: "planning"
+            status: "planning",
+            links: [
+              { id: 1, title: "📑 Báo Cáo Tiến Độ Giao Ban Viện 19.8", url: "https://drive.google.com/file/d/seta-bv198-report-w44", icon: "📑" }
+            ]
           }
         ]
       },
@@ -1672,29 +2047,36 @@
             deadline: "05/11/2026",
             cost: 5000000,
             proposal: "Khoa Ung bướu cử 01 điều dưỡng chuyên trách phối hợp trực nhật ký phản ứng thuốc",
-            status: "planning"
+            status: "planning",
+            links: [
+              { id: 1, title: "📄 Mẫu Phiếu Theo Dõi Hóa Trị", url: "https://seta.vn/forms/ung-buou-log.pdf", icon: "📄" }
+            ]
           },
           {
             id: 2,
             major: "🏢 Công Nghệ AI & Vận Hành App",
             minor: "Tích hợp API kết nối máy đo huyết áp Omron Bluetooth thế hệ mới và kiểm tra độ trễ đồng bộ",
-            collaborator: "Tech Lead Seta + Phòng CNTT Viện A",
+            collaborator: "Tech Lead Seta + Phòng CNTT Viện 19.8 - BCA",
             startDate: "03/11/2026",
             deadline: "06/11/2026",
             cost: 8000000,
             proposal: "Phòng CNTT mở port firewall cho dải IP máy chủ truyền dữ liệu sinh hiệu",
-            status: "planning"
+            status: "planning",
+            links: [
+              { id: 1, title: "📦 Tài Liệu API SDK Thiết Bị Đo", url: "https://seta.vn/developer/device-api", icon: "📦" }
+            ]
           },
           {
             id: 3,
             major: "📊 Quản Trị & Giao Ban Tiến Độ",
             minor: "Họp sơ kết tuần 1 thí điểm cùng đại diện 3 khoa lâm sàng & Phòng KHTH",
-            collaborator: "Ban Giám Đốc Viện A + Ban Lãnh Đạo Seta",
+            collaborator: "Ban Giám Đốc Viện 19.8 - BCA + Ban Lãnh Đạo Seta",
             startDate: "06/11/2026",
             deadline: "06/11/2026",
             cost: 3500000,
-            proposal: "Bố trí phòng họp trực tuyến kết hợp trực tiếp tại Hội trường Bệnh viện A",
-            status: "planning"
+            proposal: "Bố trí phòng họp trực tuyến kết hợp trực tiếp tại Hội trường Bệnh viện 19.8 - BCA",
+            status: "planning",
+            links: []
           }
         ]
       },
@@ -1716,7 +2098,10 @@
             deadline: "22/10/2026",
             cost: 5000000,
             proposal: "Đã hoàn thành ký biên bản thống nhất ngưỡng cảnh báo vàng/đỏ",
-            status: "done"
+            status: "done",
+            links: [
+              { id: 1, title: "📑 Biên Bản Thống Nhất Chỉ Số Y Tế", url: "https://drive.google.com/file/d/seta-bien-ban-chuyen-mon", icon: "📑" }
+            ]
           },
           {
             id: 2,
@@ -1727,7 +2112,10 @@
             deadline: "24/10/2026",
             cost: 15000000,
             proposal: "Đã được Apple & Google duyệt phát hành thành công",
-            status: "done"
+            status: "done",
+            links: [
+              { id: 1, title: "📱 Google Play Link Test", url: "https://play.google.com/store/apps/details?id=vn.seta.longevity", icon: "📱" }
+            ]
           },
           {
             id: 3,
@@ -1737,17 +2125,20 @@
             startDate: "21/10/2026",
             deadline: "24/10/2026",
             cost: 7200000,
-            proposal: "Đã bàn giao 100 cuốn tại kho phòng KHTH Viện A",
-            status: "done"
+            proposal: "Đã bàn giao 100 cuốn tại kho phòng KHTH Viện 19.8 - BCA",
+            status: "done",
+            links: [
+              { id: 1, title: "💊 Bản PDF In Ấn Cẩm Nang 200 Trang", url: "https://seta.vn/docs/cam-nang-in-an.pdf", icon: "💊" }
+            ]
           }
         ]
       }
     ];
 
-    // Template with 2 parallel projects: Hospital A & Internal Seta
+    // Template with 2 parallel projects: Hospital 19.8 - BCA & Internal Seta
     const SETA_PARALLEL_TEMPLATE = {
       activeFilter: "all",
-      selectedProjectId: 1, // Default: Hospital A
+      selectedProjectId: 1, // Default: Hospital 19.8 - BCA
       selectedMemberId: null,
       selectedWeekId: "2026-W44",
       weeklyPlans: DEFAULT_WEEKLY_PLANS,
@@ -1755,23 +2146,23 @@
       editingTaskId: null,
       modalSubtasksCache: [],
       projects: [
-        { id: 1, code: "PRJ-BV-A", name: "Seta Longevity - Bệnh Viện A", desc: "Triển khai thí điểm tại 3 khoa lâm sàng: Tim Mạch, Nội Tiết, Ung Bướu", icon: "🏥" },
-        { id: 2, code: "PRJ-SETA-INT", name: "Seta Longevity - Nội Bộ", desc: "Phát triển công nghệ App, mô hình AI, đào tạo và vận hành CSKH Seta", icon: "🏢" }
+        { id: 1, code: "PRJ-BV-198", name: "Seta Longevity - Bệnh viện 19.8 - BCA", shortName: "Bệnh viện 19.8 - BCA", desc: "Triển khai thí điểm tại 3 khoa lâm sàng: Tim Mạch, Nội Tiết, Ung Bướu", icon: "🏥" },
+        { id: 2, code: "PRJ-SETA-INT", name: "Seta Longevity - Nội Bộ", shortName: "Seta Nội Bộ", desc: "Phát triển công nghệ App, mô hình AI, đào tạo và vận hành CSKH Seta", icon: "🏢" }
       ],
       members: [
         { id: 1, name: "Phương (Quản lý dự án)", unit: "Seta Nội Bộ", role: "Project Manager", color: "#2563eb" },
         { id: 2, name: "Kỹ sư Tech & AI", unit: "Seta Nội Bộ", role: "Trưởng nhóm Công nghệ", color: "#7c3aed" },
         { id: 3, name: "Chuyên viên Đào tạo & CSKH", unit: "Seta Nội Bộ", role: "Vận hành & Hỗ trợ", color: "#ea580c" },
-        { id: 4, name: "Phòng KHTH (Viện A)", unit: "Bệnh Viện A", role: "Điều phối Bệnh viện", color: "#0284c7" },
-        { id: 5, name: "BS. Trưởng Khoa Tim Mạch", unit: "Bệnh Viện A", role: "Chuyên môn Tim mạch", color: "#e11d48" },
-        { id: 6, name: "BS. Trưởng Khoa Nội Tiết", unit: "Bệnh Viện A", role: "Chuyên môn Nội tiết", color: "#16a34a" },
-        { id: 7, name: "BS. Trưởng Khoa Ung Bướu", unit: "Bệnh Viện A", role: "Chuyên môn Ung bướu", color: "#9333ea" },
-        { id: 8, name: "Điều dưỡng Trưởng Điều Phối", unit: "Bệnh Viện A", role: "Giám sát ca bệnh", color: "#d97706" }
+        { id: 4, name: "Phòng KHTH (Viện 19.8)", unit: "Bệnh viện 19.8 - BCA", role: "Điều phối Bệnh viện", color: "#0284c7" },
+        { id: 5, name: "BS. Trưởng Khoa Tim Mạch", unit: "Bệnh viện 19.8 - BCA", role: "Chuyên môn Tim mạch", color: "#e11d48" },
+        { id: 6, name: "BS. Trưởng Khoa Nội Tiết", unit: "Bệnh viện 19.8 - BCA", role: "Chuyên môn Nội tiết", color: "#16a34a" },
+        { id: 7, name: "BS. Trưởng Khoa Ung Bướu", unit: "Bệnh viện 19.8 - BCA", role: "Chuyên môn Ung bướu", color: "#9333ea" },
+        { id: 8, name: "Điều dưỡng Trưởng Điều Phối", unit: "Bệnh viện 19.8 - BCA", role: "Giám sát ca bệnh", color: "#d97706" }
       ],
       tasks: [
-        /* DỰ ÁN 1: BỆNH VIỆN A */
+        /* DỰ ÁN 1: BỆNH VIỆN 19.8 - BCA */
         {
-          id: 1, projectId: 1, memberId: 4, code: "BVA-01",
+          id: 1, projectId: 1, memberId: 4, code: "BV198-01",
           title: "Thẩm định danh mục bệnh lý & biểu mẫu dữ liệu 3 khoa",
           desc: "Phòng KHTH chủ trì họp cùng 3 khoa để thống nhất ngưỡng cảnh báo và form nhập chỉ số.",
           type: "planned", priority: "high", status: "completed", completed: true, due: getTodayStr(),
@@ -1779,55 +2170,69 @@
             { title: "Duyệt form theo dõi huyết áp & nhịp tim (Khoa Tim mạch)", done: true },
             { title: "Duyệt form theo dõi đường huyết & insulin (Khoa Nội tiết)", done: true },
             { title: "Duyệt bảng câu hỏi tác dụng phụ (Khoa Ung bướu)", done: true }
+          ],
+          links: [
+            { id: 1, title: "📁 Hồ sơ bệnh án 3 khoa", url: "https://drive.google.com/drive/folders/seta-bv198-records", icon: "📁" },
+            { id: 2, title: "📄 Biểu mẫu thẩm định KHTH", url: "https://docs.google.com/document/d/seta-tham-dinh-198", icon: "📄" }
           ]
         },
         {
-          id: 2, projectId: 1, memberId: 4, code: "BVA-02",
+          id: 2, projectId: 1, memberId: 4, code: "BV198-02",
           title: "Tổ chức tập huấn và đào tạo quy trình cho Bác sĩ & Điều dưỡng",
           desc: "Đào tạo nhân sự 3 khoa cách sử dụng màn hình Central Control và phối hợp tiếp nhận cảnh báo.",
           type: "planned", priority: "high", status: "doing", completed: false, due: getTodayStr(),
           subtasks: [
             { title: "Tập huấn cho Bác sĩ đánh giá và can thiệp", done: true },
             { title: "Tập huấn cho Điều dưỡng theo dõi và gọi điện hỗ trợ", done: false }
+          ],
+          links: [
+            { id: 1, title: "💬 Nhóm Zalo Điều Phối 19.8", url: "https://zalo.me/g/seta-bv198-dieu-duong", icon: "💬" }
           ]
         },
         {
-          id: 3, projectId: 1, memberId: 5, code: "BVA-03",
+          id: 3, projectId: 1, memberId: 5, code: "BV198-03",
           title: "Triển khai thí điểm tại Khoa Tim Mạch (Onboarding 30 bệnh nhân)",
           desc: "Hướng dẫn bệnh nhân tim mạch cài app, đo huyết áp định kỳ và kiểm thử cảnh báo đau ngực.",
           type: "planned", priority: "high", status: "doing", completed: false, due: "",
           subtasks: [
             { title: "Lập danh sách 30 bệnh nhân đồng ý tham gia", done: true },
             { title: "Cài đặt ứng dụng và hướng dẫn người bệnh đo", done: false }
+          ],
+          links: [
+            { id: 1, title: "📦 Cẩm nang máy đo Omron", url: "https://seta.vn/docs/omron-bluetooth-guide.pdf", icon: "📦" }
           ]
         },
         {
-          id: 4, projectId: 1, memberId: 6, code: "BVA-04",
+          id: 4, projectId: 1, memberId: 6, code: "BV198-04",
           title: "Triển khai thí điểm tại Khoa Nội Tiết (Bệnh nhân Đái tháo đường)",
           desc: "Theo dõi tuân thủ tiêm thuốc, chỉ số đường huyết trước/sau ăn và cảnh báo hạ đường huyết.",
           type: "planned", priority: "medium", status: "todo", completed: false, due: "",
-          subtasks: []
+          subtasks: [],
+          links: []
         },
         {
-          id: 5, projectId: 1, memberId: 7, code: "BVA-05",
+          id: 5, projectId: 1, memberId: 7, code: "BV198-05",
           title: "Triển khai thí điểm tại Khoa Ung Bướu (Bệnh nhân hóa xạ trị)",
           desc: "Theo dõi mệt mỏi, nôn ói, dinh dưỡng và phát hiện sớm các cơn sốt nhiễm trùng sau truyền thuốc.",
           type: "planned", priority: "medium", status: "todo", completed: false, due: "",
-          subtasks: []
+          subtasks: [],
+          links: []
         },
         {
-          id: 6, projectId: 1, memberId: 8, code: "BVA-06",
+          id: 6, projectId: 1, memberId: 8, code: "BV198-06",
           title: "Trực theo dõi cảnh báo bất thường & Điều phối hỗ trợ hàng ngày",
           desc: "Điều dưỡng trực ca nhận cảnh báo vàng/đỏ, liên hệ bệnh nhân và báo cáo bác sĩ can thiệp.",
           type: "planned", priority: "high", status: "doing", completed: false, due: "",
-          subtasks: []
+          subtasks: [],
+          links: []
         },
         {
-          id: 7, projectId: 1, memberId: 4, code: "BVA-07",
+          id: 7, projectId: 1, memberId: 4, code: "BV198-07",
           title: "Họp giao ban tuần đánh giá tỷ lệ tuân thủ cùng Ban Giám Đốc",
           desc: "Báo cáo số ca bệnh nhân hoạt động, số biến cố được ngăn ngừa và các vướng mắc cần giải quyết.",
           type: "planned", priority: "medium", status: "todo", completed: false, due: "",
-          subtasks: []
+          subtasks: [],
+          links: []
         },
 
         /* DỰ ÁN 2: NỘI BỘ SETA */
@@ -1839,6 +2244,10 @@
           subtasks: [
             { title: "Đưa app lên TestFlight và Google Play Store", done: true },
             { title: "Kiểm tra mã hóa thông tin chỉ số sinh hiệu", done: true }
+          ],
+          links: [
+            { id: 1, title: "📱 App Store TestFlight", url: "https://testflight.apple.com/join/seta-app", icon: "📱" },
+            { id: 2, title: "📦 Danh mục thiết bị Seta", url: "https://seta.vn/products/longevity-devices", icon: "📦" }
           ]
         },
         {
@@ -1847,37 +2256,44 @@
           desc: "Hiệu chỉnh thuật toán phát hiện sớm, giảm tỷ lệ báo động giả (False Positives) cho 3 khoa.",
           type: "planned", priority: "high", status: "doing", completed: false, due: "",
           subtasks: [
-            { title: "Thu thập mẫu phản hồi từ bác sĩ bệnh viện A", done: true },
+            { title: "Thu thập mẫu phản hồi từ bác sĩ bệnh viện 19.8", done: true },
             { title: "Cập nhật ngưỡng AI nhận diện cơn loạn nhịp tim", done: false }
-          ]
+          ],
+          links: []
         },
         {
           id: 10, projectId: 2, memberId: 3, code: "SET-03",
           title: "Biên soạn Cẩm nang hướng dẫn cho 6 nhóm đối tượng",
           desc: "Tài liệu cho Bác sĩ, Điều dưỡng, CSKH, KHTH, Bệnh nhân và Người nhà người bệnh.",
           type: "planned", priority: "medium", status: "completed", completed: true, due: "",
-          subtasks: []
+          subtasks: [],
+          links: [
+            { id: 1, title: "💊 Cẩm nang 6 nhóm đối tượng (PDF)", url: "https://seta.vn/docs/cam-nang-6-nhom.pdf", icon: "💊" }
+          ]
         },
         {
           id: 11, projectId: 2, memberId: 3, code: "SET-04",
           title: "Xây dựng kịch bản CSKH hỗ trợ kỹ thuật cho bệnh nhân lớn tuổi",
           desc: "Quy trình trực điện thoại giải quyết quên mật khẩu, lỗi bluetooth máy đo huyết áp.",
           type: "planned", priority: "medium", status: "doing", completed: false, due: "",
-          subtasks: []
+          subtasks: [],
+          links: []
         },
         {
           id: 12, projectId: 2, memberId: 1, code: "SET-05",
           title: "Xử lý phát sinh: Tích hợp máy đo đường huyết không tương thích",
-          desc: "Bệnh nhân viện A sử dụng model máy đo cá nhân cũ cần viết thêm API kết nối.",
+          desc: "Bệnh nhân viện 19.8 sử dụng model máy đo cá nhân cũ cần viết thêm API kết nối.",
           type: "emergent", priority: "high", status: "doing", completed: false, due: "",
-          subtasks: []
+          subtasks: [],
+          links: []
         },
         {
           id: 13, projectId: 2, memberId: 1, code: "SET-06",
           title: "Báo cáo tiến độ nội bộ & Quản lý ngân sách giai đoạn thí điểm",
           desc: "Họp ban lãnh đạo Seta hàng tuần đánh giá chi phí, timeline và chuẩn bị kế hoạch nhân rộng.",
           type: "planned", priority: "medium", status: "todo", completed: false, due: "",
-          subtasks: []
+          subtasks: [],
+          links: []
         }
       ]
     };
@@ -1920,25 +2336,552 @@
       if (raw) {
         try { state = Object.assign(state, JSON.parse(raw)); } catch(e){}
       }
+
+      // Tự động nâng cấp / đồng bộ đổi tên sang Bệnh viện 19.8 - BCA
+      if (state.projects && state.projects[0]) {
+        if (!state.projects[0].shortName || state.projects[0].name.includes("Bệnh Viện A") || state.projects[0].code === "PRJ-BV-A") {
+          state.projects[0].name = "Seta Longevity - Bệnh viện 19.8 - BCA";
+          state.projects[0].shortName = "Bệnh viện 19.8 - BCA";
+          state.projects[0].code = "PRJ-BV-198";
+          state.projects[0].icon = "🏥";
+        }
+      }
+      if (state.projects && state.projects[1] && !state.projects[1].shortName) {
+        state.projects[1].shortName = "Seta Nội Bộ";
+      }
+
+      if (state.members) {
+        state.members.forEach(m => {
+          if (m.unit && (m.unit.includes("Bệnh Viện A") || m.unit.includes("Viện A"))) {
+            m.unit = "Bệnh viện 19.8 - BCA";
+          }
+          if (m.name && m.name.includes("(Viện A)")) {
+            m.name = m.name.replace("(Viện A)", "(Viện 19.8)");
+          }
+        });
+      }
+
+      // Đảm bảo mọi task đều có mảng links
+      if (state.tasks) {
+        state.tasks.forEach(t => {
+          if (!t.links) t.links = [];
+        });
+      }
+
       if (!state.weeklyPlans || !state.weeklyPlans.length) {
         state.weeklyPlans = JSON.parse(JSON.stringify(DEFAULT_WEEKLY_PLANS));
+      } else {
+        // Đảm bảo mọi hạng mục tuần đều có mảng links và cập nhật tên Viện 19.8
+        state.weeklyPlans.forEach(w => {
+          if (w.items) {
+            w.items.forEach(it => {
+              if (!it.links) it.links = [];
+              if (it.collaborator && it.collaborator.includes("Viện A")) {
+                it.collaborator = it.collaborator.replace(/Viện A/g, "Viện 19.8 - BCA");
+              }
+              if (it.minor && it.minor.includes("Bệnh Viện A")) {
+                it.minor = it.minor.replace(/Bệnh Viện A/g, "Bệnh viện 19.8 - BCA");
+              }
+              if (it.proposal && it.proposal.includes("Bệnh viện A")) {
+                it.proposal = it.proposal.replace(/Bệnh viện A/g, "Bệnh viện 19.8 - BCA");
+              }
+            });
+          }
+        });
       }
+
       if (!state.selectedWeekId) {
         state.selectedWeekId = "2026-W44";
       }
     }
+
     function saveState() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       renderCounters();
     }
 
     function resetSetaTemplate() {
-      if (confirm("Nạp lại dữ liệu mẫu song song (Bệnh Viện A & Seta Nội Bộ)?")) {
+      if (confirm("Nạp lại dữ liệu mẫu song song (Bệnh viện 19.8 - BCA & Seta Nội Bộ)?")) {
         state = JSON.parse(JSON.stringify(SETA_PARALLEL_TEMPLATE));
         saveState();
+        updateProjectUI();
         render();
-        showToast("Đã nạp toàn bộ cấu trúc 2 dự án song song!");
+        showToast("Đã nạp toàn bộ cấu trúc 2 dự án song song (Bệnh viện 19.8 - BCA)!");
       }
+    }
+
+    /* Quản lý tên dự án & Bệnh viện động */
+    function getProjectHospitalName() {
+      const p1 = state.projects && state.projects.find(p => p.id === 1);
+      return (p1 && (p1.shortName || p1.name)) || "Bệnh viện 19.8 - BCA";
+    }
+    function getProjectFullHospitalName() {
+      const p1 = state.projects && state.projects.find(p => p.id === 1);
+      return (p1 && p1.name) || "Seta Longevity - Bệnh viện 19.8 - BCA";
+    }
+    function getProjectName(id) {
+      const p = state.projects && state.projects.find(x => x.id === id);
+      return p ? (p.shortName || p.name) : (id === 1 ? "Bệnh viện 19.8 - BCA" : "Seta Nội Bộ");
+    }
+    function getProjectIcon(id) {
+      const p = state.projects && state.projects.find(x => x.id === id);
+      return (p && p.icon) || (id === 1 ? "🏥" : "🏢");
+    }
+
+    function updateProjectUI() {
+      const p1 = state.projects.find(p => p.id === 1);
+      const p2 = state.projects.find(p => p.id === 2);
+      const hospShort = p1 ? (p1.shortName || p1.name) : "Bệnh viện 19.8 - BCA";
+      const hospIcon = (p1 && p1.icon) || "🏥";
+      const hospDesc = (p1 && p1.desc) || "Triển khai thí điểm tại 3 khoa lâm sàng: Tim Mạch, Nội Tiết, Ung Bướu";
+
+      // 1. Sidebar Project 1
+      const sName1 = document.getElementById("sidebar-proj-name-1");
+      if (sName1) sName1.innerText = `${hospIcon} ${hospShort}`;
+      const sDesc1 = document.getElementById("sidebar-proj-desc-1");
+      if (sDesc1) sDesc1.innerText = hospDesc;
+
+      // 2. Sidebar Project 2
+      if (p2) {
+        const sName2 = document.getElementById("sidebar-proj-name-2");
+        if (sName2) sName2.innerText = `${p2.icon || '🏢'} ${p2.shortName || p2.name}`;
+      }
+
+      // 3. Dashboard Project 1 Box
+      const dTitle = document.getElementById("dash-hosp-title");
+      if (dTitle) dTitle.innerText = `${hospIcon} ${p1 ? p1.name : hospShort}`;
+      const dDesc = document.getElementById("dash-hosp-desc");
+      if (dDesc) dDesc.innerText = hospDesc;
+
+      // 4. Chart Legend Label
+      const cLegend = document.getElementById("chart-legend-hosp-lbl");
+      if (cLegend) cLegend.innerText = `${hospIcon} ${hospShort}`;
+
+      // 5. Filter Dropdown Options
+      const opt1 = document.querySelector("#filter-project option[value='1']");
+      if (opt1) opt1.innerText = `${hospIcon} ${hospShort}`;
+      const qOpt1 = document.getElementById("quick-opt-proj-1");
+      if (qOpt1) qOpt1.innerText = `${hospIcon} ${hospShort}`;
+
+      // 6. Header Title if looking at Project 1
+      if (currentView === 'tasks' && state.selectedProjectId === 1) {
+        const vTitle = document.getElementById("view-title");
+        if (vTitle) vTitle.innerText = `${hospIcon} ${p1 ? p1.name : hospShort}`;
+      }
+    }
+
+    function openEditProjectModal(pid = 1) {
+      const p = state.projects.find(x => x.id === pid) || state.projects[0];
+      document.getElementById("prj-edit-id").value = p.id;
+      document.getElementById("prj-edit-short").value = p.shortName || (p.id === 1 ? "Bệnh viện 19.8 - BCA" : "Seta Nội Bộ");
+      document.getElementById("prj-edit-name").value = p.name || "";
+      document.getElementById("prj-edit-code").value = p.code || "";
+      document.getElementById("prj-edit-icon").value = p.icon || (p.id === 1 ? "🏥" : "🏢");
+      document.getElementById("prj-edit-desc").value = p.desc || "";
+      document.getElementById("project-edit-modal").classList.add("open");
+    }
+
+    function closeEditProjectModal() {
+      document.getElementById("project-edit-modal").classList.remove("open");
+    }
+
+    function saveProjectModal() {
+      const pid = parseInt(document.getElementById("prj-edit-id").value) || 1;
+      const shortName = document.getElementById("prj-edit-short").value.trim();
+      const name = document.getElementById("prj-edit-name").value.trim();
+      const code = document.getElementById("prj-edit-code").value.trim();
+      const icon = document.getElementById("prj-edit-icon").value.trim() || (pid === 1 ? "🏥" : "🏢");
+      const desc = document.getElementById("prj-edit-desc").value.trim();
+
+      if (!shortName || !name) {
+        alert("Vui lòng nhập đầy đủ tên viết tắt và tên chính thức!");
+        return;
+      }
+
+      const p = state.projects.find(x => x.id === pid);
+      if (p) {
+        p.shortName = shortName;
+        p.name = name;
+        p.code = code;
+        p.icon = icon;
+        p.desc = desc;
+
+        if (pid === 1) {
+          state.members.forEach(m => {
+            if (m.unit.includes("Bệnh Viện A") || m.unit.includes("19.8")) {
+              m.unit = shortName;
+            }
+          });
+        }
+      }
+
+      saveState();
+      updateProjectUI();
+      closeEditProjectModal();
+      render();
+      if (currentView === 'dashboard') renderDashboard();
+      showToast(`Đã lưu thông tin: ${shortName}!`);
+    }
+
+    /* ==========================================================================
+       TÍNH NĂNG GẮN LINK TÀI LIỆU & SẢN PHẨM Ở MỌI VỊ TRÍ & MENU CHUỘT PHẢI
+       ========================================================================== */
+    let currentContextTarget = { type: null, id: null, planId: null };
+    let linkModalTarget = { type: null, id: null, planId: null };
+    let modalLinksCache = []; // Cache link khi tạo/sửa Task
+    let modalWeeklyLinksCache = []; // Cache link khi tạo/sửa Hạng mục tuần
+
+    function getTargetItemAndPlan(type, id, planId = null) {
+      if (type === 'task') {
+        const t = state.tasks.find(x => x.id === id);
+        return { item: t, plan: null };
+      } else if (type === 'weekly') {
+        const pId = planId || state.selectedWeekId;
+        const plan = state.weeklyPlans.find(w => w.id === pId) || getCurrentWeeklyPlan();
+        const it = plan && plan.items && plan.items.find(x => x.id === id);
+        return { item: it, plan };
+      }
+      return { item: null, plan: null };
+    }
+
+    function formatLinkTitle(l) {
+      if (!l || !l.title) return '';
+      const icon = l.icon || '🔗';
+      const cleanTitle = l.title.trim();
+      if (/^\p{Emoji}/u.test(cleanTitle)) {
+        return cleanTitle;
+      }
+      return `${icon} ${cleanTitle}`;
+    }
+
+    function getLinkOnlyTitle(l) {
+      if (!l || !l.title) return '';
+      return l.title.replace(/^\p{Emoji}\s*/u, '').trim();
+    }
+
+    // Mở Context Menu Chuột Phải
+    function openContextMenu(e, type, id, planId = null) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      currentContextTarget = { type, id, planId };
+
+      const menu = document.getElementById("custom-context-menu");
+      if (!menu) return;
+
+      let title = "";
+      let links = [];
+      let isDone = false;
+
+      if (type === 'task') {
+        const t = state.tasks.find(x => x.id === id);
+        if (!t) return;
+        title = `Nhiệm vụ: ${t.code} - ${t.title.slice(0, 30)}...`;
+        links = t.links || [];
+        isDone = !!t.completed;
+      } else if (type === 'weekly') {
+        const pId = planId || state.selectedWeekId;
+        const plan = state.weeklyPlans.find(w => w.id === pId);
+        const it = plan && plan.items && plan.items.find(x => x.id === id);
+        if (!it) return;
+        title = `Hạng mục: ${it.minor.slice(0, 30)}...`;
+        links = it.links || [];
+        isDone = (it.status === 'done');
+      }
+
+      document.getElementById("ctx-header").innerText = title;
+      const toggleTxt = document.getElementById("ctx-toggle-status-text");
+      const toggleIcon = document.getElementById("ctx-toggle-status-icon");
+      if (toggleTxt) toggleTxt.innerText = isDone ? "Đánh dấu chưa xong" : "Đánh dấu hoàn thành";
+      if (toggleIcon) toggleIcon.innerText = isDone ? "↩️" : "✅";
+
+      // Hiển thị danh sách link truy cập nhanh ngay trong context menu
+      const quickLinksBox = document.getElementById("ctx-quick-links-box");
+      if (quickLinksBox) {
+        if (links && links.length > 0) {
+          quickLinksBox.innerHTML = `
+            <div style="font-size:0.68rem; font-weight:700; color:#64748b; padding:4px 14px 2px 14px; text-transform:uppercase;">
+              Link đã gắn (${links.length}):
+            </div>
+            ${links.map(l => `
+              <a href="${l.url}" target="_blank" class="context-menu-item" style="color:#0369a1; text-decoration:none; padding:4px 14px;" onclick="closeContextMenu()">
+                <span>${l.icon || '🔗'}</span>
+                <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:200px;">${getLinkOnlyTitle(l)}</span>
+                <span style="font-size:0.68rem; color:#94a3b8; margin-left:auto;">↗</span>
+              </a>
+            `).join('')}
+          `;
+        } else {
+          quickLinksBox.innerHTML = "";
+        }
+      }
+
+      menu.style.display = "block";
+      const menuW = 270;
+      const menuH = menu.offsetHeight || 260;
+      let x = e ? e.clientX : window.innerWidth / 2;
+      let y = e ? e.clientY : window.innerHeight / 2;
+      if (x + menuW > window.innerWidth) x = window.innerWidth - menuW - 10;
+      if (y + menuH > window.innerHeight) y = window.innerHeight - menuH - 10;
+      menu.style.left = `${Math.max(10, x)}px`;
+      menu.style.top = `${Math.max(10, y)}px`;
+    }
+
+    function closeContextMenu() {
+      const menu = document.getElementById("custom-context-menu");
+      if (menu) menu.style.display = "none";
+    }
+
+    document.addEventListener("click", (e) => {
+      const menu = document.getElementById("custom-context-menu");
+      if (menu && menu.style.display === "block" && !menu.contains(e.target)) {
+        closeContextMenu();
+      }
+    });
+
+    function onContextAction(action) {
+      const { type, id, planId } = currentContextTarget;
+      closeContextMenu();
+      if (!type || !id) return;
+
+      if (action === 'attach_link') {
+        openLinkManagerModal(type, id, planId);
+      } else if (action === 'edit') {
+        if (type === 'task') openEditTaskModal(id);
+        else if (type === 'weekly') openNewWeeklyItemModal(id);
+      } else if (action === 'copy_title') {
+        let textToCopy = "";
+        if (type === 'task') {
+          const t = state.tasks.find(x => x.id === id);
+          if (t) textToCopy = `${t.code}: ${t.title}`;
+        } else {
+          const plan = state.weeklyPlans.find(w => w.id === (planId || state.selectedWeekId));
+          const it = plan && plan.items && plan.items.find(x => x.id === id);
+          if (it) textToCopy = `${it.major} - ${it.minor}`;
+        }
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          showToast("📋 Đã sao chép nội dung vào bộ nhớ tạm!");
+        }).catch(() => {
+          showToast(`Đã sao chép: ${textToCopy}`);
+        });
+      } else if (action === 'toggle_status') {
+        if (type === 'task') {
+          toggleTask(id);
+        } else if (type === 'weekly') {
+          const pId = planId || state.selectedWeekId;
+          const plan = state.weeklyPlans.find(w => w.id === pId);
+          const it = plan && plan.items && plan.items.find(x => x.id === id);
+          if (it) {
+            it.status = (it.status === 'done') ? 'doing' : 'done';
+            saveState();
+            renderWeeklyPlanSection();
+            showToast(it.status === 'done' ? "✅ Đã chuyển thành Hoàn thành!" : "🔄 Đã chuyển thành Đang làm!");
+          }
+        }
+      } else if (action === 'delete') {
+        if (type === 'task') deleteTask(id);
+        else if (type === 'weekly') deleteWeeklyItem(id);
+      }
+    }
+
+    // Modal Quản Lý Link Tài Liệu Universal
+    function openLinkManagerModal(type, id, planId = null) {
+      linkModalTarget = { type, id, planId };
+      const { item } = getTargetItemAndPlan(type, id, planId);
+      if (!item) return;
+
+      if (!item.links) item.links = [];
+
+      const labelEl = document.getElementById("link-modal-target-title");
+      if (labelEl) {
+        if (type === 'task') {
+          labelEl.innerHTML = `Nhiệm vụ: <strong style="color:#0284c7;">[${item.code}] ${item.title}</strong>`;
+        } else {
+          labelEl.innerHTML = `Hạng mục tuần: <strong style="color:#0284c7;">${item.minor}</strong>`;
+        }
+      }
+
+      document.getElementById("link-add-title").value = "";
+      document.getElementById("link-add-url").value = "";
+      renderLinkModalList();
+      document.getElementById("link-manager-modal").classList.add("open");
+    }
+
+    function closeLinkManagerModal() {
+      document.getElementById("link-manager-modal").classList.remove("open");
+      linkModalTarget = { type: null, id: null, planId: null };
+      render();
+      renderWeeklyPlanSection();
+    }
+
+    function applyLinkPreset(presetTitle) {
+      document.getElementById("link-add-title").value = presetTitle;
+      document.getElementById("link-add-url").focus();
+    }
+
+    function addNewLinkToTarget() {
+      const title = document.getElementById("link-add-title").value.trim();
+      let url = document.getElementById("link-add-url").value.trim();
+
+      if (!title) {
+        alert("Vui lòng nhập tên tài liệu hoặc sản phẩm!");
+        return;
+      }
+      if (!url) {
+        alert("Vui lòng nhập hoặc dán đường dẫn link!");
+        return;
+      }
+      if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("file://") && !url.startsWith("mailto:")) {
+        url = "https://" + url;
+      }
+
+      const { item } = getTargetItemAndPlan(linkModalTarget.type, linkModalTarget.id, linkModalTarget.planId);
+      if (!item) return;
+      if (!item.links) item.links = [];
+
+      let icon = "🔗";
+      const tLower = title.toLowerCase();
+      if (tLower.includes("drive") || tLower.includes("folder") || tLower.includes("thư mục")) icon = "📁";
+      else if (tLower.includes("sheet") || tLower.includes("excel") || tLower.includes("bảng")) icon = "📊";
+      else if (tLower.includes("doc") || tLower.includes("bệnh án") || tLower.includes("bản thảo")) icon = "📄";
+      else if (tLower.includes("sản phẩm") || tLower.includes("thiết bị") || tLower.includes("máy")) icon = "📦";
+      else if (tLower.includes("zalo") || tLower.includes("nhóm") || tLower.includes("chat")) icon = "💬";
+      else if (tLower.includes("hợp đồng") || tLower.includes("quyết định")) icon = "📑";
+
+      const newId = item.links.length ? Math.max(...item.links.map(x => x.id || 0)) + 1 : 1;
+      item.links.push({
+        id: newId,
+        title,
+        url,
+        icon,
+        createdAt: new Date().toISOString()
+      });
+
+      saveState();
+      document.getElementById("link-add-title").value = "";
+      document.getElementById("link-add-url").value = "";
+      renderLinkModalList();
+      showToast(`Đã gắn link: ${title}`);
+    }
+
+    function removeLinkFromTarget(linkId) {
+      const { item } = getTargetItemAndPlan(linkModalTarget.type, linkModalTarget.id, linkModalTarget.planId);
+      if (!item || !item.links) return;
+
+      item.links = item.links.filter(x => x.id !== linkId);
+      saveState();
+      renderLinkModalList();
+      showToast("Đã xóa link đính kèm!");
+    }
+
+    function copyLinkUrl(url) {
+      navigator.clipboard.writeText(url).then(() => {
+        showToast("📋 Đã sao chép link vào clipboard!");
+      });
+    }
+
+    function renderLinkModalList() {
+      const { item } = getTargetItemAndPlan(linkModalTarget.type, linkModalTarget.id, linkModalTarget.planId);
+      const container = document.getElementById("link-modal-list-box");
+      const countEl = document.getElementById("link-modal-count");
+      if (!container) return;
+
+      const links = (item && item.links) ? item.links : [];
+      if (countEl) countEl.innerText = links.length;
+
+      if (!links.length) {
+        container.innerHTML = `
+          <div style="text-align:center; padding:18px; color:#94a3b8; font-size:0.8rem; background:#f8fafc; border-radius:6px; border:1px dashed #cbd5e1;">
+            Chưa có link tài liệu hay sản phẩm nào được gắn. Nhập form phía trên để gắn link đầu tiên!
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = links.map(l => `
+        <div style="display:flex; justify-content:space-between; align-items:center; background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:6px 10px; transition:all 0.15s ease;">
+          <div style="display:flex; align-items:center; gap:8px; overflow:hidden; flex:1;">
+            <span style="font-size:1.1rem;">${l.icon || '🔗'}</span>
+            <div style="overflow:hidden;">
+              <a href="${l.url}" target="_blank" style="font-weight:700; color:#0284c7; text-decoration:none; font-size:0.82rem; display:block; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;" title="Mở link trong tab mới">
+                ${getLinkOnlyTitle(l)} ↗
+              </a>
+              <div style="font-size:0.68rem; color:#64748b; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:400px;">
+                ${l.url}
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:5px; margin-left:10px;">
+            <button class="btn-icon" style="padding:2px 6px; font-size:0.75rem;" title="Sao chép link" onclick="copyLinkUrl('${l.url}')">📋 Chép</button>
+            <button class="btn-icon del" style="padding:2px 6px; font-size:0.75rem;" title="Xóa link này" onclick="removeLinkFromTarget(${l.id})">🗑️</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Modal nhúng trong Task Modal
+    function addModalLink() {
+      const title = document.getElementById("modal-link-title").value.trim();
+      let url = document.getElementById("modal-link-url").value.trim();
+      if (!title || !url) { alert("Vui lòng nhập đầy đủ tên tài liệu và đường dẫn!"); return; }
+      if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("file://")) url = "https://" + url;
+      let icon = "🔗";
+      if (title.toLowerCase().includes("drive")) icon = "📁";
+      else if (title.toLowerCase().includes("sheet")) icon = "📊";
+      else if (title.toLowerCase().includes("sản phẩm") || title.toLowerCase().includes("thiết bị")) icon = "📦";
+      modalLinksCache.push({ id: Date.now(), title, url, icon });
+      document.getElementById("modal-link-title").value = "";
+      document.getElementById("modal-link-url").value = "";
+      renderModalLinks();
+    }
+    function removeModalLink(idx) {
+      modalLinksCache.splice(idx, 1);
+      renderModalLinks();
+    }
+    function renderModalLinks() {
+      const box = document.getElementById("modal-links-container");
+      if (!box) return;
+      box.innerHTML = modalLinksCache.map((l, idx) => `
+        <div style="display:flex; align-items:center; justify-content:space-between; background:#f0f9ff; border:1px solid #bae6fd; padding:3px 8px; border-radius:4px; font-size:0.76rem;">
+          <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:320px;">
+            <a href="${l.url}" target="_blank" style="color:#0284c7; font-weight:600; text-decoration:none;">${formatLinkTitle(l)}</a>
+          </span>
+          <button type="button" style="border:none; background:transparent; color:#dc2626; cursor:pointer;" onclick="removeModalLink(${idx})">✕</button>
+        </div>
+      `).join('');
+    }
+
+    // Modal nhúng trong Weekly Item Modal
+    function addModalWeeklyLink() {
+      const title = document.getElementById("wk-modal-link-title").value.trim();
+      let url = document.getElementById("wk-modal-link-url").value.trim();
+      if (!title || !url) { alert("Vui lòng nhập đầy đủ tên tài liệu và đường dẫn!"); return; }
+      if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("file://")) url = "https://" + url;
+      let icon = "🔗";
+      if (title.toLowerCase().includes("drive")) icon = "📁";
+      else if (title.toLowerCase().includes("sheet")) icon = "📊";
+      else if (title.toLowerCase().includes("sản phẩm") || title.toLowerCase().includes("thiết bị")) icon = "📦";
+      modalWeeklyLinksCache.push({ id: Date.now(), title, url, icon });
+      document.getElementById("wk-modal-link-title").value = "";
+      document.getElementById("wk-modal-link-url").value = "";
+      renderModalWeeklyLinks();
+    }
+    function removeModalWeeklyLink(idx) {
+      modalWeeklyLinksCache.splice(idx, 1);
+      renderModalWeeklyLinks();
+    }
+    function renderModalWeeklyLinks() {
+      const box = document.getElementById("wk-modal-links-container");
+      if (!box) return;
+      box.innerHTML = modalWeeklyLinksCache.map((l, idx) => `
+        <div style="display:flex; align-items:center; justify-content:space-between; background:#f0f9ff; border:1px solid #bae6fd; padding:3px 8px; border-radius:4px; font-size:0.76rem;">
+          <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:320px;">
+            <a href="${l.url}" target="_blank" style="color:#0284c7; font-weight:600; text-decoration:none;">${formatLinkTitle(l)}</a>
+          </span>
+          <button type="button" style="border:none; background:transparent; color:#dc2626; cursor:pointer;" onclick="removeModalWeeklyLink(${idx})">✕</button>
+        </div>
+      `).join('');
     }
 
     function switchView(view) {
@@ -1960,7 +2903,7 @@
         document.getElementById("dashboard-view").classList.add("show");
         document.getElementById("btn-view-tasks").classList.remove("active");
         document.getElementById("btn-view-dashboard").classList.add("active");
-        document.getElementById("view-title").innerText = "📊 Dashboard Toàn Cảnh: Bệnh Viện A & Nội Bộ";
+        document.getElementById("view-title").innerText = "📊 Dashboard Toàn Cảnh: " + getProjectHospitalName() + " & Nội Bộ";
         document.getElementById("view-sub").innerText = "So sánh tiến độ song song và đôn đốc nhiệm vụ trễ hạn";
         renderDashboard();
       }
@@ -2008,7 +2951,7 @@
         state.selectedProjectId = null;
         state.activeFilter = "all";
         document.querySelectorAll(".proj-card-item").forEach(el => el.classList.remove("active"));
-        document.getElementById("view-title").innerText = "📋 Toàn Bộ Nhiệm Vụ (Bệnh Viện A + Nội Bộ)";
+        document.getElementById("view-title").innerText = "📋 Toàn Bộ Nhiệm Vụ (" + getProjectHospitalName() + " + Nội Bộ)";
         document.getElementById("view-sub").innerText = "Xem đồng thời cả 2 dự án song song";
       } else {
         selectProject(parseInt(val));
@@ -2279,6 +3222,7 @@
         const m = state.members.find(x => x.id === t.memberId);
         const card = document.createElement("div");
         card.className = `task-card ${t.completed ? "completed" : ""}`;
+        card.oncontextmenu = (e) => { openContextMenu(e, 'task', t.id); };
         
         let dueClass = "";
         let dueText = t.due ? `📅 Hạn: ${t.due}` : "";
@@ -2288,8 +3232,8 @@
         }
 
         const projBadge = t.projectId === 1
-          ? `<span class="badge badge-proj-hosp">🏥 Bệnh Viện A</span>`
-          : `<span class="badge badge-proj-internal">🏢 Seta Nội Bộ</span>`;
+          ? `<span class="badge badge-proj-hosp">${getProjectIcon(1)} ${getProjectHospitalName()}</span>`
+          : `<span class="badge badge-proj-internal">${getProjectIcon(2)} ${getProjectName(2)}</span>`;
 
         const typeBadge = t.type === "emergent"
           ? `<span class="badge badge-emergent">⚡ Phát sinh</span>`
@@ -2322,6 +3266,17 @@
           `;
         }
 
+        // Attached links row preview
+        let linksHtml = "";
+        if (t.links && t.links.length > 0) {
+          linksHtml = `
+            <div class="task-links-row">
+              ${t.links.map(l => `<a href="${l.url}" target="_blank" class="task-link-badge" title="${l.url}" onclick="event.stopPropagation()">${formatLinkTitle(l)}</a>`).join('')}
+              <button class="btn-add-link-mini" onclick="event.stopPropagation(); openLinkManagerModal('task', ${t.id})" title="Thêm link khác">+</button>
+            </div>
+          `;
+        }
+
         card.innerHTML = `
           <div class="card-top">
             <div class="card-left">
@@ -2334,6 +3289,7 @@
               ${statusText}
             </div>
             <div class="card-actions">
+              <button class="btn-icon" title="Gắn/Xem link tài liệu & sản phẩm" onclick="openLinkManagerModal('task', ${t.id})">📎</button>
               <button class="btn-icon" title="Sửa chi tiết" onclick="openEditTaskModal(${t.id})">✏️</button>
               <button class="btn-icon del" title="Xóa" onclick="deleteTask(${t.id})">🗑️</button>
             </div>
@@ -2341,6 +3297,7 @@
           <div class="task-title">${t.title}</div>
           ${t.desc ? `<div class="task-desc">${t.desc}</div>` : ""}
           ${subHtml}
+          ${linksHtml}
           <div class="card-bottom">
             ${dueText ? `<span class="${dueClass}">${dueText}</span>` : ""}
           </div>
@@ -2746,7 +3703,7 @@
               <span style="font-size:0.72rem; color:#94a3b8; font-weight:normal;">(${modeName})</span>
             </div>
             <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:3px;">
-              <span style="color:#38bdf8;">🏥 Bệnh Viện A:</span>
+              <span style="color:#38bdf8;">${getProjectIcon(1)} ${getProjectHospitalName()}:</span>
               <strong style="color:#ffffff;">${hV}%</strong>
             </div>
             <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:3px;">
@@ -2906,14 +3863,24 @@
           ? `<span style="color:#b45309; font-weight:600;">📌 ${it.proposal}</span>`
           : `<span style="color:#94a3b8; font-style:italic;">-</span>`;
 
+        let wkLinksHtml = "";
+        if (it.links && it.links.length > 0) {
+          wkLinksHtml = `
+            <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:4px;">
+              ${it.links.map(l => `<a href="${l.url}" target="_blank" class="weekly-link-pill" title="${l.url}" onclick="event.stopPropagation()">${formatLinkTitle(l)}</a>`).join('')}
+            </div>
+          `;
+        }
+
         tbody.innerHTML += `
-          <tr>
+          <tr oncontextmenu="openContextMenu(event, 'weekly', ${it.id}, '${plan.id}'); return false;">
             <td style="text-align:center; font-weight:700; color:#64748b; background:#fbfcfe;">${idx + 1}</td>
             <td>
               <span class="excel-badge-major ${majorClass}">${it.major || 'Chung'}</span>
             </td>
             <td>
               <strong style="color:#0f172a;">${it.minor || ''}</strong>
+              ${wkLinksHtml}
             </td>
             <td>
               <span style="display:flex; align-items:center; gap:4px; font-weight:600; color:#1e293b;">
@@ -2938,6 +3905,7 @@
               </span>
             </td>
             <td style="text-align:center; white-space:nowrap;">
+              <button class="btn-icon" style="padding:2px 4px; font-size:0.8rem;" title="Gắn/Xem link tài liệu & sản phẩm" onclick="openLinkManagerModal('weekly', ${it.id}, '${plan.id}')">📎</button>
               <button class="btn-icon" style="padding:2px 4px; font-size:0.8rem;" title="Chỉnh sửa dòng" onclick="openNewWeeklyItemModal(${it.id})">✏️</button>
               <button class="btn-icon del" style="padding:2px 4px; font-size:0.8rem;" title="Xóa dòng" onclick="deleteWeeklyItem(${it.id})">🗑️</button>
             </td>
@@ -3015,6 +3983,7 @@
         document.getElementById("wk-item-deadline").value = it.deadline || "";
         document.getElementById("wk-item-proposal").value = it.proposal || "";
         document.getElementById("wk-item-status").value = it.status || "doing";
+        modalWeeklyLinksCache = (it.links && it.links.length) ? JSON.parse(JSON.stringify(it.links)) : [];
       } else {
         if (titleEl) titleEl.innerText = `Thêm Hạng Mục Kế Hoạch - Tuần ${plan.weekNum}`;
         document.getElementById("wk-item-major").value = "🏥 Thí điểm Lâm Sàng - Khoa Tim Mạch";
@@ -3025,8 +3994,12 @@
         document.getElementById("wk-item-deadline").value = plan.endDate || "";
         document.getElementById("wk-item-proposal").value = "";
         document.getElementById("wk-item-status").value = "doing";
+        modalWeeklyLinksCache = [];
       }
 
+      document.getElementById("wk-modal-link-title").value = "";
+      document.getElementById("wk-modal-link-url").value = "";
+      renderModalWeeklyLinks();
       document.getElementById("weekly-item-modal").classList.add("open");
     }
 
@@ -3043,7 +4016,7 @@
       const major = document.getElementById("wk-item-major").value.trim() || "Chung";
       const minor = document.getElementById("wk-item-minor").value.trim();
       if (!minor) {
-        alert("Vui lòng nhập nội dung cụ thể của hạng mục nhỏ!");
+        alert("Vui lòng nhập nội dung cụ thể của hạng mục con!");
         return;
       }
       const collaborator = document.getElementById("wk-item-collab").value.trim() || "Chưa phân công";
@@ -3066,6 +4039,7 @@
           it.deadline = deadline;
           it.proposal = proposal;
           it.status = status;
+          it.links = modalWeeklyLinksCache;
           showToast("Đã cập nhật hạng mục kế hoạch!");
         }
       } else {
@@ -3079,7 +4053,8 @@
           startDate,
           deadline,
           proposal,
-          status
+          status,
+          links: modalWeeklyLinksCache
         });
         showToast("Đã thêm mới hạng mục vào kế hoạch tuần!");
       }
@@ -3195,7 +4170,7 @@
       csv += `Chủ đề trọng tâm:,"${(plan.theme || '').replace(/"/g, '""')}"\n`;
       csv += `Thời gian:,"${plan.startDate || ''} đến ${plan.endDate || ''}"\n\n`;
 
-      csv += "STT,Hạng mục công việc lớn,Hạng mục nhỏ (Nhiệm vụ cụ thể),Người/Đơn vị phối hợp,Thời gian tiến hành,Thời hạn yêu cầu hoàn thành,Chi phí dự kiến (VNĐ),Đề xuất phối hợp & Hỗ trợ,Trạng thái\n";
+      csv += "STT,Hạng mục lớn,Hạng mục con (Nhiệm vụ cụ thể & Sản phẩm),Người/Đơn vị phối hợp,Thời gian tiến hành,Thời hạn yêu cầu hoàn thành,Chi phí dự kiến (VNĐ),Đề xuất phối hợp & Hỗ trợ,Trạng thái\n";
 
       const statusMap = {
         planning: 'Dự kiến',
@@ -3260,7 +4235,7 @@
     // Helper to format category badges with vibrant todolist colors
     function getMajorCategoryBadge(major) {
       const m = (major || '').toLowerCase();
-      if (m.includes('lâm sàng') || m.includes('khoa') || m.includes('bv') || m.includes('viện a') || m.includes('tim') || m.includes('nội tiết') || m.includes('ung bướu')) {
+      if (m.includes('lâm sàng') || m.includes('khoa') || m.includes('bv') || m.includes('viện a') || m.includes('19.8') || m.includes('tim') || m.includes('nội tiết') || m.includes('ung bướu')) {
         return `<span style="display:inline-block; font-size:0.65rem; font-weight:700; color:#0369a1; background:#e0f2fe; border:1px solid #bae6fd; padding:1px 6px; border-radius:4px;">${major}</span>`;
       } else if (m.includes('công nghệ') || m.includes('ai') || m.includes('app') || m.includes('tech') || m.includes('firewall') || m.includes('hạ tầng')) {
         return `<span style="display:inline-block; font-size:0.65rem; font-weight:700; color:#6b21a8; background:#f3e8ff; border:1px solid #e9d5ff; padding:1px 6px; border-radius:4px;">${major}</span>`;
@@ -3385,7 +4360,7 @@
             <div style="display:flex; gap:12px; font-size:0.67rem; align-items:center;">
               <span style="display:flex; align-items:center; gap:4px;">
                 <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#0284c7;"></span>
-                Viện A: <strong style="color:#0284c7;">${hPct}%</strong>
+                ${getProjectHospitalName()}: <strong style="color:#0284c7;">${hPct}%</strong>
               </span>
               <span style="display:flex; align-items:center; gap:4px;">
                 <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#9333ea;"></span>
@@ -3466,14 +4441,15 @@
       });
 
       // Member chips for compact view with individual brand colors
-      const hMemberChipsHtml = state.members.filter(m => m.unit === 'Bệnh Viện A').map(m => {
+      const hMemberChipsHtml = state.members.filter(m => m.unit !== 'Seta Nội Bộ').map(m => {
         const mTasks = state.tasks.filter(t => t.memberId === m.id);
         const mComp = mTasks.filter(t => t.completed).length;
         const mPct = mTasks.length ? Math.round((mComp / mTasks.length) * 100) : 0;
+        const cleanName = m.name.replace(' (Viện A)', '').replace(' (Viện 19.8)', '').replace(' (19.8)', '');
         return `
           <span style="background:#ffffff; border:1px solid #bae6fd; border-radius:4px; padding:2px 6px; display:inline-flex; align-items:center; gap:4px;">
             <span style="width:7px; height:7px; border-radius:50%; background:${m.color || '#0284c7'}; display:inline-block;"></span>
-            <span style="font-weight:600; color:#1e293b;">${m.name.replace(' (Viện A)', '')}</span>: 
+            <span style="font-weight:600; color:#1e293b;">${cleanName}</span>: 
             <strong style="color:#0369a1;">${mComp}/${mTasks.length}</strong> 
             <span style="font-size:0.64rem; color:${mPct === 100 ? '#15803d' : '#475569'}; font-weight:700;">(${mPct}%)</span>
           </span>
@@ -3494,25 +4470,35 @@
         `;
       }).join('');
 
-      // Build HTML for Weekly Table Rows (Compact 6-column format with vibrant category badges)
+      // Build HTML for Weekly Table Rows (Distinct columns: Hạng mục lớn & Hạng mục con + Attached Links)
       let weeklyCompactRowsHtml = "";
       if (!targetItems.length) {
-        weeklyCompactRowsHtml = `<tr><td colspan="6" style="text-align:center; padding:12px; color:#64748b;">Chưa có dữ liệu kế hoạch cho tuần này.</td></tr>`;
+        weeklyCompactRowsHtml = `<tr><td colspan="7" style="text-align:center; padding:12px; color:#64748b;">Chưa có dữ liệu kế hoạch cho tuần này.</td></tr>`;
       } else {
         targetItems.forEach((it, idx) => {
+          let linksPdf = "";
+          if (it.links && it.links.length > 0) {
+            linksPdf = `
+              <div style="margin-top:3px; display:flex; flex-wrap:wrap; gap:3px;">
+                ${it.links.map(l => `<span style="font-size:0.64rem; color:#0369a1; background:#e0f2fe; padding:1px 4px; border-radius:3px; border:1px solid #bae6fd;">${formatLinkTitle(l)}</span>`).join('')}
+              </div>
+            `;
+          }
+
           weeklyCompactRowsHtml += `
             <tr>
-              <td style="text-align:center; font-weight:bold; color:#64748b; font-size:0.72rem;">${idx + 1}</td>
-              <td>
-                <div style="margin-bottom:2px;">
-                  ${getMajorCategoryBadge(it.major)}
-                </div>
-                <div style="font-weight:600; color:#0f172a; font-size:0.73rem; line-height:1.35;">${it.minor || ''}</div>
+              <td style="text-align:center; font-weight:bold; color:#64748b; font-size:0.72rem; vertical-align:top;">${idx + 1}</td>
+              <td style="vertical-align:top;">
+                ${getMajorCategoryBadge(it.major)}
               </td>
-              <td style="font-size:0.71rem; color:#334155;">${it.collaborator || '-'}</td>
-              <td style="text-align:center; white-space:nowrap; color:#dc2626; font-weight:700; font-size:0.71rem;">${it.deadline || '-'}</td>
-              <td style="text-align:right; font-weight:700; color:#047857; font-size:0.73rem; white-space:nowrap;">${formatVND(it.cost)}</td>
-              <td style="font-size:0.71rem; color:#b45309; line-height:1.3;">
+              <td style="vertical-align:top;">
+                <div style="font-weight:600; color:#0f172a; font-size:0.73rem; line-height:1.35;">${it.minor || ''}</div>
+                ${linksPdf}
+              </td>
+              <td style="font-size:0.71rem; color:#334155; vertical-align:top;">${it.collaborator || '-'}</td>
+              <td style="text-align:center; white-space:nowrap; color:#dc2626; font-weight:700; font-size:0.71rem; vertical-align:top;">${it.deadline || '-'}</td>
+              <td style="text-align:right; font-weight:700; color:#047857; font-size:0.73rem; white-space:nowrap; vertical-align:top;">${formatVND(it.cost)}</td>
+              <td style="font-size:0.71rem; color:#b45309; line-height:1.3; vertical-align:top;">
                 ${it.proposal && it.proposal.trim() && it.proposal.trim() !== '-' ? `<span style="background:#fffbeb; padding:1px 4px; border-radius:3px; border:1px solid #fef3c7;">${it.proposal}</span>` : '<span style="color:#94a3b8;">-</span>'}
               </td>
             </tr>
@@ -3569,7 +4555,7 @@
           <div class="report-header-banner">
             <div>
               <div style="font-size:0.78rem; font-weight:800; color:#0284c7; text-transform:uppercase; letter-spacing:0.3px;">
-                🏥 BỆNH VIỆN A &amp; 🏢 SETA LONGEVITY HEALTHCARE
+                ${getProjectIcon(1)} ${getProjectHospitalName().toUpperCase()} &amp; ${getProjectIcon(2)} SETA LONGEVITY HEALTHCARE
               </div>
               <div style="font-size:0.68rem; color:#64748b; margin-top:1px;">
                 Ban Điều Phối Dự Án Thí Điểm Lâm Sàng &amp; Công Nghệ Y Tế Song Song
@@ -3599,7 +4585,7 @@
             <!-- Box Hosp A (Medical Blue) -->
             <div style="border:1.5px solid #0284c7; border-radius:6px; padding:6px 10px; background:#f0f9ff;">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
-                <strong style="color:#0369a1; font-size:0.76rem;">🏥 DỰ ÁN BỆNH VIỆN A (3 KHOA)</strong>
+                <strong style="color:#0369a1; font-size:0.76rem;">${getProjectIcon(1)} DỰ ÁN ${getProjectHospitalName().toUpperCase()} (3 KHOA)</strong>
                 <span style="font-size:0.95rem; font-weight:900; color:#0284c7;">${hPct}%</span>
               </div>
               <div style="font-size:0.68rem; color:#334155; margin-bottom:4px; display:flex; gap:10px;">
@@ -3650,18 +4636,19 @@
           <table class="report-table">
             <thead>
               <tr>
-                <th style="width:28px; text-align:center;">STT</th>
-                <th style="width:38%;">Hạng mục &amp; Nội dung nhiệm vụ cụ thể</th>
-                <th style="width:18%;">Phối hợp &amp; Phụ trách</th>
-                <th style="width:10%; text-align:center;">Hạn chót</th>
-                <th style="width:13%; text-align:right;">Chi phí dự kiến</th>
-                <th style="width:17%;">Đề xuất phối hợp</th>
+                <th style="width:26px; text-align:center;">STT</th>
+                <th style="width:20%;">Hạng mục lớn</th>
+                <th style="width:28%;">Hạng mục con (Nhiệm vụ &amp; Sản phẩm)</th>
+                <th style="width:16%;">Phối hợp &amp; Phụ trách</th>
+                <th style="width:9%; text-align:center;">Hạn chót</th>
+                <th style="width:12%; text-align:right;">Chi phí</th>
+                <th style="width:15%;">Đề xuất phối hợp</th>
               </tr>
             </thead>
             <tbody>
               ${weeklyCompactRowsHtml}
               <tr style="background:#f0fdf4; border-top:1.5px solid #86efac; font-weight:800;">
-                <td colspan="4" style="text-align:right; text-transform:uppercase; font-size:0.71rem; color:#166534;">
+                <td colspan="5" style="text-align:right; text-transform:uppercase; font-size:0.71rem; color:#166534;">
                   TỔNG CỘNG KINH PHÍ DỰ KIẾN TUẦN:
                 </td>
                 <td style="text-align:right; color:#15803d; font-size:0.76rem; font-weight:900;">
@@ -3694,7 +4681,7 @@
             </div>
 
             <div>
-              <div style="font-size:0.74rem; font-weight:700; text-transform:uppercase; color:#0f172a;">ĐẠI DIỆN PHÒNG KHTH - VIỆN A</div>
+              <div style="font-size:0.74rem; font-weight:700; text-transform:uppercase; color:#0f172a;">ĐẠI DIỆN PHÒNG KHTH - ${getProjectHospitalName().toUpperCase()}</div>
               <div style="font-size:0.67rem; font-style:italic; color:#64748b; margin-top:1px;">(Ký, ghi rõ họ tên &amp; đóng dấu)</div>
               <div style="height:38px;"></div>
               <div style="font-weight:700; font-size:0.8rem; color:#0f172a;">Trưởng Phòng KHTH</div>
@@ -3726,6 +4713,7 @@
     function openNewTaskModal() {
       state.editingTaskId = null;
       state.modalSubtasksCache = [];
+      modalLinksCache = [];
       document.getElementById("modal-task-title").innerText = "Thêm Nhiệm Vụ Mới";
       document.getElementById("task-modal-name").value = "";
       document.getElementById("task-modal-desc").value = "";
@@ -3733,8 +4721,11 @@
       document.getElementById("task-modal-status").value = "todo";
       document.getElementById("modal-subtask-input").value = "";
       document.getElementById("duplicate-warning").classList.remove("show");
+      document.getElementById("modal-link-title").value = "";
+      document.getElementById("modal-link-url").value = "";
       populateModalSelects();
       renderModalSubtasks();
+      renderModalLinks();
       document.getElementById("task-modal").classList.add("open");
     }
 
@@ -3743,6 +4734,7 @@
       if (!t) return;
       state.editingTaskId = id;
       state.modalSubtasksCache = JSON.parse(JSON.stringify(t.subtasks || []));
+      modalLinksCache = (t.links && t.links.length) ? JSON.parse(JSON.stringify(t.links)) : [];
       document.getElementById("modal-task-title").innerText = `Chỉnh sửa: ${t.code}`;
       document.getElementById("task-modal-name").value = t.title;
       document.getElementById("task-modal-desc").value = t.desc || "";
@@ -3752,8 +4744,11 @@
       document.getElementById("task-modal-due").value = t.due || "";
       document.getElementById("task-modal-status").value = t.status || (t.completed ? "completed" : "todo");
       document.getElementById("duplicate-warning").classList.remove("show");
+      document.getElementById("modal-link-title").value = "";
+      document.getElementById("modal-link-url").value = "";
       populateModalSelects(t.memberId);
       renderModalSubtasks();
+      renderModalLinks();
       document.getElementById("task-modal").classList.add("open");
     }
 
@@ -3827,15 +4822,17 @@
           t.projectId = pid; t.memberId = mid; t.title = title; t.desc = desc;
           t.type = type; t.priority = prio; t.due = due; t.status = status; t.completed = completed;
           t.subtasks = state.modalSubtasksCache;
+          t.links = modalLinksCache;
         }
         showToast(`Đã cập nhật: ${t.code}`);
       } else {
-        const pCode = pid === 1 ? 'BVA' : 'SET';
+        const pCode = pid === 1 ? 'BV198' : 'SET';
         const newId = state.tasks.length ? Math.max(...state.tasks.map(t=>t.id)) + 1 : 1;
         state.tasks.push({
           id: newId, projectId: pid, memberId: mid, code: `${pCode}-${String(newId).padStart(2,'0')}`,
           title, desc, type, priority: prio, status, completed, due,
-          subtasks: state.modalSubtasksCache
+          subtasks: state.modalSubtasksCache,
+          links: modalLinksCache
         });
         showToast(`Đã thêm mới: ${title}`);
       }
@@ -4109,6 +5106,7 @@
     // Init
     checkLockStatus();
     loadState();
+    updateProjectUI();
     if (window.location.hash === '#dashboard') {
       switchView('dashboard');
     } else {
