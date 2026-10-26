@@ -1483,14 +1483,14 @@
       <div class="form-group" style="background:#f8fafc; border:1px solid var(--border); border-radius:8px; padding:10px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
           <label style="font-size:0.78rem; font-weight:700; margin-bottom:0; display:flex; align-items:center; gap:6px;">
-            <span>📎</span> Link tài liệu &amp; sản phẩm đính kèm:
+            <span>📎</span> Gắn link tài liệu &amp; sản phẩm:
           </label>
-          <span style="font-size:0.7rem; color:var(--text-secondary);">(Drive, Sheet, File, Web...)</span>
+          <span style="font-size:0.7rem; color:var(--text-secondary);">(Drive, Sheet, Zalo, File, Web...)</span>
         </div>
         <div style="display:flex; gap:6px; margin-bottom:6px;">
-          <input type="text" id="modal-link-title" placeholder="Tên tài liệu / sản phẩm..." style="flex:1; font-size:0.8rem; padding:6px 8px;">
-          <input type="text" id="modal-link-url" placeholder="https://..." style="flex:1.5; font-size:0.8rem; padding:6px 8px;">
-          <button type="button" class="btn-secondary" style="padding:6px 10px; font-size:0.8rem;" onclick="addModalLink()">+ Gắn</button>
+          <input type="text" id="modal-link-title" placeholder="Tên gợi nhớ (bỏ trống hệ thống tự đặt)..." style="flex:1; font-size:0.8rem; padding:6px 8px;" onkeydown="if(event.key==='Enter'){ event.preventDefault(); addModalLink(); }">
+          <input type="text" id="modal-link-url" placeholder="Dán đường link https://... (Enter để gắn)" style="flex:1.5; font-size:0.8rem; padding:6px 8px;" onkeydown="if(event.key==='Enter'){ event.preventDefault(); addModalLink(); }">
+          <button type="button" class="btn-primary" style="padding:6px 12px; font-size:0.8rem; background:#0284c7; white-space:nowrap;" onclick="addModalLink()">+ Gắn Link</button>
         </div>
         <div id="modal-links-container" style="display:flex; flex-direction:column; gap:4px;"></div>
       </div>
@@ -1649,14 +1649,14 @@
       <div class="form-group" style="background:#f8fafc; border:1px solid var(--border); border-radius:8px; padding:10px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
           <label style="font-size:0.78rem; font-weight:700; margin-bottom:0; display:flex; align-items:center; gap:6px;">
-            <span>📎</span> Link tài liệu &amp; sản phẩm liên quan:
+            <span>📎</span> Gắn link tài liệu &amp; sản phẩm liên quan:
           </label>
-          <span style="font-size:0.7rem; color:var(--text-secondary);">(Drive, Sheet, Web, File...)</span>
+          <span style="font-size:0.7rem; color:var(--text-secondary);">(Drive, Sheet, Zalo, File, Web...)</span>
         </div>
         <div style="display:flex; gap:6px; margin-bottom:6px;">
-          <input type="text" id="wk-modal-link-title" placeholder="Tên tài liệu / sản phẩm..." style="flex:1; font-size:0.8rem; padding:6px 8px;">
-          <input type="text" id="wk-modal-link-url" placeholder="https://..." style="flex:1.5; font-size:0.8rem; padding:6px 8px;">
-          <button type="button" class="btn-secondary" style="padding:6px 10px; font-size:0.8rem;" onclick="addModalWeeklyLink()">+ Gắn</button>
+          <input type="text" id="wk-modal-link-title" placeholder="Tên gợi nhớ (bỏ trống hệ thống tự đặt)..." style="flex:1; font-size:0.8rem; padding:6px 8px;" onkeydown="if(event.key==='Enter'){ event.preventDefault(); addModalWeeklyLink(); }">
+          <input type="text" id="wk-modal-link-url" placeholder="Dán đường link https://... (Enter để gắn)" style="flex:1.5; font-size:0.8rem; padding:6px 8px;" onkeydown="if(event.key==='Enter'){ event.preventDefault(); addModalWeeklyLink(); }">
+          <button type="button" class="btn-primary" style="padding:6px 12px; font-size:0.8rem; background:#0284c7; white-space:nowrap;" onclick="addModalWeeklyLink()">+ Gắn Link</button>
         </div>
         <div id="wk-modal-links-container" style="display:flex; flex-direction:column; gap:4px;"></div>
       </div>
@@ -1810,7 +1810,7 @@
 
   <!-- Modal Quản Lý Link Tài Liệu & Sản Phẩm (Link & Document Manager Modal) -->
   <div class="modal-overlay" id="link-manager-modal">
-    <div class="modal-card" style="width: 650px;">
+    <div class="modal-card" style="width: 670px;">
       <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:10px;">
         <div>
           <h2 class="modal-title" style="margin:0; display:flex; align-items:center; gap:8px;">
@@ -1821,6 +1821,16 @@
           </div>
         </div>
         <button class="btn-icon" onclick="closeLinkManagerModal()">✕</button>
+      </div>
+
+      <!-- Quick Step Instruction Banner -->
+      <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:6px; padding:8px 12px; font-size:0.74rem; color:#1e40af; line-height:1.5;">
+        <div style="font-weight:700; margin-bottom:2px; display:flex; align-items:center; gap:4px;">
+          <span>📌</span> HƯỚNG DẪN 3 BƯỚC ĐỂ GẮN VÀ MỞ LINK:
+        </div>
+        <div><strong>1. Dán đường link</strong> (Google Drive, Sheet, Zalo, Web...) vào ô link phía dưới (Tên có thể để trống).</div>
+        <div><strong>2. Bấm nút "+ Gắn Link"</strong> (hoặc gõ <strong>Enter</strong>) ➜ rồi bấm nút <strong>"Xong"</strong> để lưu.</div>
+        <div><strong>3. Cách truy cập:</strong> Bấm trực tiếp vào <strong>biểu tượng / tên tài liệu (↗)</strong> trên thẻ công việc để mở tab mới ngay!</div>
       </div>
 
       <!-- Quick Preset Tag Buttons -->
@@ -1839,13 +1849,19 @@
 
       <!-- Add New Link Form -->
       <div style="background:#f8fafc; border:1px solid var(--border); border-radius:8px; padding:12px; display:flex; flex-direction:column; gap:8px;">
-        <div style="font-size:0.76rem; font-weight:700; color:#0f172a;">+ Thêm Đường Link Mới:</div>
+        <div style="font-size:0.76rem; font-weight:700; color:#0f172a; display:flex; justify-content:space-between; align-items:center;">
+          <span>+ Thêm Hoặc Chỉnh Sửa Đường Link:</span>
+          <button id="btn-cancel-edit-link" type="button" style="display:none; font-size:0.72rem; color:#dc2626; background:transparent; border:none; cursor:pointer; text-decoration:underline;" onclick="cancelEditLink()">✕ Hủy chỉnh sửa</button>
+        </div>
         <div style="display:grid; grid-template-columns: 1fr 1.3fr auto; gap:8px; align-items:center;">
-          <input type="text" id="link-add-title" placeholder="Tên tài liệu / sản phẩm..." style="font-size:0.8rem; padding:7px 10px;">
-          <input type="text" id="link-add-url" placeholder="Dán đường link (https://...)..." style="font-size:0.8rem; padding:7px 10px;">
-          <button class="btn-primary" style="padding:7px 14px; font-size:0.82rem; white-space:nowrap; background:#0284c7;" onclick="addNewLinkToTarget()">
+          <input type="text" id="link-add-title" placeholder="Tên gợi nhớ (bỏ trống hệ thống tự đặt)..." style="font-size:0.8rem; padding:7px 10px;" onkeydown="if(event.key==='Enter') addNewLinkToTarget()">
+          <input type="text" id="link-add-url" placeholder="Dán link (https://... hoặc file://...) tại đây..." style="font-size:0.8rem; padding:7px 10px;" onkeydown="if(event.key==='Enter') addNewLinkToTarget()">
+          <button id="btn-submit-link" class="btn-primary" style="padding:7px 14px; font-size:0.82rem; white-space:nowrap; background:#0284c7; font-weight:700;" onclick="addNewLinkToTarget()">
             + Gắn Link
           </button>
+        </div>
+        <div style="font-size:0.7rem; color:#64748b;">
+          💡 <em>Bạn chỉ cần dán đường link (URL) vào ô trên rồi bấm nút "<strong>+ Gắn Link</strong>" hoặc nhấn <strong>Enter</strong>. Hệ thống sẽ tự động gán icon tương ứng!</em>
         </div>
       </div>
 
@@ -1853,7 +1869,7 @@
       <div>
         <div style="font-size:0.76rem; font-weight:700; color:#475569; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
           <span>DANH SÁCH LINK ĐÃ GẮN (<span id="link-modal-count">0</span>):</span>
-          <span style="font-size:0.7rem; color:#64748b;">(Bấm để mở tab mới hoặc sao chép)</span>
+          <span style="font-size:0.7rem; color:#64748b;">(Bấm <strong>↗ Mở</strong> để truy cập ngay | Bấm <strong>✏️ Sửa</strong> để thay link của bạn)</span>
         </div>
         <div id="link-modal-list-box" style="display:flex; flex-direction:column; gap:6px; max-height:220px; overflow-y:auto; padding-right:2px;">
           <!-- Populated dynamically -->
@@ -1862,9 +1878,9 @@
 
       <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:10px; margin-top:4px;">
         <div style="font-size:0.72rem; color:#64748b;">
-          💡 <em>Mẹo: Bạn có thể chuột phải vào bất kỳ công việc nào để gắn hoặc mở link nhanh bất kỳ lúc nào!</em>
+          💡 <em>Mẹo: Bấm nút <strong>"Xong"</strong> hoặc nhấn phím <strong>ESC</strong> để đóng bảng sau khi đã gắn xong!</em>
         </div>
-        <button class="btn-primary" onclick="closeLinkManagerModal()">Xong</button>
+        <button class="btn-primary" style="padding:6px 20px; font-weight:700;" onclick="closeLinkManagerModal()">Xong</button>
       </div>
     </div>
   </div>
@@ -2540,6 +2556,16 @@
         const plan = state.weeklyPlans.find(w => w.id === pId) || getCurrentWeeklyPlan();
         const it = plan && plan.items && plan.items.find(x => x.id === id);
         return { item: it, plan };
+      } else if (type === 'general') {
+        if (!state.projectLinks) {
+          state.projectLinks = [
+            { id: 1, title: "📁 Thư Mục Google Drive Dự Án", url: "https://drive.google.com/drive/folders/seta-198-master", icon: "📁" },
+            { id: 2, title: "📊 Google Sheet Báo Cáo Tổng Hợp", url: "https://docs.google.com/spreadsheets/d/seta-master-report", icon: "📊" },
+            { id: 3, title: "💬 Nhóm Zalo Điều Hành Viện 19.8", url: "https://zalo.me/g/seta-bv198-dieu-hanh", icon: "💬" },
+            { id: 4, title: "📦 Danh Mục Thiết Bị & Sản Phẩm Seta", url: "https://seta.vn/products/longevity-devices", icon: "📦" }
+          ];
+        }
+        return { item: { code: 'CHUNG', title: 'Kho Tài Liệu Chung Của Dự Án', links: state.projectLinks }, plan: null };
       }
       return { item: null, plan: null };
     }
@@ -2685,6 +2711,67 @@
       }
     }
 
+    // Hàm giải mã và chuẩn hóa link tài liệu thông minh
+    function resolveSmartLink(rawTitle, rawUrl) {
+      let title = (rawTitle || "").trim();
+      let url = (rawUrl || "").trim();
+
+      // Nếu người dùng dán link vào ô tiêu đề thì tự động chuyển sang ô URL
+      if (!url && title && (title.startsWith("http://") || title.startsWith("https://") || title.startsWith("www.") || title.includes("drive.google") || title.includes("docs.google") || title.includes("zalo.me") || title.startsWith("file://") || /^[a-zA-Z]:[\\\/]/.test(title))) {
+        url = title;
+        title = "";
+      }
+
+      if (!url) return null;
+
+      // Xử lý đường dẫn file cục bộ trên máy tính (Windows)
+      if (/^[a-zA-Z]:[\\\/]/.test(url)) {
+        url = "file:///" + url.replace(/\\/g, '/');
+      }
+
+      if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("file://") && !url.startsWith("mailto:")) {
+        url = "https://" + url;
+      }
+
+      let icon = "🔗";
+      const uLower = url.toLowerCase();
+      const tLower = title.toLowerCase();
+
+      if (tLower.includes("drive") || uLower.includes("drive.google")) icon = "📁";
+      else if (tLower.includes("sheet") || tLower.includes("excel") || uLower.includes("spreadsheets") || uLower.endsWith(".xlsx") || uLower.endsWith(".xls")) icon = "📊";
+      else if (tLower.includes("doc") || tLower.includes("bệnh án") || uLower.includes("docs.google") || uLower.endsWith(".doc") || uLower.endsWith(".docx")) icon = "📄";
+      else if (tLower.includes("sản phẩm") || tLower.includes("thiết bị") || uLower.includes("product")) icon = "📦";
+      else if (tLower.includes("zalo") || uLower.includes("zalo.me")) icon = "💬";
+      else if (tLower.includes("hợp đồng") || tLower.includes("quyết định") || uLower.includes(".pdf")) icon = "📑";
+      else if (url.startsWith("file://")) icon = "📄";
+
+      // Nếu tiêu đề để trống, tự động sinh tên thông minh
+      if (!title) {
+        if (icon === "📁") title = "📁 Thư mục Google Drive";
+        else if (icon === "📊") title = "📊 Báo cáo / Sheet Dữ Liệu";
+        else if (icon === "📄") {
+          const fn = decodeURIComponent(url.split('/').pop());
+          title = (fn && !fn.includes("?")) ? `📄 ${fn}` : "📄 Tài Liệu Bệnh Án";
+        }
+        else if (icon === "📦") title = "📦 Sản Phẩm & Thiết Bị Seta";
+        else if (icon === "💬") title = "💬 Nhóm Zalo Bệnh Viện 19.8";
+        else if (icon === "📑") {
+          const fn = decodeURIComponent(url.split('/').pop());
+          title = (fn && fn.endsWith(".pdf")) ? `📑 ${fn}` : "📑 File Tài Liệu PDF";
+        }
+        else {
+          try {
+            const parsed = new URL(url);
+            title = `🔗 Link ${parsed.hostname.replace('www.', '')}`;
+          } catch(e) {
+            title = "🔗 Link Tài Liệu Đính Kèm";
+          }
+        }
+      }
+
+      return { title, url, icon };
+    }
+
     // Modal Quản Lý Link Tài Liệu Universal
     function openLinkManagerModal(type, id, planId = null) {
       linkModalTarget = { type, id, planId };
@@ -2697,8 +2784,10 @@
       if (labelEl) {
         if (type === 'task') {
           labelEl.innerHTML = `Nhiệm vụ: <strong style="color:#0284c7;">[${item.code}] ${item.title}</strong>`;
-        } else {
+        } else if (type === 'weekly') {
           labelEl.innerHTML = `Hạng mục tuần: <strong style="color:#0284c7;">${item.minor}</strong>`;
+        } else {
+          labelEl.innerHTML = `Kho tài liệu chung: <strong style="color:#15803d;">${item.title}</strong>`;
         }
       }
 
@@ -2708,7 +2797,10 @@
       document.getElementById("link-manager-modal").classList.add("open");
     }
 
+    let editingTargetLinkId = null;
+
     function closeLinkManagerModal() {
+      cancelEditLink();
       document.getElementById("link-manager-modal").classList.remove("open");
       linkModalTarget = { type: null, id: null, planId: null };
       render();
@@ -2720,49 +2812,73 @@
       document.getElementById("link-add-url").focus();
     }
 
-    function addNewLinkToTarget() {
-      const title = document.getElementById("link-add-title").value.trim();
-      let url = document.getElementById("link-add-url").value.trim();
+    function editLinkInTarget(linkId) {
+      const { item } = getTargetItemAndPlan(linkModalTarget.type, linkModalTarget.id, linkModalTarget.planId);
+      if (!item || !item.links) return;
+      const l = item.links.find(x => x.id === linkId);
+      if (!l) return;
+      editingTargetLinkId = linkId;
+      document.getElementById("link-add-title").value = l.title;
+      document.getElementById("link-add-url").value = l.url;
+      const btn = document.getElementById("btn-submit-link");
+      if (btn) btn.innerHTML = "💾 Cập Nhật";
+      const cancelBtn = document.getElementById("btn-cancel-edit-link");
+      if (cancelBtn) cancelBtn.style.display = "inline-block";
+      document.getElementById("link-add-url").focus();
+    }
 
-      if (!title) {
-        alert("Vui lòng nhập tên tài liệu hoặc sản phẩm!");
+    function cancelEditLink() {
+      editingTargetLinkId = null;
+      document.getElementById("link-add-title").value = "";
+      document.getElementById("link-add-url").value = "";
+      const btn = document.getElementById("btn-submit-link");
+      if (btn) btn.innerHTML = "+ Gắn Link";
+      const cancelBtn = document.getElementById("btn-cancel-edit-link");
+      if (cancelBtn) cancelBtn.style.display = "none";
+    }
+
+    function addNewLinkToTarget() {
+      const titleInput = document.getElementById("link-add-title");
+      const urlInput = document.getElementById("link-add-url");
+      const resolved = resolveSmartLink(titleInput.value, urlInput.value);
+
+      if (!resolved) {
+        alert("Vui lòng dán đường link (URL) trang web, file Google Drive, Sheet hoặc Zalo!");
+        urlInput.focus();
         return;
-      }
-      if (!url) {
-        alert("Vui lòng nhập hoặc dán đường dẫn link!");
-        return;
-      }
-      if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("file://") && !url.startsWith("mailto:")) {
-        url = "https://" + url;
       }
 
       const { item } = getTargetItemAndPlan(linkModalTarget.type, linkModalTarget.id, linkModalTarget.planId);
       if (!item) return;
       if (!item.links) item.links = [];
 
-      let icon = "🔗";
-      const tLower = title.toLowerCase();
-      if (tLower.includes("drive") || tLower.includes("folder") || tLower.includes("thư mục")) icon = "📁";
-      else if (tLower.includes("sheet") || tLower.includes("excel") || tLower.includes("bảng")) icon = "📊";
-      else if (tLower.includes("doc") || tLower.includes("bệnh án") || tLower.includes("bản thảo")) icon = "📄";
-      else if (tLower.includes("sản phẩm") || tLower.includes("thiết bị") || tLower.includes("máy")) icon = "📦";
-      else if (tLower.includes("zalo") || tLower.includes("nhóm") || tLower.includes("chat")) icon = "💬";
-      else if (tLower.includes("hợp đồng") || tLower.includes("quyết định")) icon = "📑";
-
-      const newId = item.links.length ? Math.max(...item.links.map(x => x.id || 0)) + 1 : 1;
-      item.links.push({
-        id: newId,
-        title,
-        url,
-        icon,
-        createdAt: new Date().toISOString()
-      });
+      if (editingTargetLinkId !== null) {
+        const existLink = item.links.find(x => x.id === editingTargetLinkId);
+        if (existLink) {
+          existLink.title = resolved.title;
+          existLink.url = resolved.url;
+          existLink.icon = resolved.icon;
+          showToast(`Đã cập nhật link: ${resolved.title}`);
+        }
+        cancelEditLink();
+      } else {
+        const newId = item.links.length ? Math.max(...item.links.map(x => x.id || 0)) + 1 : 1;
+        item.links.push({
+          id: newId,
+          title: resolved.title,
+          url: resolved.url,
+          icon: resolved.icon,
+          createdAt: new Date().toISOString()
+        });
+        showToast(`Đã gắn link thành công: ${resolved.title}`);
+      }
 
       saveState();
-      document.getElementById("link-add-title").value = "";
-      document.getElementById("link-add-url").value = "";
+      titleInput.value = "";
+      urlInput.value = "";
       renderLinkModalList();
-      showToast(`Đã gắn link: ${title}`);
+      render();
+      renderWeeklyPlanSection();
     }
 
     function removeLinkFromTarget(linkId) {
@@ -2772,6 +2888,8 @@
       item.links = item.links.filter(x => x.id !== linkId);
       saveState();
       renderLinkModalList();
+      render();
+      renderWeeklyPlanSection();
       showToast("Đã xóa link đính kèm!");
     }
 
@@ -2802,19 +2920,21 @@
       container.innerHTML = links.map(l => `
         <div style="display:flex; justify-content:space-between; align-items:center; background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:6px 10px; transition:all 0.15s ease;">
           <div style="display:flex; align-items:center; gap:8px; overflow:hidden; flex:1;">
-            <span style="font-size:1.1rem;">${l.icon || '🔗'}</span>
+            <span style="font-size:1.15rem;">${l.icon || '🔗'}</span>
             <div style="overflow:hidden;">
-              <a href="${l.url}" target="_blank" style="font-weight:700; color:#0284c7; text-decoration:none; font-size:0.82rem; display:block; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;" title="Mở link trong tab mới">
-                ${getLinkOnlyTitle(l)} ↗
+              <a href="${l.url}" target="_blank" style="font-weight:700; color:#0284c7; text-decoration:none; font-size:0.82rem; display:block; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;" title="Nhấp mở link trong tab mới: ${l.url}">
+                ${getLinkOnlyTitle(l)} <span style="font-size:0.75rem; color:#0284c7; font-weight:normal;">↗ Mở tab</span>
               </a>
-              <div style="font-size:0.68rem; color:#64748b; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:400px;">
+              <div style="font-size:0.68rem; color:#64748b; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:380px;">
                 ${l.url}
               </div>
             </div>
           </div>
-          <div style="display:flex; align-items:center; gap:5px; margin-left:10px;">
-            <button class="btn-icon" style="padding:2px 6px; font-size:0.75rem;" title="Sao chép link" onclick="copyLinkUrl('${l.url}')">📋 Chép</button>
-            <button class="btn-icon del" style="padding:2px 6px; font-size:0.75rem;" title="Xóa link này" onclick="removeLinkFromTarget(${l.id})">🗑️</button>
+          <div style="display:flex; align-items:center; gap:4px; margin-left:8px; white-space:nowrap;">
+            <a href="${l.url}" target="_blank" class="btn-icon" style="padding:3px 7px; font-size:0.75rem; text-decoration:none; color:#0284c7; background:#f0f9ff; border:1px solid #bae6fd; border-radius:4px; font-weight:600;" title="Mở link này ngay">↗ Mở</a>
+            <button class="btn-icon" style="padding:3px 7px; font-size:0.75rem; color:#0369a1; background:#f8fafc; border:1px solid #cbd5e1; border-radius:4px;" title="Chỉnh sửa link này" onclick="editLinkInTarget(${l.id})">✏️ Sửa</button>
+            <button class="btn-icon" style="padding:3px 7px; font-size:0.75rem; color:#475569; background:#f8fafc; border:1px solid #cbd5e1; border-radius:4px;" title="Sao chép link" onclick="copyLinkUrl('${l.url}')">📋 Chép</button>
+            <button class="btn-icon del" style="padding:3px 7px; font-size:0.75rem; color:#dc2626; background:#fef2f2; border:1px solid #fecaca; border-radius:4px;" title="Xóa link này" onclick="removeLinkFromTarget(${l.id})">🗑️</button>
           </div>
         </div>
       `).join('');
@@ -2822,18 +2942,19 @@
 
     // Modal nhúng trong Task Modal
     function addModalLink() {
-      const title = document.getElementById("modal-link-title").value.trim();
-      let url = document.getElementById("modal-link-url").value.trim();
-      if (!title || !url) { alert("Vui lòng nhập đầy đủ tên tài liệu và đường dẫn!"); return; }
-      if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("file://")) url = "https://" + url;
-      let icon = "🔗";
-      if (title.toLowerCase().includes("drive")) icon = "📁";
-      else if (title.toLowerCase().includes("sheet")) icon = "📊";
-      else if (title.toLowerCase().includes("sản phẩm") || title.toLowerCase().includes("thiết bị")) icon = "📦";
-      modalLinksCache.push({ id: Date.now(), title, url, icon });
-      document.getElementById("modal-link-title").value = "";
-      document.getElementById("modal-link-url").value = "";
+      const titleInput = document.getElementById("modal-link-title");
+      const urlInput = document.getElementById("modal-link-url");
+      const resolved = resolveSmartLink(titleInput.value, urlInput.value);
+      if (!resolved) {
+        alert("Vui lòng dán đường link (URL) trang web, file Google Drive, Sheet hoặc Zalo!");
+        urlInput.focus();
+        return;
+      }
+      modalLinksCache.push({ id: Date.now(), title: resolved.title, url: resolved.url, icon: resolved.icon });
+      titleInput.value = "";
+      urlInput.value = "";
       renderModalLinks();
+      showToast(`Đã gắn link: ${resolved.title}`);
     }
     function removeModalLink(idx) {
       modalLinksCache.splice(idx, 1);
@@ -2854,18 +2975,19 @@
 
     // Modal nhúng trong Weekly Item Modal
     function addModalWeeklyLink() {
-      const title = document.getElementById("wk-modal-link-title").value.trim();
-      let url = document.getElementById("wk-modal-link-url").value.trim();
-      if (!title || !url) { alert("Vui lòng nhập đầy đủ tên tài liệu và đường dẫn!"); return; }
-      if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("file://")) url = "https://" + url;
-      let icon = "🔗";
-      if (title.toLowerCase().includes("drive")) icon = "📁";
-      else if (title.toLowerCase().includes("sheet")) icon = "📊";
-      else if (title.toLowerCase().includes("sản phẩm") || title.toLowerCase().includes("thiết bị")) icon = "📦";
-      modalWeeklyLinksCache.push({ id: Date.now(), title, url, icon });
-      document.getElementById("wk-modal-link-title").value = "";
-      document.getElementById("wk-modal-link-url").value = "";
+      const titleInput = document.getElementById("wk-modal-link-title");
+      const urlInput = document.getElementById("wk-modal-link-url");
+      const resolved = resolveSmartLink(titleInput.value, urlInput.value);
+      if (!resolved) {
+        alert("Vui lòng dán đường link (URL) trang web, file Google Drive, Sheet hoặc Zalo!");
+        urlInput.focus();
+        return;
+      }
+      modalWeeklyLinksCache.push({ id: Date.now(), title: resolved.title, url: resolved.url, icon: resolved.icon });
+      titleInput.value = "";
+      urlInput.value = "";
       renderModalWeeklyLinks();
+      showToast(`Đã gắn link: ${resolved.title}`);
     }
     function removeModalWeeklyLink(idx) {
       modalWeeklyLinksCache.splice(idx, 1);
@@ -3271,8 +3393,16 @@
         if (t.links && t.links.length > 0) {
           linksHtml = `
             <div class="task-links-row">
-              ${t.links.map(l => `<a href="${l.url}" target="_blank" class="task-link-badge" title="${l.url}" onclick="event.stopPropagation()">${formatLinkTitle(l)}</a>`).join('')}
-              <button class="btn-add-link-mini" onclick="event.stopPropagation(); openLinkManagerModal('task', ${t.id})" title="Thêm link khác">+</button>
+              ${t.links.map(l => `<a href="${l.url}" target="_blank" class="task-link-badge" title="Nhấp mở link: ${l.url}" onclick="event.stopPropagation()">${formatLinkTitle(l)} <span style="font-size:0.65rem; color:#0369a1;">↗</span></a>`).join('')}
+              <button class="btn-add-link-mini" onclick="event.stopPropagation(); openLinkManagerModal('task', ${t.id})" title="Gắn thêm link khác">+ Thêm link</button>
+            </div>
+          `;
+        } else {
+          linksHtml = `
+            <div class="task-links-row" style="margin-top:4px;">
+              <button class="btn-add-link-mini" style="background:#f0f9ff; border:1px solid #bae6fd; color:#0284c7; padding:2px 8px; font-weight:600; cursor:pointer;" onclick="event.stopPropagation(); openLinkManagerModal('task', ${t.id})" title="Gắn link Google Drive, Sheet, Zalo, tài liệu vào việc này">
+                📎 + Gắn link tài liệu
+              </button>
             </div>
           `;
         }
@@ -3289,7 +3419,7 @@
               ${statusText}
             </div>
             <div class="card-actions">
-              <button class="btn-icon" title="Gắn/Xem link tài liệu & sản phẩm" onclick="openLinkManagerModal('task', ${t.id})">📎</button>
+              <button class="btn-icon" style="background:#f0f9ff; border:1px solid #bae6fd; color:#0284c7;" title="Gắn / Quản lý link tài liệu & sản phẩm" onclick="openLinkManagerModal('task', ${t.id})">📎</button>
               <button class="btn-icon" title="Sửa chi tiết" onclick="openEditTaskModal(${t.id})">✏️</button>
               <button class="btn-icon del" title="Xóa" onclick="deleteTask(${t.id})">🗑️</button>
             </div>
@@ -3867,7 +3997,16 @@
         if (it.links && it.links.length > 0) {
           wkLinksHtml = `
             <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:4px;">
-              ${it.links.map(l => `<a href="${l.url}" target="_blank" class="weekly-link-pill" title="${l.url}" onclick="event.stopPropagation()">${formatLinkTitle(l)}</a>`).join('')}
+              ${it.links.map(l => `<a href="${l.url}" target="_blank" class="weekly-link-pill" title="Nhấp mở link: ${l.url}" onclick="event.stopPropagation()">${formatLinkTitle(l)} <span style="font-size:0.65rem; color:#7c3aed;">↗</span></a>`).join('')}
+              <button class="weekly-link-pill" style="background:#f8fafc; border:1px solid #cbd5e1; color:#0369a1; font-weight:700; cursor:pointer;" onclick="event.stopPropagation(); openLinkManagerModal('weekly', ${it.id}, '${plan.id}')" title="Gắn thêm link khác">+</button>
+            </div>
+          `;
+        } else {
+          wkLinksHtml = `
+            <div style="margin-top:3px;">
+              <button class="weekly-link-pill" style="background:#f0f9ff; border:1px solid #bae6fd; color:#0284c7; font-size:0.68rem; font-weight:600; cursor:pointer;" onclick="event.stopPropagation(); openLinkManagerModal('weekly', ${it.id}, '${plan.id}')" title="Gắn link Google Drive, Sheet hoặc sản phẩm cho hạng mục này">
+                📎 + Gắn link
+              </button>
             </div>
           `;
         }
@@ -3905,7 +4044,7 @@
               </span>
             </td>
             <td style="text-align:center; white-space:nowrap;">
-              <button class="btn-icon" style="padding:2px 4px; font-size:0.8rem;" title="Gắn/Xem link tài liệu & sản phẩm" onclick="openLinkManagerModal('weekly', ${it.id}, '${plan.id}')">📎</button>
+              <button class="btn-icon" style="padding:2px 5px; font-size:0.8rem; background:#f0f9ff; border:1px solid #bae6fd; color:#0284c7;" title="Gắn / Quản lý link tài liệu & sản phẩm" onclick="openLinkManagerModal('weekly', ${it.id}, '${plan.id}')">📎</button>
               <button class="btn-icon" style="padding:2px 4px; font-size:0.8rem;" title="Chỉnh sửa dòng" onclick="openNewWeeklyItemModal(${it.id})">✏️</button>
               <button class="btn-icon del" style="padding:2px 4px; font-size:0.8rem;" title="Xóa dòng" onclick="deleteWeeklyItem(${it.id})">🗑️</button>
             </td>
@@ -4012,6 +4151,18 @@
       const plan = getCurrentWeeklyPlan();
       if (!plan) return;
       if (!plan.items) plan.items = [];
+
+      // Tự động gắn link nếu người dùng đã dán link nhưng quên bấm nút "+ Gắn"
+      const pendingWkUrlEl = document.getElementById("wk-modal-link-url");
+      const pendingWkTitleEl = document.getElementById("wk-modal-link-title");
+      if (pendingWkUrlEl && (pendingWkUrlEl.value.trim() || (pendingWkTitleEl && pendingWkTitleEl.value.trim()))) {
+        const resolved = resolveSmartLink(pendingWkTitleEl ? pendingWkTitleEl.value : "", pendingWkUrlEl.value);
+        if (resolved) {
+          modalWeeklyLinksCache.push({ id: Date.now(), title: resolved.title, url: resolved.url, icon: resolved.icon });
+          pendingWkUrlEl.value = "";
+          if (pendingWkTitleEl) pendingWkTitleEl.value = "";
+        }
+      }
 
       const major = document.getElementById("wk-item-major").value.trim() || "Chung";
       const minor = document.getElementById("wk-item-minor").value.trim();
@@ -4807,6 +4958,19 @@
     function saveTaskModal() {
       const title = document.getElementById("task-modal-name").value.trim();
       if (!title) { alert("Vui lòng nhập tên công việc!"); return; }
+
+      // Tự động gắn link nếu người dùng đã dán link nhưng quên bấm nút "+ Gắn"
+      const pendingUrlEl = document.getElementById("modal-link-url");
+      const pendingTitleEl = document.getElementById("modal-link-title");
+      if (pendingUrlEl && (pendingUrlEl.value.trim() || (pendingTitleEl && pendingTitleEl.value.trim()))) {
+        const resolved = resolveSmartLink(pendingTitleEl ? pendingTitleEl.value : "", pendingUrlEl.value);
+        if (resolved) {
+          modalLinksCache.push({ id: Date.now(), title: resolved.title, url: resolved.url, icon: resolved.icon });
+          pendingUrlEl.value = "";
+          if (pendingTitleEl) pendingTitleEl.value = "";
+        }
+      }
+
       const pid = parseInt(document.getElementById("task-modal-project").value);
       const mid = parseInt(document.getElementById("task-modal-assignee").value);
       const desc = document.getElementById("task-modal-desc").value.trim();
