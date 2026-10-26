@@ -607,6 +607,109 @@
       accent-color: #2563eb;
       cursor: pointer;
     }
+
+    /* Print & Executive PDF Stylesheet */
+    #report-printable-area {
+      display: none;
+    }
+    .report-a4-preview {
+      background: #ffffff;
+      color: #0f172a;
+      padding: 24px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      max-height: 65vh;
+      overflow-y: auto;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
+    }
+    .report-header-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid #0284c7;
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+    }
+    .report-sec-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #0f172a;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin: 16px 0 8px 0;
+      padding-bottom: 4px;
+      border-bottom: 1.5px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 12px;
+      font-size: 0.76rem;
+    }
+    .report-table th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+      padding: 6px 8px;
+      border: 1px solid #cbd5e1;
+      text-align: left;
+    }
+    .report-table td {
+      border: 1px solid #cbd5e1;
+      padding: 6px 8px;
+      vertical-align: top;
+      color: #1e293b;
+    }
+    .report-signatures {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-top: 24px;
+      padding-top: 12px;
+      text-align: center;
+      page-break-inside: avoid;
+    }
+
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+      #report-printable-area, #report-printable-area * {
+        visibility: visible !important;
+      }
+      #report-printable-area {
+        display: block !important;
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+        color: black !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      @page {
+        size: A4 portrait;
+        margin: 12mm 14mm 14mm 14mm;
+      }
+      .page-break {
+        page-break-before: always;
+      }
+    }
   </style>
 </head>
 <body>
@@ -742,6 +845,7 @@
     <!-- Sidebar Footer -->
     <div class="sidebar-footer">
       <button class="btn-side-action" onclick="exportToExcel()">📥 Xuất báo cáo tiến độ Excel</button>
+      <button class="btn-side-action" style="font-size:0.75rem; background:#0284c7;" onclick="openReportPDFModal()">📄 Xuất Báo Cáo PDF (A4)</button>
       <button class="btn-side-action" style="font-size:0.75rem; background:#1e3a8a;" onclick="resetSetaTemplate()">🔄 Nạp lại dữ liệu chuẩn mẫu</button>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
         <button class="btn-side-action" style="font-size: 0.72rem;" onclick="exportData()">💾 Sao lưu</button>
@@ -785,6 +889,9 @@
 
           <button class="btn-header-tool" onclick="exportToExcel()" title="Tải file Excel tiến độ">
             <span>📊</span> Xuất Excel
+          </button>
+          <button class="btn-header-tool" style="background:#e0f2fe; color:#0369a1; border-color:#bae6fd; font-weight:700;" onclick="openReportPDFModal()" title="Xuất báo cáo tổng hợp ra file PDF">
+            <span>📄</span> Xuất Báo Cáo PDF
           </button>
           <button class="btn-header-tool" onclick="lockAppNow()" title="Khóa màn hình ngay">
             <span>🔒</span> Khóa
@@ -868,6 +975,24 @@
 
     <!-- Mode 2: Full Dashboard View (Compare 2 Projects & Team) -->
     <div class="dashboard-view" id="dashboard-view">
+      <!-- Executive Dashboard Top Action Bar -->
+      <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px; background:linear-gradient(135deg, #1e293b, #0f172a); color:white; padding:14px 18px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+        <div>
+          <div style="font-size:1.05rem; font-weight:800; display:flex; align-items:center; gap:8px;">
+            <span>📋 Báo Cáo Tiến Độ Song Song & Kế Hoạch Tuần</span>
+            <span style="font-size:0.7rem; background:#0284c7; color:white; padding:2px 8px; border-radius:99px; font-weight:600;">Executive Report</span>
+          </div>
+          <div style="font-size:0.78rem; color:#94a3b8; margin-top:2px;">
+            Tổng hợp kết quả hoàn thành tuần vừa qua & Kế hoạch dự kiến tuần mới gửi Ban Giám Đốc
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <button class="btn-side-action" style="background:#0284c7; color:white; font-weight:700; padding:8px 16px; border-radius:8px; font-size:0.82rem; border:none; cursor:pointer; display:flex; align-items:center; gap:6px; box-shadow:0 2px 6px rgba(2,132,199,0.4);" onclick="openReportPDFModal()">
+            <span>📄</span> Xuất Báo Cáo PDF (A4)
+          </button>
+        </div>
+      </div>
+
       <!-- 2 Parallel Projects Comparison Box -->
       <div class="dash-compare-grid">
         <!-- Box 1: Bệnh Viện A -->
@@ -1364,6 +1489,63 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal Xuất Báo Cáo PDF (Executive PDF Report Modal) -->
+  <div class="modal-overlay" id="report-pdf-modal">
+    <div class="modal-card" style="width: 900px; max-width: 96vw; max-height: 94vh;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:10px;">
+        <h2 class="modal-title" style="display:flex; align-items:center; gap:8px;">
+          <span>📄</span> Xuất Báo Cáo Tổng Hợp PDF (A4)
+        </h2>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <button class="btn-primary" style="background:#0284c7; padding:7px 16px; font-size:0.85rem;" onclick="triggerPrintPDF()">
+            🖨️ In / Tải file PDF ngay
+          </button>
+          <button class="btn-secondary" style="padding:7px 12px; font-size:0.85rem;" onclick="closeReportPDFModal()">✕ Đóng</button>
+        </div>
+      </div>
+
+      <!-- Controls row: Week Selector & Custom Note -->
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; background:#f8fafc; padding:12px 14px; border-radius:8px; border:1px solid var(--border); margin-bottom:12px;">
+        <div class="form-group">
+          <label style="font-size:0.78rem; font-weight:700;">Chọn tuần kế hoạch mới đưa vào báo cáo (*):</label>
+          <select id="pdf-target-week" onchange="updatePDFPreview()" style="padding:7px 10px; font-size:0.82rem;">
+            <!-- Populated dynamically -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label style="font-size:0.78rem; font-weight:700;">Người lập báo cáo:</label>
+          <input type="text" id="pdf-author-name" value="Thanh Phương - Quản lý dự án" oninput="updatePDFPreview()" style="padding:7px 10px; font-size:0.82rem;">
+        </div>
+        <div class="form-group" style="grid-column: 1 / -1;">
+          <label style="font-size:0.78rem; font-weight:700;">Nhận định & Đề xuất chung của Quản lý dự án (PM Notes):</label>
+          <textarea id="pdf-pm-notes" rows="2" oninput="updatePDFPreview()" style="padding:7px 10px; font-size:0.82rem;" placeholder="Nhập nhận định tiến độ, vướng mắc cần lưu ý gửi Ban Giám Đốc..."></textarea>
+        </div>
+      </div>
+
+      <!-- Live A4 Report Preview Container -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+        <span style="font-size:0.75rem; font-weight:700; color:#64748b; text-transform:uppercase;">XEM TRƯỚC BẢN IN BÁO CÁO (A4):</span>
+        <span style="font-size:0.72rem; color:#0284c7; font-weight:600;">(Bản in sẽ tự động căn chỉnh khổ giấy A4)</span>
+      </div>
+      <div class="report-a4-preview" id="report-preview-box">
+        <!-- Live rendered report content -->
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding-top:10px; border-top:1px solid var(--border);">
+        <div style="font-size:0.75rem; color:#64748b;">
+          💡 Mẹo: Khi hộp thoại in mở ra, tại mục <strong>Máy in (Destination)</strong> chọn <strong>"Save as PDF" (Lưu thành file PDF)</strong> để tải về.
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn-secondary" onclick="closeReportPDFModal()">Đóng</button>
+          <button class="btn-primary" style="background:#0284c7;" onclick="triggerPrintPDF()">🖨️ In / Tải file PDF ngay</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden Printable Container (Only visible during @media print) -->
+  <div id="report-printable-area"></div>
 
   <!-- Toast Container -->
   <div class="toast-container" id="toast-container"></div>
@@ -3021,6 +3203,267 @@
       a.download = `Ke_Hoach_Tuan_${plan.weekNum}_${plan.year}_Seta_Longevity.csv`;
       a.click();
       showToast(`Đã xuất file Excel Kế hoạch Tuần ${plan.weekNum}!`);
+    }
+
+    /* --- XUẤT BÁO CÁO TỔNG HỢP PDF (EXECUTIVE REPORT) --- */
+    function openReportPDFModal() {
+      // 1. Populate Target Week dropdown
+      const sel = document.getElementById("pdf-target-week");
+      if (sel) {
+        sel.innerHTML = "";
+        const sortedWeeks = [...state.weeklyPlans].sort((a,b) => {
+          if (b.year !== a.year) return b.year - a.year;
+          return b.weekNum - a.weekNum;
+        });
+
+        sortedWeeks.forEach(w => {
+          const isCurrent = (w.weekNum === 44 && w.year === 2026);
+          sel.innerHTML += `<option value="${w.id}" ${w.id === state.selectedWeekId ? 'selected' : ''}>${w.title || ('Tuần ' + w.weekNum)} ${isCurrent ? '⭐ [Hiện tại]' : ''}</option>`;
+        });
+      }
+
+      // Pre-fill notes if empty
+      const notesEl = document.getElementById("pdf-pm-notes");
+      if (notesEl && !notesEl.value.trim()) {
+        notesEl.value = "Tiến độ triển khai thí điểm tại 3 khoa lâm sàng (Tim Mạch, Nội Tiết, Ung Bướu) đang được kiểm soát tốt. Mô hình AI v1.0 và Hotline CSKH 24/7 đã bắt đầu vận hành ổn định. Đề xuất Phòng KHTH tiếp tục hỗ trợ thẩm định danh mục bệnh nhân mở rộng đợt 2.";
+      }
+
+      updatePDFPreview();
+      document.getElementById("report-pdf-modal").classList.add("open");
+    }
+
+    function closeReportPDFModal() {
+      document.getElementById("report-pdf-modal").classList.remove("open");
+    }
+
+    function updatePDFPreview() {
+      const today = getTodayStr();
+      const now = new Date();
+      const formattedDate = `Ngày ${now.getDate()} tháng ${now.getMonth() + 1} năm ${now.getFullYear()}`;
+      const authorName = document.getElementById("pdf-author-name")?.value.trim() || "Thanh Phương - Quản lý dự án";
+      const pmNotes = document.getElementById("pdf-pm-notes")?.value.trim() || "";
+      const targetWeekId = document.getElementById("pdf-target-week")?.value || state.selectedWeekId;
+      const targetPlan = state.weeklyPlans.find(w => w.id === targetWeekId) || getCurrentWeeklyPlan();
+
+      // Project 1: Bệnh Viện A stats
+      const hTasks = state.tasks.filter(t => t.projectId === 1);
+      const hDone = hTasks.filter(t => t.completed).length;
+      const hDoing = hTasks.filter(t => t.status === 'doing' && !t.completed).length;
+      const hOverdue = hTasks.filter(t => t.due && t.due < today && !t.completed).length;
+      const hPct = hTasks.length ? Math.round((hDone / hTasks.length) * 100) : 0;
+
+      // Project 2: Seta Nội Bộ stats
+      const iTasks = state.tasks.filter(t => t.projectId === 2);
+      const iDone = iTasks.filter(t => t.completed).length;
+      const iDoing = iTasks.filter(t => t.status === 'doing' && !t.completed).length;
+      const iOverdue = iTasks.filter(t => t.due && t.due < today && !t.completed).length;
+      const iPct = iTasks.length ? Math.round((iDone / iTasks.length) * 100) : 0;
+
+      // Weekly plan calculation
+      const targetItems = targetPlan ? (targetPlan.items || []) : [];
+      let totalCost = 0;
+      let proposalCount = 0;
+      targetItems.forEach(it => {
+        totalCost += parseNumericCost(it.cost);
+        if (it.proposal && it.proposal.trim() && it.proposal.trim() !== '-') proposalCount++;
+      });
+
+      const statusMap = {
+        planning: { label: '🟡 Dự kiến', color: '#b45309', bg: '#fffbeb' },
+        doing: { label: '🔵 Đang làm', color: '#1d4ed8', bg: '#eff6ff' },
+        done: { label: '🟢 Hoàn thành', color: '#15803d', bg: '#f0fdf4' },
+        postponed: { label: '⚪ Tạm hoãn', color: '#64748b', bg: '#f1f5f9' }
+      };
+
+      // Build HTML for Weekly Table Rows
+      let weeklyRowsHtml = "";
+      if (!targetItems.length) {
+        weeklyRowsHtml = `<tr><td colspan="7" style="text-align:center; padding:16px; color:#64748b;">Chưa có dữ liệu kế hoạch cho tuần này.</td></tr>`;
+      } else {
+        targetItems.forEach((it, idx) => {
+          weeklyRowsHtml += `
+            <tr>
+              <td style="text-align:center; font-weight:bold;">${idx + 1}</td>
+              <td style="font-weight:600; color:#0369a1;">${it.major || 'Chung'}</td>
+              <td><strong>${it.minor || ''}</strong></td>
+              <td>${it.collaborator || 'Chưa gán'}</td>
+              <td style="white-space:nowrap; color:#dc2626; font-weight:600;">${it.deadline || '-'}</td>
+              <td style="text-align:right; font-weight:bold; color:#047857;">${formatVND(it.cost)}</td>
+              <td>${it.proposal && it.proposal.trim() && it.proposal.trim() !== '-' ? `<span style="color:#b45309;">${it.proposal}</span>` : '<span style="color:#94a3b8;">-</span>'}</td>
+            </tr>
+          `;
+        });
+      }
+
+      // Build HTML for Member Summary Table
+      let memberRowsHtml = "";
+      state.members.forEach(m => {
+        const mTasks = state.tasks.filter(t => t.memberId === m.id);
+        const mComp = mTasks.filter(t => t.completed).length;
+        const mPct = mTasks.length ? Math.round((mComp / mTasks.length) * 100) : 0;
+        memberRowsHtml += `
+          <tr>
+            <td><strong>${m.name}</strong></td>
+            <td>${m.unit} - ${m.role}</td>
+            <td style="text-align:center;">${mTasks.length}</td>
+            <td style="text-align:center; color:#15803d; font-weight:bold;">${mComp}</td>
+            <td style="text-align:center; font-weight:bold;">${mPct}%</td>
+          </tr>
+        `;
+      });
+
+      // Compose full executive printable document
+      const reportHtml = `
+        <div style="font-family:system-ui, -apple-system, sans-serif; line-height:1.45; color:#0f172a;">
+          <!-- Header Banner -->
+          <div class="report-header-banner">
+            <div>
+              <div style="font-size:0.8rem; font-weight:800; color:#0284c7; text-transform:uppercase;">🏥 BỆNH VIỆN A - PHÒNG KẾ HOẠCH TỔNG HỢP</div>
+              <div style="font-size:0.72rem; color:#64748b;">Đơn vị chủ trì lâm sàng: Khoa Tim Mạch - Nội Tiết - Ung Bướu</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:0.8rem; font-weight:800; color:#7c3aed; text-transform:uppercase;">🏢 SETA LONGEVITY HEALTHCARE</div>
+              <div style="font-size:0.72rem; color:#64748b;">Bộ phận Công nghệ, AI & Vận hành CSKH</div>
+            </div>
+          </div>
+
+          <div style="text-align:center; margin:14px 0 18px 0;">
+            <div style="font-size:1.25rem; font-weight:900; color:#0f172a; text-transform:uppercase; letter-spacing:0.5px;">
+              BÁO CÁO TỔNG KẾT TIẾN ĐỘ & KẾ HOẠCH HÀNH ĐỘNG TUẦN
+            </div>
+            <div style="font-size:0.8rem; font-style:italic; color:#475569; margin-top:2px;">
+              (Hệ thống quản trị tiến độ triển khai song song Bệnh Viện A & Seta Longevity)
+            </div>
+            <div style="font-size:0.78rem; color:#64748b; margin-top:4px;">
+              Thời điểm lập báo cáo: <strong>${formattedDate}</strong> | Người phụ trách: <strong>${authorName}</strong>
+            </div>
+          </div>
+
+          <!-- PHẦN I: DASHBOARD KẾT QUẢ TUẦN CŨ -->
+          <div class="report-sec-title">
+            <span>I. KẾT QUẢ THỰC HIỆN & TIẾN ĐỘ HOÀN THÀNH (DASHBOARD TUẦN CŨ)</span>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:12px;">
+            <!-- Box Hosp A -->
+            <div style="border:1.5px solid #0284c7; border-radius:8px; padding:10px 14px; background:#f0f9ff;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <strong style="color:#0369a1; font-size:0.85rem;">🏥 DỰ ÁN BỆNH VIỆN A (3 KHOA)</strong>
+                <span style="font-size:1.15rem; font-weight:900; color:#0284c7;">${hPct}%</span>
+              </div>
+              <div style="font-size:0.76rem; color:#475569; display:flex; justify-content:space-between;">
+                <span>Tổng nhiệm vụ: <strong>${hTasks.length}</strong></span>
+                <span>Đã hoàn thành: <strong style="color:#15803d;">${hDone}</strong></span>
+                <span>Đang xử lý: <strong style="color:#d97706;">${hDoing}</strong></span>
+                <span>Quá hạn: <strong style="color:#dc2626;">${hOverdue}</strong></span>
+              </div>
+            </div>
+
+            <!-- Box Internal Seta -->
+            <div style="border:1.5px solid #7c3aed; border-radius:8px; padding:10px 14px; background:#faf5ff;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <strong style="color:#6b21a8; font-size:0.85rem;">🏢 DỰ ÁN NỘI BỘ SETA (TECH & CSKH)</strong>
+                <span style="font-size:1.15rem; font-weight:900; color:#7c3aed;">${iPct}%</span>
+              </div>
+              <div style="font-size:0.76rem; color:#475569; display:flex; justify-content:space-between;">
+                <span>Tổng nhiệm vụ: <strong>${iTasks.length}</strong></span>
+                <span>Đã hoàn thành: <strong style="color:#15803d;">${iDone}</strong></span>
+                <span>Đang xử lý: <strong style="color:#d97706;">${iDoing}</strong></span>
+                <span>Quá hạn: <strong style="color:#dc2626;">${iOverdue}</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bảng nhân sự tóm tắt -->
+          <div style="font-size:0.76rem; font-weight:700; color:#475569; margin:8px 0 4px 0;">1. Phân bổ công việc & Tỷ lệ hoàn thành theo nhân sự:</div>
+          <table class="report-table">
+            <thead>
+              <tr>
+                <th style="width:28%;">Nhân sự phụ trách</th>
+                <th style="width:36%;">Đơn vị & Chức danh</th>
+                <th style="width:12%; text-align:center;">Tổng việc</th>
+                <th style="width:12%; text-align:center;">Đã xong</th>
+                <th style="width:12%; text-align:center;">Tiến độ</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${memberRowsHtml}
+            </tbody>
+          </table>
+
+          <!-- PHẦN II: KẾ HOẠCH DỰ KIẾN TUẦN MỚI -->
+          <div class="report-sec-title" style="margin-top:16px;">
+            <span>II. KẾ HOẠCH HÀNH ĐỘNG DỰ KIẾN CHO TUẦN MỚI (${targetPlan.title || ('Tuần ' + targetPlan.weekNum)})</span>
+          </div>
+
+          <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:6px; padding:8px 12px; margin-bottom:8px; font-size:0.78rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+            <div><strong>🎯 Tiêu điểm tuần mới:</strong> ${targetPlan.theme || 'Triển khai công việc trọng tâm'}</div>
+            <div><strong>💰 Tổng kinh phí dự trù tuần:</strong> <span style="color:#047857; font-weight:800;">${formatVND(totalCost)}</span></div>
+          </div>
+
+          <table class="report-table">
+            <thead>
+              <tr>
+                <th style="width:30px; text-align:center;">STT</th>
+                <th style="width:19%;">Hạng mục lớn</th>
+                <th style="width:28%;">Hạng mục nhỏ (Nhiệm vụ cụ thể)</th>
+                <th style="width:17%;">Người phối hợp</th>
+                <th style="width:11%;">Hạn chót</th>
+                <th style="width:12%; text-align:right;">Chi phí dự kiến</th>
+                <th style="width:13%;">Đề xuất phối hợp</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${weeklyRowsHtml}
+            </tbody>
+          </table>
+
+          <!-- PHẦN III: NHẬN ĐỊNH CỦA QUẢN LÝ DỰ ÁN & CHỮ KÝ -->
+          <div class="report-sec-title">
+            <span>III. NHẬN ĐỊNH CỦA QUẢN LÝ DỰ ÁN & Ý KIẾN CHỈ ĐẠO</span>
+          </div>
+
+          <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:6px; padding:8px 12px; font-size:0.78rem; line-height:1.5; margin-bottom:12px;">
+            <strong>📌 Ý kiến nhận định của Quản lý dự án:</strong><br>
+            ${pmNotes ? pmNotes.replace(/\n/g, '<br>') : 'Toàn bộ kế hoạch tuần mới đã được rà soát và thống nhất cùng các khoa phòng lâm sàng.'}
+          </div>
+
+          <!-- Chữ ký phê duyệt -->
+          <div class="report-signatures">
+            <div>
+              <div style="font-size:0.78rem; font-weight:700; text-transform:uppercase;">NGƯỜI LẬP BÁO CÁO</div>
+              <div style="font-size:0.7rem; font-style:italic; color:#64748b; margin-top:2px;">(Ký &amp; ghi rõ họ tên)</div>
+              <div style="height:50px;"></div>
+              <div style="font-weight:700; font-size:0.85rem; color:#0f172a;">${authorName}</div>
+            </div>
+
+            <div>
+              <div style="font-size:0.78rem; font-weight:700; text-transform:uppercase;">ĐẠI DIỆN PHÒNG KHTH - VIỆN A</div>
+              <div style="font-size:0.7rem; font-style:italic; color:#64748b; margin-top:2px;">(Ký, ghi rõ họ tên &amp; đóng dấu)</div>
+              <div style="height:50px;"></div>
+              <div style="font-weight:700; font-size:0.85rem; color:#0f172a;">Trưởng Phòng KHTH</div>
+            </div>
+
+            <div>
+              <div style="font-size:0.78rem; font-weight:700; text-transform:uppercase;">BAN LÃNH ĐẠO SETA LONGEVITY</div>
+              <div style="font-size:0.7rem; font-style:italic; color:#64748b; margin-top:2px;">(Ký duyệt &amp; phân bổ ngân sách)</div>
+              <div style="height:50px;"></div>
+              <div style="font-weight:700; font-size:0.85rem; color:#0f172a;">Ban Giám Đốc</div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const previewBox = document.getElementById("report-preview-box");
+      if (previewBox) previewBox.innerHTML = reportHtml;
+
+      const printArea = document.getElementById("report-printable-area");
+      if (printArea) printArea.innerHTML = reportHtml;
+    }
+
+    function triggerPrintPDF() {
+      updatePDFPreview();
+      window.print();
     }
 
     // Modal Task Logic
