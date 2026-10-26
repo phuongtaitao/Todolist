@@ -615,31 +615,31 @@
     .report-a4-preview {
       background: #ffffff;
       color: #0f172a;
-      padding: 24px;
+      padding: 20px 24px;
       border: 1px solid #cbd5e1;
       border-radius: 8px;
       max-height: 65vh;
       overflow-y: auto;
-      font-size: 0.82rem;
-      line-height: 1.5;
+      font-size: 0.78rem;
+      line-height: 1.45;
       box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
     }
     .report-header-banner {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
       border-bottom: 2px solid #0284c7;
-      padding-bottom: 10px;
-      margin-bottom: 14px;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
     }
     .report-sec-title {
-      font-size: 0.88rem;
+      font-size: 0.8rem;
       font-weight: 800;
       color: #0f172a;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin: 16px 0 8px 0;
-      padding-bottom: 4px;
+      letter-spacing: 0.3px;
+      margin: 12px 0 6px 0;
+      padding-bottom: 3px;
       border-bottom: 1.5px solid #e2e8f0;
       display: flex;
       align-items: center;
@@ -648,29 +648,35 @@
     .report-table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 12px;
-      font-size: 0.76rem;
+      margin-bottom: 8px;
+      font-size: 0.73rem;
     }
     .report-table th {
       background: #f1f5f9;
       color: #0f172a;
       font-weight: 700;
-      padding: 6px 8px;
+      padding: 5px 6px;
       border: 1px solid #cbd5e1;
       text-align: left;
     }
     .report-table td {
       border: 1px solid #cbd5e1;
-      padding: 6px 8px;
+      padding: 5px 6px;
       vertical-align: top;
       color: #1e293b;
+    }
+    .report-table tr {
+      page-break-inside: avoid;
+    }
+    .report-chart-box {
+      page-break-inside: avoid;
     }
     .report-signatures {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 16px;
-      margin-top: 24px;
-      padding-top: 12px;
+      gap: 12px;
+      margin-top: 14px;
+      padding-top: 8px;
       text-align: center;
       page-break-inside: avoid;
     }
@@ -690,8 +696,8 @@
         width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
-        background: white !important;
-        color: black !important;
+        background: #ffffff !important;
+        color: #0f172a !important;
         border: none !important;
         box-shadow: none !important;
       }
@@ -701,10 +707,11 @@
       * {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
+        color-adjust: exact !important;
       }
       @page {
         size: A4 portrait;
-        margin: 12mm 14mm 14mm 14mm;
+        margin: 8mm 10mm 10mm 10mm;
       }
       .page-break {
         page-break-before: always;
@@ -1505,21 +1512,35 @@
         </div>
       </div>
 
-      <!-- Controls row: Week Selector & Custom Note -->
-      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; background:#f8fafc; padding:12px 14px; border-radius:8px; border:1px solid var(--border); margin-bottom:12px;">
+      <!-- Controls row: Week Selector, Author, Mode & Chart Toggle -->
+      <div style="display:grid; grid-template-columns: 1.2fr 1fr 1.2fr; gap:10px; background:#f8fafc; padding:10px 14px; border-radius:8px; border:1px solid var(--border); margin-bottom:12px;">
         <div class="form-group">
-          <label style="font-size:0.78rem; font-weight:700;">Chọn tuần kế hoạch mới đưa vào báo cáo (*):</label>
-          <select id="pdf-target-week" onchange="updatePDFPreview()" style="padding:7px 10px; font-size:0.82rem;">
+          <label style="font-size:0.76rem; font-weight:700;">Chọn tuần kế hoạch mới (*):</label>
+          <select id="pdf-target-week" onchange="updatePDFPreview()" style="padding:6px 8px; font-size:0.8rem;">
             <!-- Populated dynamically -->
           </select>
         </div>
         <div class="form-group">
-          <label style="font-size:0.78rem; font-weight:700;">Người lập báo cáo:</label>
-          <input type="text" id="pdf-author-name" value="Thanh Phương - Quản lý dự án" oninput="updatePDFPreview()" style="padding:7px 10px; font-size:0.82rem;">
+          <label style="font-size:0.76rem; font-weight:700;">Người lập báo cáo:</label>
+          <input type="text" id="pdf-author-name" value="Thanh Phương - Quản lý dự án" oninput="updatePDFPreview()" style="padding:6px 8px; font-size:0.8rem;">
+        </div>
+        <div class="form-group">
+          <label style="font-size:0.76rem; font-weight:700;">Định dạng & Bố cục in:</label>
+          <select id="pdf-layout-mode" onchange="updatePDFPreview()" style="padding:6px 8px; font-size:0.8rem;">
+            <option value="compact" selected>🔹 Bản Tinh Gọn (1-2 trang - Khuyên dùng)</option>
+            <option value="detailed">🔸 Bản Chi Tiết (Kèm danh sách nhân sự)</option>
+          </select>
+        </div>
+        <div class="form-group" style="grid-column: 1 / -1; display:flex; align-items:center; justify-content:space-between; margin-top:2px; background:#ffffff; padding:6px 10px; border-radius:6px; border:1px solid #e2e8f0;">
+          <label style="font-size:0.76rem; font-weight:700; color:#0369a1; display:flex; align-items:center; gap:8px; cursor:pointer;">
+            <input type="checkbox" id="pdf-include-chart" checked onchange="updatePDFPreview()" style="width:16px; height:16px; accent-color:#0284c7; cursor:pointer;">
+            <span>📈 In kèm Biểu đồ đường cong tiến độ hoàn thành (Progress Curve Chart)</span>
+          </label>
+          <span style="font-size:0.72rem; color:#64748b;">Tối ưu: <strong>Khổ A4 Dọc (Portrait)</strong></span>
         </div>
         <div class="form-group" style="grid-column: 1 / -1;">
-          <label style="font-size:0.78rem; font-weight:700;">Nhận định & Đề xuất chung của Quản lý dự án (PM Notes):</label>
-          <textarea id="pdf-pm-notes" rows="2" oninput="updatePDFPreview()" style="padding:7px 10px; font-size:0.82rem;" placeholder="Nhập nhận định tiến độ, vướng mắc cần lưu ý gửi Ban Giám Đốc..."></textarea>
+          <label style="font-size:0.76rem; font-weight:700;">Nhận định & Đề xuất chung của Quản lý dự án (PM Notes):</label>
+          <textarea id="pdf-pm-notes" rows="2" oninput="updatePDFPreview()" style="padding:6px 8px; font-size:0.8rem;" placeholder="Nhập nhận định tiến độ, vướng mắc cần lưu ý gửi Ban Giám Đốc..."></textarea>
         </div>
       </div>
 
@@ -1533,8 +1554,8 @@
       </div>
 
       <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding-top:10px; border-top:1px solid var(--border);">
-        <div style="font-size:0.75rem; color:#64748b;">
-          💡 Mẹo: Khi hộp thoại in mở ra, tại mục <strong>Máy in (Destination)</strong> chọn <strong>"Save as PDF" (Lưu thành file PDF)</strong> để tải về.
+        <div style="font-size:0.75rem; color:#475569; line-height:1.4;">
+          💡 <strong>Mẹo in đẹp & chuẩn màu:</strong> Chọn máy in <strong>"Save as PDF" (Lưu thành file PDF)</strong>, khổ giấy <strong>A4</strong>, và tích chọn <strong>"Đồ họa nền" (Background graphics)</strong> để file PDF giữ nguyên 100% màu sắc rực rỡ và biểu đồ tiến độ.
         </div>
         <div style="display:flex; gap:8px;">
           <button class="btn-secondary" onclick="closeReportPDFModal()">Đóng</button>
@@ -3236,6 +3257,175 @@
       document.getElementById("report-pdf-modal").classList.remove("open");
     }
 
+    // Helper to format category badges with vibrant todolist colors
+    function getMajorCategoryBadge(major) {
+      const m = (major || '').toLowerCase();
+      if (m.includes('lâm sàng') || m.includes('khoa') || m.includes('bv') || m.includes('viện a') || m.includes('tim') || m.includes('nội tiết') || m.includes('ung bướu')) {
+        return `<span style="display:inline-block; font-size:0.65rem; font-weight:700; color:#0369a1; background:#e0f2fe; border:1px solid #bae6fd; padding:1px 6px; border-radius:4px;">${major}</span>`;
+      } else if (m.includes('công nghệ') || m.includes('ai') || m.includes('app') || m.includes('tech') || m.includes('firewall') || m.includes('hạ tầng')) {
+        return `<span style="display:inline-block; font-size:0.65rem; font-weight:700; color:#6b21a8; background:#f3e8ff; border:1px solid #e9d5ff; padding:1px 6px; border-radius:4px;">${major}</span>`;
+      } else if (m.includes('chăm sóc') || m.includes('cskh') || m.includes('đào tạo') || m.includes('tập huấn') || m.includes('hotline')) {
+        return `<span style="display:inline-block; font-size:0.65rem; font-weight:700; color:#c2410c; background:#ffedd5; border:1px solid #fed7aa; padding:1px 6px; border-radius:4px;">${major}</span>`;
+      } else if (m.includes('quản trị') || m.includes('giao ban') || m.includes('báo cáo') || m.includes('sơ kết')) {
+        return `<span style="display:inline-block; font-size:0.65rem; font-weight:700; color:#047857; background:#ecfdf5; border:1px solid #a7f3d0; padding:1px 6px; border-radius:4px;">${major}</span>`;
+      }
+      return `<span style="display:inline-block; font-size:0.65rem; font-weight:700; color:#334155; background:#f1f5f9; border:1px solid #cbd5e1; padding:1px 6px; border-radius:4px;">${major}</span>`;
+    }
+
+    // Generate high-fidelity vector spline chart for PDF
+    function generatePDFReportChartSvg(hPct, iPct) {
+      const totalTasks = state.tasks.length;
+      const totalDone = state.tasks.filter(t => t.completed).length;
+      const avgPct = totalTasks ? Math.round((totalDone / totalTasks) * 100) : 0;
+
+      const hTasks = state.tasks.filter(t => t.projectId === 1);
+      const iTasks = state.tasks.filter(t => t.projectId === 2);
+
+      const stagesMeta = [
+        { name: "Khởi động", sub: "Mốc 0", target: 0 },
+        { name: "GĐ 1: Chuẩn bị", sub: "Setup", target: 25 },
+        { name: "GĐ 2: Thí điểm", sub: "3 Khoa & AI", target: 50 },
+        { name: "GĐ 3: Vận hành", sub: "Giám sát", target: 75 },
+        { name: "GĐ 4: Đánh giá", sub: "Báo cáo", target: 90 },
+        { name: "GĐ 5: Mở rộng", sub: "Mục tiêu", target: 100 }
+      ];
+
+      const hVals = [0];
+      const iVals = [0];
+      const avgVals = [0];
+      const targetVals = stagesMeta.map(s => s.target);
+
+      for (let s = 1; s <= 4; s++) {
+        const sHTasks = hTasks.filter(t => getTaskStage(t, hTasks) === s);
+        const sHScore = sHTasks.reduce((acc, t) => acc + getTaskScore(t), 0);
+        const sHPct = sHTasks.length ? Math.min(100, Math.round((sHScore / sHTasks.length) * 100)) : 0;
+        hVals.push(sHPct);
+
+        const sITasks = iTasks.filter(t => getTaskStage(t, iTasks) === s);
+        const sIScore = sITasks.reduce((acc, t) => acc + getTaskScore(t), 0);
+        const sIPct = sITasks.length ? Math.min(100, Math.round((sIScore / sITasks.length) * 100)) : 0;
+        iVals.push(sIPct);
+
+        const combinedTasks = [...sHTasks, ...sITasks];
+        const combinedScore = sHScore + sIScore;
+        const combinedPct = combinedTasks.length ? Math.min(100, Math.round((combinedScore / combinedTasks.length) * 100)) : 0;
+        avgVals.push(combinedPct);
+      }
+      hVals.push(hPct);
+      iVals.push(iPct);
+      avgVals.push(avgPct);
+
+      const svgW = 740;
+      const svgH = 145;
+      const padLeft = 40;
+      const padRight = 32;
+      const padTop = 18;
+      const padBottom = 32;
+      const plotW = svgW - padLeft - padRight;
+      const plotH = svgH - padTop - padBottom;
+      const baseY = svgH - padBottom;
+
+      const xCoords = [0, 1, 2, 3, 4, 5].map(i => padLeft + (i / 5) * plotW);
+      const getY = p => baseY - (Math.max(0, Math.min(100, p)) / 100) * (plotH);
+
+      const hPts = hVals.map((v, i) => ({ x: xCoords[i], y: getY(v), val: v }));
+      const iPts = iVals.map((v, i) => ({ x: xCoords[i], y: getY(v), val: v }));
+      const avgPts = avgVals.map((v, i) => ({ x: xCoords[i], y: getY(v), val: v }));
+      const targetPts = targetVals.map((v, i) => ({ x: xCoords[i], y: getY(v), val: v }));
+
+      const hLineD = generateSplinePath(hPts);
+      const iLineD = generateSplinePath(iPts);
+      const avgLineD = generateSplinePath(avgPts);
+      const targetLineD = generateSplinePath(targetPts);
+
+      const hAreaD = `${hLineD} L ${hPts[hPts.length-1].x.toFixed(1)} ${baseY} L ${hPts[0].x.toFixed(1)} ${baseY} Z`;
+      const iAreaD = `${iLineD} L ${iPts[iPts.length-1].x.toFixed(1)} ${baseY} L ${iPts[0].x.toFixed(1)} ${baseY} Z`;
+
+      let gridSvg = "";
+      [100, 50, 0].forEach(lvl => {
+        const y = getY(lvl);
+        gridSvg += `
+          <line x1="${padLeft}" y1="${y}" x2="${svgW - padRight}" y2="${y}" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="${lvl === 0 ? 'none' : '3 3'}" />
+          <text x="${padLeft - 6}" y="${y + 3}" text-anchor="end" fill="#94a3b8" font-size="8.5" font-weight="600" font-family="system-ui, sans-serif">${lvl}%</text>
+        `;
+      });
+
+      let xSvg = "";
+      stagesMeta.forEach((m, idx) => {
+        const x = xCoords[idx];
+        xSvg += `
+          <line x1="${x}" y1="${padTop}" x2="${x}" y2="${baseY}" stroke="#f1f5f9" stroke-width="1" />
+          <text x="${x}" y="${baseY + 13}" text-anchor="middle" fill="#334155" font-size="8.5" font-weight="700" font-family="system-ui, sans-serif">${m.name}</text>
+          <text x="${x}" y="${baseY + 24}" text-anchor="middle" fill="#94a3b8" font-size="7.5" font-family="system-ui, sans-serif">${m.sub}</text>
+        `;
+      });
+
+      let dotsSvg = "";
+      stagesMeta.forEach((_, idx) => {
+        const hp = hPts[idx];
+        const ip = iPts[idx];
+        dotsSvg += `
+          <circle cx="${hp.x}" cy="${hp.y}" r="3.2" fill="#ffffff" stroke="#0284c7" stroke-width="2" />
+          <circle cx="${ip.x}" cy="${ip.y}" r="3.2" fill="#ffffff" stroke="#9333ea" stroke-width="2" />
+        `;
+        if (idx === 5) {
+          dotsSvg += `
+            <text x="${hp.x + 4}" y="${hp.y - 3}" fill="#0284c7" font-size="8.5" font-weight="800" font-family="system-ui, sans-serif">${hp.val}%</text>
+            <text x="${ip.x + 4}" y="${ip.y + 11}" fill="#9333ea" font-size="8.5" font-weight="800" font-family="system-ui, sans-serif">${ip.val}%</text>
+          `;
+        }
+      });
+
+      return `
+        <div class="report-chart-box" style="background:#ffffff; border:1px solid #cbd5e1; border-radius:6px; padding:6px 10px; margin-bottom:8px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; font-size:0.72rem;">
+            <span style="font-weight:700; color:#0f172a; display:flex; align-items:center; gap:4px;">
+              📈 BIỂU ĐỒ ĐƯỜNG CONG TIẾN ĐỘ THỰC HIỆN (PROGRESS CURVE)
+            </span>
+            <div style="display:flex; gap:12px; font-size:0.67rem; align-items:center;">
+              <span style="display:flex; align-items:center; gap:4px;">
+                <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#0284c7;"></span>
+                Viện A: <strong style="color:#0284c7;">${hPct}%</strong>
+              </span>
+              <span style="display:flex; align-items:center; gap:4px;">
+                <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#9333ea;"></span>
+                Seta: <strong style="color:#9333ea;">${iPct}%</strong>
+              </span>
+              <span style="display:flex; align-items:center; gap:4px;">
+                <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#16a34a;"></span>
+                Toàn bộ: <strong style="color:#16a34a;">${avgPct}%</strong>
+              </span>
+              <span style="display:flex; align-items:center; gap:4px; color:#64748b;">
+                <span style="display:inline-block; width:12px; height:2px; background:#cbd5e1; border-top:1px dashed #94a3b8;"></span>
+                Mục tiêu
+              </span>
+            </div>
+          </div>
+          <svg viewBox="0 0 ${svgW} ${svgH}" style="width:100%; height:auto; display:block;" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="print-grad-hosp" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0284c7" stop-opacity="0.25"/>
+                <stop offset="100%" stop-color="#0284c7" stop-opacity="0.02"/>
+              </linearGradient>
+              <linearGradient id="print-grad-internal" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#9333ea" stop-opacity="0.20"/>
+                <stop offset="100%" stop-color="#9333ea" stop-opacity="0.02"/>
+              </linearGradient>
+            </defs>
+            ${gridSvg}
+            ${xSvg}
+            <path d="${targetLineD}" fill="none" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4 4" />
+            <path d="${iAreaD}" fill="url(#print-grad-internal)" />
+            <path d="${hAreaD}" fill="url(#print-grad-hosp)" />
+            <path d="${hLineD}" fill="none" stroke="#0284c7" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="${iLineD}" fill="none" stroke="#9333ea" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="${avgLineD}" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="3 2" stroke-linecap="round" stroke-linejoin="round" />
+            ${dotsSvg}
+          </svg>
+        </div>
+      `;
+    }
+
     function updatePDFPreview() {
       const today = getTodayStr();
       const now = new Date();
@@ -3244,6 +3434,8 @@
       const pmNotes = document.getElementById("pdf-pm-notes")?.value.trim() || "";
       const targetWeekId = document.getElementById("pdf-target-week")?.value || state.selectedWeekId;
       const targetPlan = state.weeklyPlans.find(w => w.id === targetWeekId) || getCurrentWeeklyPlan();
+      const layoutMode = document.getElementById("pdf-layout-mode")?.value || "compact";
+      const includeChart = document.getElementById("pdf-include-chart") ? document.getElementById("pdf-include-chart").checked : true;
 
       // Project 1: Bệnh Viện A stats
       const hTasks = state.tasks.filter(t => t.projectId === 1);
@@ -3259,6 +3451,11 @@
       const iOverdue = iTasks.filter(t => t.due && t.due < today && !t.completed).length;
       const iPct = iTasks.length ? Math.round((iDone / iTasks.length) * 100) : 0;
 
+      // Total tasks
+      const totalAll = state.tasks.length;
+      const doneAll = hDone + iDone;
+      const avgAllPct = totalAll ? Math.round((doneAll / totalAll) * 100) : 0;
+
       // Weekly plan calculation
       const targetItems = targetPlan ? (targetPlan.items || []) : [];
       let totalCost = 0;
@@ -3268,34 +3465,62 @@
         if (it.proposal && it.proposal.trim() && it.proposal.trim() !== '-') proposalCount++;
       });
 
-      const statusMap = {
-        planning: { label: '🟡 Dự kiến', color: '#b45309', bg: '#fffbeb' },
-        doing: { label: '🔵 Đang làm', color: '#1d4ed8', bg: '#eff6ff' },
-        done: { label: '🟢 Hoàn thành', color: '#15803d', bg: '#f0fdf4' },
-        postponed: { label: '⚪ Tạm hoãn', color: '#64748b', bg: '#f1f5f9' }
-      };
+      // Member chips for compact view with individual brand colors
+      const hMemberChipsHtml = state.members.filter(m => m.unit === 'Bệnh Viện A').map(m => {
+        const mTasks = state.tasks.filter(t => t.memberId === m.id);
+        const mComp = mTasks.filter(t => t.completed).length;
+        const mPct = mTasks.length ? Math.round((mComp / mTasks.length) * 100) : 0;
+        return `
+          <span style="background:#ffffff; border:1px solid #bae6fd; border-radius:4px; padding:2px 6px; display:inline-flex; align-items:center; gap:4px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:${m.color || '#0284c7'}; display:inline-block;"></span>
+            <span style="font-weight:600; color:#1e293b;">${m.name.replace(' (Viện A)', '')}</span>: 
+            <strong style="color:#0369a1;">${mComp}/${mTasks.length}</strong> 
+            <span style="font-size:0.64rem; color:${mPct === 100 ? '#15803d' : '#475569'}; font-weight:700;">(${mPct}%)</span>
+          </span>
+        `;
+      }).join('');
 
-      // Build HTML for Weekly Table Rows
-      let weeklyRowsHtml = "";
+      const iMemberChipsHtml = state.members.filter(m => m.unit === 'Seta Nội Bộ').map(m => {
+        const mTasks = state.tasks.filter(t => t.memberId === m.id);
+        const mComp = mTasks.filter(t => t.completed).length;
+        const mPct = mTasks.length ? Math.round((mComp / mTasks.length) * 100) : 0;
+        return `
+          <span style="background:#ffffff; border:1px solid #e9d5ff; border-radius:4px; padding:2px 6px; display:inline-flex; align-items:center; gap:4px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:${m.color || '#7c3aed'}; display:inline-block;"></span>
+            <span style="font-weight:600; color:#1e293b;">${m.name.replace(' (Quản lý dự án)', ' (PM)')}</span>: 
+            <strong style="color:#6b21a8;">${mComp}/${mTasks.length}</strong> 
+            <span style="font-size:0.64rem; color:${mPct === 100 ? '#15803d' : '#475569'}; font-weight:700;">(${mPct}%)</span>
+          </span>
+        `;
+      }).join('');
+
+      // Build HTML for Weekly Table Rows (Compact 6-column format with vibrant category badges)
+      let weeklyCompactRowsHtml = "";
       if (!targetItems.length) {
-        weeklyRowsHtml = `<tr><td colspan="7" style="text-align:center; padding:16px; color:#64748b;">Chưa có dữ liệu kế hoạch cho tuần này.</td></tr>`;
+        weeklyCompactRowsHtml = `<tr><td colspan="6" style="text-align:center; padding:12px; color:#64748b;">Chưa có dữ liệu kế hoạch cho tuần này.</td></tr>`;
       } else {
         targetItems.forEach((it, idx) => {
-          weeklyRowsHtml += `
+          weeklyCompactRowsHtml += `
             <tr>
-              <td style="text-align:center; font-weight:bold;">${idx + 1}</td>
-              <td style="font-weight:600; color:#0369a1;">${it.major || 'Chung'}</td>
-              <td><strong>${it.minor || ''}</strong></td>
-              <td>${it.collaborator || 'Chưa gán'}</td>
-              <td style="white-space:nowrap; color:#dc2626; font-weight:600;">${it.deadline || '-'}</td>
-              <td style="text-align:right; font-weight:bold; color:#047857;">${formatVND(it.cost)}</td>
-              <td>${it.proposal && it.proposal.trim() && it.proposal.trim() !== '-' ? `<span style="color:#b45309;">${it.proposal}</span>` : '<span style="color:#94a3b8;">-</span>'}</td>
+              <td style="text-align:center; font-weight:bold; color:#64748b; font-size:0.72rem;">${idx + 1}</td>
+              <td>
+                <div style="margin-bottom:2px;">
+                  ${getMajorCategoryBadge(it.major)}
+                </div>
+                <div style="font-weight:600; color:#0f172a; font-size:0.73rem; line-height:1.35;">${it.minor || ''}</div>
+              </td>
+              <td style="font-size:0.71rem; color:#334155;">${it.collaborator || '-'}</td>
+              <td style="text-align:center; white-space:nowrap; color:#dc2626; font-weight:700; font-size:0.71rem;">${it.deadline || '-'}</td>
+              <td style="text-align:right; font-weight:700; color:#047857; font-size:0.73rem; white-space:nowrap;">${formatVND(it.cost)}</td>
+              <td style="font-size:0.71rem; color:#b45309; line-height:1.3;">
+                ${it.proposal && it.proposal.trim() && it.proposal.trim() !== '-' ? `<span style="background:#fffbeb; padding:1px 4px; border-radius:3px; border:1px solid #fef3c7;">${it.proposal}</span>` : '<span style="color:#94a3b8;">-</span>'}
+              </td>
             </tr>
           `;
         });
       }
 
-      // Build HTML for Member Summary Table
+      // Build HTML for Member Summary Table (Used in Detailed view)
       let memberRowsHtml = "";
       state.members.forEach(m => {
         const mTasks = state.tasks.filter(t => t.memberId === m.id);
@@ -3303,152 +3528,183 @@
         const mPct = mTasks.length ? Math.round((mComp / mTasks.length) * 100) : 0;
         memberRowsHtml += `
           <tr>
-            <td><strong>${m.name}</strong></td>
+            <td>
+              <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:${m.color || '#2563eb'}; margin-right:5px;"></span>
+              <strong>${m.name}</strong>
+            </td>
             <td>${m.unit} - ${m.role}</td>
             <td style="text-align:center;">${mTasks.length}</td>
             <td style="text-align:center; color:#15803d; font-weight:bold;">${mComp}</td>
-            <td style="text-align:center; font-weight:bold;">${mPct}%</td>
+            <td style="text-align:center; font-weight:bold; color:${mPct === 100 ? '#15803d' : '#0369a1'};">${mPct}%</td>
           </tr>
         `;
       });
 
+      // Render Progress Curve SVG Chart
+      const chartHtml = includeChart ? generatePDFReportChartSvg(hPct, iPct) : "";
+
+      // Detailed Personnel Section (only if layoutMode === 'detailed')
+      const detailedMemberSectionHtml = (layoutMode === 'detailed') ? `
+        <div style="font-size:0.74rem; font-weight:700; color:#475569; margin:8px 0 4px 0;">1. Phân bổ công việc & Tỷ lệ hoàn thành chi tiết từng nhân sự:</div>
+        <table class="report-table">
+          <thead>
+            <tr>
+              <th style="width:28%;">Nhân sự phụ trách</th>
+              <th style="width:36%;">Đơn vị & Chức danh</th>
+              <th style="width:12%; text-align:center;">Tổng việc</th>
+              <th style="width:12%; text-align:center;">Đã xong</th>
+              <th style="width:12%; text-align:center;">Tiến độ</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${memberRowsHtml}
+          </tbody>
+        </table>
+      ` : "";
+
       // Compose full executive printable document
       const reportHtml = `
         <div style="font-family:system-ui, -apple-system, sans-serif; line-height:1.45; color:#0f172a;">
-          <!-- Header Banner -->
+          <!-- Header Banner (Vivid Hospital & Seta Branding) -->
           <div class="report-header-banner">
             <div>
-              <div style="font-size:0.8rem; font-weight:800; color:#0284c7; text-transform:uppercase;">🏥 BỆNH VIỆN A - PHÒNG KẾ HOẠCH TỔNG HỢP</div>
-              <div style="font-size:0.72rem; color:#64748b;">Đơn vị chủ trì lâm sàng: Khoa Tim Mạch - Nội Tiết - Ung Bướu</div>
+              <div style="font-size:0.78rem; font-weight:800; color:#0284c7; text-transform:uppercase; letter-spacing:0.3px;">
+                🏥 BỆNH VIỆN A &amp; 🏢 SETA LONGEVITY HEALTHCARE
+              </div>
+              <div style="font-size:0.68rem; color:#64748b; margin-top:1px;">
+                Ban Điều Phối Dự Án Thí Điểm Lâm Sàng &amp; Công Nghệ Y Tế Song Song
+              </div>
             </div>
-            <div style="text-align:right;">
-              <div style="font-size:0.8rem; font-weight:800; color:#7c3aed; text-transform:uppercase;">🏢 SETA LONGEVITY HEALTHCARE</div>
-              <div style="font-size:0.72rem; color:#64748b;">Bộ phận Công nghệ, AI & Vận hành CSKH</div>
-            </div>
-          </div>
-
-          <div style="text-align:center; margin:14px 0 18px 0;">
-            <div style="font-size:1.25rem; font-weight:900; color:#0f172a; text-transform:uppercase; letter-spacing:0.5px;">
-              BÁO CÁO TỔNG KẾT TIẾN ĐỘ & KẾ HOẠCH HÀNH ĐỘNG TUẦN
-            </div>
-            <div style="font-size:0.8rem; font-style:italic; color:#475569; margin-top:2px;">
-              (Hệ thống quản trị tiến độ triển khai song song Bệnh Viện A & Seta Longevity)
-            </div>
-            <div style="font-size:0.78rem; color:#64748b; margin-top:4px;">
-              Thời điểm lập báo cáo: <strong>${formattedDate}</strong> | Người phụ trách: <strong>${authorName}</strong>
+            <div style="text-align:right; font-size:0.7rem; color:#475569;">
+              <div>Thời điểm: <strong>${formattedDate}</strong></div>
+              <div>Người lập: <strong style="color:#0284c7;">${authorName}</strong></div>
             </div>
           </div>
 
-          <!-- PHẦN I: DASHBOARD KẾT QUẢ TUẦN CŨ -->
+          <div style="text-align:center; margin:6px 0 10px 0;">
+            <div style="font-size:1.05rem; font-weight:900; color:#0f172a; text-transform:uppercase; letter-spacing:0.4px;">
+              BÁO CÁO TIẾN ĐỘ THỰC HIỆN &amp; KẾ HOẠCH HÀNH ĐỘNG TUẦN
+            </div>
+            <div style="font-size:0.72rem; color:#64748b;">
+              Tổng hợp tiến độ tuần qua &amp; Kế hoạch tuần mới: <strong style="color:#0284c7;">${targetPlan.title || ('Tuần ' + targetPlan.weekNum)}</strong>
+            </div>
+          </div>
+
+          <!-- PHẦN I: DASHBOARD KẾT QUẢ TUẦN CŨ & BIỂU ĐỒ TIẾN ĐỘ -->
           <div class="report-sec-title">
-            <span>I. KẾT QUẢ THỰC HIỆN & TIẾN ĐỘ HOÀN THÀNH (DASHBOARD TUẦN CŨ)</span>
+            <span>I. KẾT QUẢ THỰC HIỆN &amp; BIỂU ĐỒ TIẾN ĐỘ HOÀN THÀNH (DASHBOARD TUẦN CŨ)</span>
           </div>
 
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:12px;">
-            <!-- Box Hosp A -->
-            <div style="border:1.5px solid #0284c7; border-radius:8px; padding:10px 14px; background:#f0f9ff;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                <strong style="color:#0369a1; font-size:0.85rem;">🏥 DỰ ÁN BỆNH VIỆN A (3 KHOA)</strong>
-                <span style="font-size:1.15rem; font-weight:900; color:#0284c7;">${hPct}%</span>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom:8px;">
+            <!-- Box Hosp A (Medical Blue) -->
+            <div style="border:1.5px solid #0284c7; border-radius:6px; padding:6px 10px; background:#f0f9ff;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
+                <strong style="color:#0369a1; font-size:0.76rem;">🏥 DỰ ÁN BỆNH VIỆN A (3 KHOA)</strong>
+                <span style="font-size:0.95rem; font-weight:900; color:#0284c7;">${hPct}%</span>
               </div>
-              <div style="font-size:0.76rem; color:#475569; display:flex; justify-content:space-between;">
-                <span>Tổng nhiệm vụ: <strong>${hTasks.length}</strong></span>
-                <span>Đã hoàn thành: <strong style="color:#15803d;">${hDone}</strong></span>
-                <span>Đang xử lý: <strong style="color:#d97706;">${hDoing}</strong></span>
-                <span>Quá hạn: <strong style="color:#dc2626;">${hOverdue}</strong></span>
+              <div style="font-size:0.68rem; color:#334155; margin-bottom:4px; display:flex; gap:10px;">
+                <span>Tổng: <strong>${hTasks.length} việc</strong></span>
+                <span>Đã xong: <strong style="color:#15803d;">${hDone}</strong></span>
+                <span>Đang làm: <strong style="color:#d97706;">${hDoing}</strong></span>
+                <span>Quá hạn: <strong style="color:${hOverdue > 0 ? '#dc2626' : '#64748b'};">${hOverdue}</strong></span>
+              </div>
+              <div style="font-size:0.66rem; color:#475569; border-top:1px dashed #bae6fd; padding-top:4px; display:flex; flex-wrap:wrap; gap:3px 6px;">
+                ${hMemberChipsHtml}
               </div>
             </div>
 
-            <!-- Box Internal Seta -->
-            <div style="border:1.5px solid #7c3aed; border-radius:8px; padding:10px 14px; background:#faf5ff;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                <strong style="color:#6b21a8; font-size:0.85rem;">🏢 DỰ ÁN NỘI BỘ SETA (TECH & CSKH)</strong>
-                <span style="font-size:1.15rem; font-weight:900; color:#7c3aed;">${iPct}%</span>
+            <!-- Box Internal Seta (Tech Purple) -->
+            <div style="border:1.5px solid #7c3aed; border-radius:6px; padding:6px 10px; background:#faf5ff;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
+                <strong style="color:#6b21a8; font-size:0.76rem;">🏢 DỰ ÁN NỘI BỘ SETA (TECH &amp; CSKH)</strong>
+                <span style="font-size:0.95rem; font-weight:900; color:#7c3aed;">${iPct}%</span>
               </div>
-              <div style="font-size:0.76rem; color:#475569; display:flex; justify-content:space-between;">
-                <span>Tổng nhiệm vụ: <strong>${iTasks.length}</strong></span>
-                <span>Đã hoàn thành: <strong style="color:#15803d;">${iDone}</strong></span>
-                <span>Đang xử lý: <strong style="color:#d97706;">${iDoing}</strong></span>
-                <span>Quá hạn: <strong style="color:#dc2626;">${iOverdue}</strong></span>
+              <div style="font-size:0.68rem; color:#334155; margin-bottom:4px; display:flex; gap:10px;">
+                <span>Tổng: <strong>${iTasks.length} việc</strong></span>
+                <span>Đã xong: <strong style="color:#15803d;">${iDone}</strong></span>
+                <span>Đang làm: <strong style="color:#d97706;">${iDoing}</strong></span>
+                <span>Quá hạn: <strong style="color:${iOverdue > 0 ? '#dc2626' : '#64748b'};">${iOverdue}</strong></span>
+              </div>
+              <div style="font-size:0.66rem; color:#475569; border-top:1px dashed #e9d5ff; padding-top:4px; display:flex; flex-wrap:wrap; gap:3px 6px;">
+                ${iMemberChipsHtml}
               </div>
             </div>
           </div>
 
-          <!-- Bảng nhân sự tóm tắt -->
-          <div style="font-size:0.76rem; font-weight:700; color:#475569; margin:8px 0 4px 0;">1. Phân bổ công việc & Tỷ lệ hoàn thành theo nhân sự:</div>
-          <table class="report-table">
-            <thead>
-              <tr>
-                <th style="width:28%;">Nhân sự phụ trách</th>
-                <th style="width:36%;">Đơn vị & Chức danh</th>
-                <th style="width:12%; text-align:center;">Tổng việc</th>
-                <th style="width:12%; text-align:center;">Đã xong</th>
-                <th style="width:12%; text-align:center;">Tiến độ</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${memberRowsHtml}
-            </tbody>
-          </table>
+          <!-- Vector Spline Curve Chart (Vivid SVG Colors) -->
+          ${chartHtml}
+
+          <!-- Optional Detailed Member Table (If detailed mode selected) -->
+          ${detailedMemberSectionHtml}
 
           <!-- PHẦN II: KẾ HOẠCH DỰ KIẾN TUẦN MỚI -->
-          <div class="report-sec-title" style="margin-top:16px;">
+          <div class="report-sec-title">
             <span>II. KẾ HOẠCH HÀNH ĐỘNG DỰ KIẾN CHO TUẦN MỚI (${targetPlan.title || ('Tuần ' + targetPlan.weekNum)})</span>
           </div>
 
-          <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:6px; padding:8px 12px; margin-bottom:8px; font-size:0.78rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;">
-            <div><strong>🎯 Tiêu điểm tuần mới:</strong> ${targetPlan.theme || 'Triển khai công việc trọng tâm'}</div>
+          <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:6px; padding:6px 10px; margin-bottom:6px; font-size:0.74rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;">
+            <div><strong>🎯 Tiêu điểm tuần:</strong> ${targetPlan.theme || 'Triển khai công việc trọng tâm'}</div>
             <div><strong>💰 Tổng kinh phí dự trù tuần:</strong> <span style="color:#047857; font-weight:800;">${formatVND(totalCost)}</span></div>
           </div>
 
           <table class="report-table">
             <thead>
               <tr>
-                <th style="width:30px; text-align:center;">STT</th>
-                <th style="width:19%;">Hạng mục lớn</th>
-                <th style="width:28%;">Hạng mục nhỏ (Nhiệm vụ cụ thể)</th>
-                <th style="width:17%;">Người phối hợp</th>
-                <th style="width:11%;">Hạn chót</th>
-                <th style="width:12%; text-align:right;">Chi phí dự kiến</th>
-                <th style="width:13%;">Đề xuất phối hợp</th>
+                <th style="width:28px; text-align:center;">STT</th>
+                <th style="width:38%;">Hạng mục &amp; Nội dung nhiệm vụ cụ thể</th>
+                <th style="width:18%;">Phối hợp &amp; Phụ trách</th>
+                <th style="width:10%; text-align:center;">Hạn chót</th>
+                <th style="width:13%; text-align:right;">Chi phí dự kiến</th>
+                <th style="width:17%;">Đề xuất phối hợp</th>
               </tr>
             </thead>
             <tbody>
-              ${weeklyRowsHtml}
+              ${weeklyCompactRowsHtml}
+              <tr style="background:#f0fdf4; border-top:1.5px solid #86efac; font-weight:800;">
+                <td colspan="4" style="text-align:right; text-transform:uppercase; font-size:0.71rem; color:#166534;">
+                  TỔNG CỘNG KINH PHÍ DỰ KIẾN TUẦN:
+                </td>
+                <td style="text-align:right; color:#15803d; font-size:0.76rem; font-weight:900;">
+                  ${formatVND(totalCost)}
+                </td>
+                <td style="font-size:0.68rem; color:#166534;">
+                  ${proposalCount} đề xuất phối hợp
+                </td>
+              </tr>
             </tbody>
           </table>
 
           <!-- PHẦN III: NHẬN ĐỊNH CỦA QUẢN LÝ DỰ ÁN & CHỮ KÝ -->
           <div class="report-sec-title">
-            <span>III. NHẬN ĐỊNH CỦA QUẢN LÝ DỰ ÁN & Ý KIẾN CHỈ ĐẠO</span>
+            <span>III. NHẬN ĐỊNH CỦA QUẢN LÝ DỰ ÁN &amp; CHỮ KÝ PHÊ DUYỆT</span>
           </div>
 
-          <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:6px; padding:8px 12px; font-size:0.78rem; line-height:1.5; margin-bottom:12px;">
-            <strong>📌 Ý kiến nhận định của Quản lý dự án:</strong><br>
+          <div style="background:#f8fafc; border-left:3.5px solid #0284c7; border-top:1px solid #e2e8f0; border-right:1px solid #e2e8f0; border-bottom:1px solid #e2e8f0; border-radius:4px; padding:6px 10px; font-size:0.73rem; line-height:1.45; margin-bottom:8px;">
+            <strong style="color:#0284c7;">📌 Ý kiến nhận định của Quản lý dự án:</strong><br>
             ${pmNotes ? pmNotes.replace(/\n/g, '<br>') : 'Toàn bộ kế hoạch tuần mới đã được rà soát và thống nhất cùng các khoa phòng lâm sàng.'}
           </div>
 
-          <!-- Chữ ký phê duyệt -->
+          <!-- Chữ ký phê duyệt 3 bên -->
           <div class="report-signatures">
             <div>
-              <div style="font-size:0.78rem; font-weight:700; text-transform:uppercase;">NGƯỜI LẬP BÁO CÁO</div>
-              <div style="font-size:0.7rem; font-style:italic; color:#64748b; margin-top:2px;">(Ký &amp; ghi rõ họ tên)</div>
-              <div style="height:50px;"></div>
-              <div style="font-weight:700; font-size:0.85rem; color:#0f172a;">${authorName}</div>
+              <div style="font-size:0.74rem; font-weight:700; text-transform:uppercase; color:#0f172a;">NGƯỜI LẬP BÁO CÁO</div>
+              <div style="font-size:0.67rem; font-style:italic; color:#64748b; margin-top:1px;">(Ký &amp; ghi rõ họ tên)</div>
+              <div style="height:38px;"></div>
+              <div style="font-weight:700; font-size:0.8rem; color:#0f172a;">${authorName}</div>
             </div>
 
             <div>
-              <div style="font-size:0.78rem; font-weight:700; text-transform:uppercase;">ĐẠI DIỆN PHÒNG KHTH - VIỆN A</div>
-              <div style="font-size:0.7rem; font-style:italic; color:#64748b; margin-top:2px;">(Ký, ghi rõ họ tên &amp; đóng dấu)</div>
-              <div style="height:50px;"></div>
-              <div style="font-weight:700; font-size:0.85rem; color:#0f172a;">Trưởng Phòng KHTH</div>
+              <div style="font-size:0.74rem; font-weight:700; text-transform:uppercase; color:#0f172a;">ĐẠI DIỆN PHÒNG KHTH - VIỆN A</div>
+              <div style="font-size:0.67rem; font-style:italic; color:#64748b; margin-top:1px;">(Ký, ghi rõ họ tên &amp; đóng dấu)</div>
+              <div style="height:38px;"></div>
+              <div style="font-weight:700; font-size:0.8rem; color:#0f172a;">Trưởng Phòng KHTH</div>
             </div>
 
             <div>
-              <div style="font-size:0.78rem; font-weight:700; text-transform:uppercase;">BAN LÃNH ĐẠO SETA LONGEVITY</div>
-              <div style="font-size:0.7rem; font-style:italic; color:#64748b; margin-top:2px;">(Ký duyệt &amp; phân bổ ngân sách)</div>
-              <div style="height:50px;"></div>
-              <div style="font-weight:700; font-size:0.85rem; color:#0f172a;">Ban Giám Đốc</div>
+              <div style="font-size:0.74rem; font-weight:700; text-transform:uppercase; color:#0f172a;">BAN LÃNH ĐẠO SETA LONGEVITY</div>
+              <div style="font-size:0.67rem; font-style:italic; color:#64748b; margin-top:1px;">(Ký duyệt &amp; phân bổ ngân sách)</div>
+              <div style="height:38px;"></div>
+              <div style="font-weight:700; font-size:0.8rem; color:#0f172a;">Ban Giám Đốc</div>
             </div>
           </div>
         </div>
