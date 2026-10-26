@@ -228,6 +228,224 @@
     .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 200; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
     .toast { background: #1e293b; color: white; padding: 10px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 500; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 8px; }
 
+    /* Excel Weekly Plan Table Styling */
+    .excel-dash-box {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+      border-top: 4px solid #107c41; /* Excel green */
+    }
+    .excel-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .excel-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .excel-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .excel-tag {
+      background: #ecfdf5;
+      color: #047857;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 99px;
+      border: 1px solid #a7f3d0;
+    }
+    .excel-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .excel-week-select {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #1e293b;
+      cursor: pointer;
+      outline: none;
+    }
+    .excel-week-select:focus {
+      border-color: #107c41;
+      box-shadow: 0 0 0 2px rgba(16, 124, 65, 0.2);
+    }
+    .btn-excel-tool {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      color: #334155;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+    }
+    .btn-excel-tool:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+    .btn-excel-tool.primary {
+      background: #107c41;
+      color: white;
+      border-color: #107c41;
+    }
+    .btn-excel-tool.primary:hover {
+      background: #0b5c30;
+    }
+    .excel-kpi-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+      background: #f8fafc;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+    }
+    .excel-kpi-pill {
+      display: flex;
+      flex-direction: column;
+    }
+    .excel-kpi-pill-val {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .excel-kpi-pill-lbl {
+      font-size: 0.7rem;
+      color: #64748b;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .excel-table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .excel-grid-table {
+      width: 100%;
+      min-width: 1060px;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      text-align: left;
+    }
+    .excel-grid-table th {
+      background: #f1f5f9;
+      color: #1e293b;
+      font-weight: 700;
+      padding: 9px 10px;
+      border: 1px solid #cbd5e1;
+      white-space: nowrap;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    .excel-grid-table td {
+      border: 1px solid #e2e8f0;
+      padding: 8px 10px;
+      vertical-align: top;
+      line-height: 1.45;
+      color: #334155;
+    }
+    .excel-grid-table tr:hover td {
+      background: #f8fafc;
+    }
+    .excel-badge-major {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+    .excel-badge-major.hosp {
+      background: #e0f2fe;
+      color: #0369a1;
+      border-color: #bae6fd;
+    }
+    .excel-badge-major.internal {
+      background: #f3e8ff;
+      color: #7e22ce;
+      border-color: #e9d5ff;
+    }
+    .excel-badge-major.general {
+      background: #fef3c7;
+      color: #b45309;
+      border-color: #fde68a;
+    }
+    .excel-cost-val {
+      font-weight: 700;
+      color: #047857;
+      white-space: nowrap;
+    }
+    .excel-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 99px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: transform 0.1s;
+    }
+    .excel-status-pill:hover {
+      transform: scale(1.05);
+    }
+    .excel-status-pill.doing {
+      background: #eff6ff;
+      color: #2563eb;
+      border-color: #bfdbfe;
+    }
+    .excel-status-pill.planning {
+      background: #fffbeb;
+      color: #b45309;
+      border-color: #fde68a;
+    }
+    .excel-status-pill.done {
+      background: #f0fdf4;
+      color: #15803d;
+      border-color: #bbf7d0;
+    }
+    .excel-status-pill.postponed {
+      background: #f1f5f9;
+      color: #64748b;
+      border-color: #cbd5e1;
+    }
+
     /* Mobile Responsive */
     @media (max-width: 768px) {
       .sidebar { position: fixed; top: 0; bottom: 0; left: 0; transform: translateX(-100%); width: 300px; }
@@ -752,6 +970,77 @@
         </div>
       </div>
 
+      <!-- BẢNG TỔNG HỢP KẾ HOẠCH DỰ KIẾN THEO TUẦN (EXCEL WEEKLY ACTION PLAN) -->
+      <div class="excel-dash-box">
+        <div class="excel-header-row">
+          <div class="excel-title-group">
+            <div class="excel-title">
+              <span>📋 Bảng Tổng Hợp Kế Hoạch Dự Kiến Theo Tuần (Weekly Action Plan)</span>
+              <span class="excel-tag" id="excel-week-active-badge">Tuần 44 / 2026</span>
+            </div>
+            <div style="font-size:0.78rem; color:var(--text-secondary); margin-top:2px;" id="excel-week-theme-text">
+              Kế hoạch phối hợp chi tiết theo mẫu bảng tính Excel: Phân định hạng mục lớn - nhỏ, người phối hợp, thời gian, hạn chót, chi phí & kiến nghị
+            </div>
+          </div>
+
+          <!-- Toolbar: Navigation & Actions -->
+          <div class="excel-toolbar">
+            <button class="btn-excel-tool" onclick="navigateWeeklyPlan(-1)" title="Xem kế hoạch tuần trước">◀ Tuần trước</button>
+            <select id="excel-week-picker" class="excel-week-select" onchange="onWeekPickerChange(this.value)">
+              <!-- Populated dynamically -->
+            </select>
+            <button class="btn-excel-tool" onclick="navigateWeeklyPlan(1)" title="Xem kế hoạch tuần kế tiếp">Tuần sau ▶</button>
+            <button class="btn-excel-tool" onclick="goToCurrentWeek()" title="Trở về tuần hiện tại">📍 Tuần này</button>
+            <button class="btn-excel-tool primary" onclick="openNewWeeklyItemModal()" title="Thêm dòng công việc vào tuần này">+ Thêm dòng việc</button>
+            <button class="btn-excel-tool" onclick="openCreateWeekModal()" title="Tạo tuần kế hoạch mới">📅 Tạo tuần mới</button>
+            <button class="btn-excel-tool" style="background:#107c41; color:white; border-color:#107c41;" onclick="exportWeeklyPlanToExcel()" title="Tải bảng kế hoạch tuần thành file Excel (.CSV)">📥 Xuất Excel Tuần</button>
+          </div>
+        </div>
+
+        <!-- Weekly Summary KPI Metrics -->
+        <div class="excel-kpi-summary">
+          <div class="excel-kpi-pill">
+            <div class="excel-kpi-pill-lbl">Số hạng mục tuần</div>
+            <div class="excel-kpi-pill-val" id="wk-kpi-total">0 việc</div>
+          </div>
+          <div class="excel-kpi-pill">
+            <div class="excel-kpi-pill-lbl">Tổng kinh phí dự kiến</div>
+            <div class="excel-kpi-pill-val" style="color:#047857;" id="wk-kpi-cost">0 ₫</div>
+          </div>
+          <div class="excel-kpi-pill">
+            <div class="excel-kpi-pill-lbl">Tỷ lệ hoàn thành</div>
+            <div class="excel-kpi-pill-val" style="color:#2563eb;" id="wk-kpi-pct">0%</div>
+          </div>
+          <div class="excel-kpi-pill">
+            <div class="excel-kpi-pill-lbl">Đề xuất cần phối hợp</div>
+            <div class="excel-kpi-pill-val" style="color:#b45309;" id="wk-kpi-proposals">0 kiến nghị</div>
+          </div>
+        </div>
+
+        <!-- Excel Table Grid Container -->
+        <div class="excel-table-scroll">
+          <table class="excel-grid-table">
+            <thead>
+              <tr>
+                <th style="width:42px; text-align:center;">STT</th>
+                <th style="width:190px;">Hạng mục công việc lớn</th>
+                <th style="min-width:240px;">Hạng mục nhỏ (Nhiệm vụ cụ thể)</th>
+                <th style="width:175px;">Người / Đơn vị phối hợp</th>
+                <th style="width:115px;">Thời gian</th>
+                <th style="width:105px;">Hạn chót</th>
+                <th style="width:125px; text-align:right;">Chi phí dự kiến</th>
+                <th style="min-width:220px;">Đề xuất phối hợp & Hỗ trợ</th>
+                <th style="width:115px; text-align:center;">Trạng thái</th>
+                <th style="width:70px; text-align:center;">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="excel-weekly-tbody">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <!-- Team Members Workload Table -->
       <div class="dash-box">
         <div class="dash-box-header">
@@ -958,6 +1247,124 @@
     </div>
   </div>
 
+  <!-- Modal Thêm / Sửa Dòng Kế Hoạch Tuần (Weekly Plan Item Modal) -->
+  <div class="modal-overlay" id="weekly-item-modal">
+    <div class="modal-card" style="width: 580px;">
+      <h2 class="modal-title" id="weekly-item-modal-title">Thêm Hạng Mục Kế Hoạch Tuần</h2>
+      
+      <div class="form-group">
+        <label>Hạng mục công việc lớn (*)</label>
+        <input type="text" id="wk-item-major" list="wk-major-datalist" placeholder="Ví dụ: Triển khai lâm sàng Khoa Tim Mạch, Công nghệ AI...">
+        <datalist id="wk-major-datalist">
+          <option value="🏥 Thí điểm Lâm Sàng - Khoa Tim Mạch">
+          <option value="🏥 Thí điểm Lâm Sàng - Khoa Nội Tiết">
+          <option value="🏥 Thí điểm Lâm Sàng - Khoa Ung Bướu">
+          <option value="🏢 Công Nghệ AI & Vận Hành App">
+          <option value="🏥 Đào Tạo & Giám Sát Ca Bệnh">
+          <option value="🏢 Chăm Sóc Khách Hàng & CSKH">
+          <option value="📊 Quản Trị & Giao Ban Tiến Độ">
+          <option value="⚙️ Thiết Bị & Kết Nối Máy Đo">
+        </datalist>
+      </div>
+
+      <div class="form-group">
+        <label>Hạng mục nhỏ (Nhiệm vụ cụ thể & sản phẩm đầu ra) (*)</label>
+        <textarea id="wk-item-minor" rows="2" placeholder="Mô tả cụ thể đầu việc, đối tượng bệnh nhân hoặc tính năng cần hoàn tất..."></textarea>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="form-group">
+          <label>Người / Đơn vị phối hợp (*)</label>
+          <input type="text" id="wk-item-collab" placeholder="Ví dụ: BS Trưởng Khoa Tim Mạch + CSKH Seta">
+        </div>
+        <div class="form-group">
+          <label>Chi phí dự kiến (VNĐ hoặc Ghi chú)</label>
+          <input type="text" id="wk-item-cost" placeholder="Ví dụ: 8.500.000 hoặc 0 (Nội bộ)">
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="form-group">
+          <label>Thời gian tiến hành</label>
+          <input type="text" id="wk-item-start" placeholder="Ví dụ: 26/10 - 29/10/2026">
+        </div>
+        <div class="form-group">
+          <label>Thời hạn yêu cầu (Deadline) (*)</label>
+          <input type="text" id="wk-item-deadline" placeholder="Ví dụ: 30/10/2026">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Đề xuất phối hợp & Hỗ trợ cần giải quyết</label>
+        <textarea id="wk-item-proposal" rows="2" placeholder="Ghi chú các yêu cầu cần Ban Giám Đốc, KHTH hoặc các khoa phòng khác hỗ trợ..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Trạng thái tiến độ</label>
+        <select id="wk-item-status">
+          <option value="planning">🟡 Dự kiến (Lên kế hoạch)</option>
+          <option value="doing" selected>🔵 Đang tiến hành</option>
+          <option value="done">🟢 Đã hoàn thành</option>
+          <option value="postponed">⚪ Tạm hoãn</option>
+        </select>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
+        <button class="btn-secondary" onclick="closeWeeklyItemModal()">Hủy</button>
+        <button class="btn-primary" onclick="saveWeeklyItemModal()">💾 Lưu Hạng Mục</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Tạo Tuần Kế Hoạch Mới (Create Week Modal) -->
+  <div class="modal-overlay" id="create-week-modal">
+    <div class="modal-card" style="width: 480px;">
+      <h2 class="modal-title">📅 Tạo Kế Hoạch Tuần Mới</h2>
+      <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:10px;">
+        Thiết lập một tuần làm việc mới để lên kế hoạch và lưu trữ tiến độ theo dòng thời gian.
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="form-group">
+          <label>Số tuần (*)</label>
+          <input type="number" id="new-week-num" min="1" max="53" value="45">
+        </div>
+        <div class="form-group">
+          <label>Năm (*)</label>
+          <input type="number" id="new-week-year" value="2026">
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="form-group">
+          <label>Ngày bắt đầu (Thứ 2)</label>
+          <input type="date" id="new-week-start">
+        </div>
+        <div class="form-group">
+          <label>Ngày kết thúc (Chủ nhật)</label>
+          <input type="date" id="new-week-end">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Tiêu đề / Chủ đề trọng tâm tuần (*)</label>
+        <input type="text" id="new-week-theme" placeholder="Ví dụ: Mở rộng thí điểm Khoa Ung Bướu & Tinh chỉnh thuật toán AI">
+      </div>
+
+      <div class="form-group" style="background:#f8fafc; padding:10px; border-radius:6px; border:1px solid var(--border);">
+        <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:0.82rem;">
+          <input type="checkbox" id="new-week-copy-unfinished" checked style="width:16px; height:16px; accent-color:var(--primary);">
+          <span>Tự động sao chép các việc chưa hoàn thành từ tuần hiện tại sang tuần mới</span>
+        </label>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px;">
+        <button class="btn-secondary" onclick="closeCreateWeekModal()">Hủy</button>
+        <button class="btn-primary" onclick="saveCreateWeekModal()">💾 Khởi Tạo Tuần</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Container -->
   <div class="toast-container" id="toast-container"></div>
 
@@ -965,11 +1372,182 @@
     const STORAGE_KEY = "seta_longevity_parallel_v5";
     let currentView = "tasks"; // 'tasks' or 'dashboard'
 
+    // Dữ liệu mẫu kế hoạch hành động theo tuần (Weekly Action Plans)
+    const DEFAULT_WEEKLY_PLANS = [
+      {
+        id: "2026-W44",
+        weekNum: 44,
+        year: 2026,
+        startDate: "2026-10-26",
+        endDate: "2026-11-01",
+        title: "Tuần 44 (26/10 - 01/11/2026)",
+        theme: "Thí điểm lâm sàng 3 khoa, Onboarding bệnh nhân & Thử nghiệm AI v1.0",
+        items: [
+          {
+            id: 1,
+            major: "🏥 Thí điểm Lâm Sàng - Khoa Tim Mạch",
+            minor: "Onboarding đợt 1 cho 20 bệnh nhân THA & suy tim; hướng dẫn kết nối máy đo huyết áp Bluetooth và cài App Seta",
+            collaborator: "BS. Trưởng Khoa Tim Mạch + Điều dưỡng Trưởng + CSKH Seta",
+            startDate: "26/10/2026",
+            deadline: "29/10/2026",
+            cost: 6500000,
+            proposal: "Đề nghị Phòng KHTH bố trí 01 bàn hướng dẫn tiếp đón tại sảnh phòng khám Tim mạch từ 7h30 sáng",
+            status: "doing"
+          },
+          {
+            id: 2,
+            major: "🏥 Thí điểm Lâm Sàng - Khoa Nội Tiết",
+            minor: "Thống nhất form nhật ký đường huyết trước/sau ăn; thiết lập ngưỡng báo động hạ đường huyết khẩn cấp (< 3.9 mmol/L)",
+            collaborator: "BS. Trưởng Khoa Nội Tiết + Tech Lead Seta",
+            startDate: "27/10/2026",
+            deadline: "30/10/2026",
+            cost: 3000000,
+            proposal: "Cần Khoa Dược & KHTH thẩm định danh mục thuốc insulin để đồng bộ mã thuốc trên hệ thống",
+            status: "planning"
+          },
+          {
+            id: 3,
+            major: "🏢 Công Nghệ AI & Vận Hành App",
+            minor: "Kiểm thử mô hình AI lọc báo động giả (False Alarm) cho cơn loạn nhịp tim ngoại tâm thu; phát hành bản cập nhật App v1.0.4",
+            collaborator: "Kỹ sư AI Seta + Bác sĩ Tim Mạch Viện A",
+            startDate: "26/10/2026",
+            deadline: "31/10/2026",
+            cost: 12000000,
+            proposal: "Xin trích xuất mẫu log 50 ca lâm sàng ẩn danh để chạy benchmark đo độ chính xác",
+            status: "doing"
+          },
+          {
+            id: 4,
+            major: "🏥 Đào Tạo & Giám Sát Ca Bệnh",
+            minor: "Tổ chức buổi tập huấn 45 phút cho 12 Điều dưỡng trực ca về quy trình tiếp nhận & gọi điện can thiệp cảnh báo đỏ",
+            collaborator: "Phòng KHTH + Điều dưỡng Trưởng Điều Phối",
+            startDate: "28/10/2026",
+            deadline: "28/10/2026",
+            cost: 4000000,
+            proposal: "Đề nghị Trưởng phòng KHTH gửi giấy triệu tập điều dưỡng 3 khoa tham gia đầy đủ",
+            status: "done"
+          },
+          {
+            id: 5,
+            major: "🏢 Chăm Sóc Khách Hàng & CSKH",
+            minor: "Vận hành Hotline kỹ thuật riêng 24/7 giải đáp thắc mắc người bệnh lớn tuổi sử dụng thiết bị đo huyết áp",
+            collaborator: "Đội CSKH Seta + Tổ Tiếp đón Viện A",
+            startDate: "26/10/2026",
+            deadline: "29/10/2026",
+            cost: 5500000,
+            proposal: "Cung cấp danh bạ số máy bàn nội bộ khoa để chuyển tiếp kịp thời khi có ca cần cấp cứu chuyên môn",
+            status: "doing"
+          },
+          {
+            id: 6,
+            major: "📊 Quản Trị & Giao Ban Tiến Độ",
+            minor: "Tổng hợp slide báo cáo tuần và bảng số liệu tuân thủ đo gửi Ban Giám Đốc Bệnh Viện A",
+            collaborator: "Quản lý Dự án (Phương) + Phòng KHTH",
+            startDate: "30/10/2026",
+            deadline: "01/11/2026",
+            cost: 0,
+            proposal: "Đăng ký lịch họp giao ban sáng thứ 2 tuần tới vào chương trình nghị sự của Viện",
+            status: "planning"
+          }
+        ]
+      },
+      {
+        id: "2026-W45",
+        weekNum: 45,
+        year: 2026,
+        startDate: "2026-11-02",
+        endDate: "2026-11-08",
+        title: "Tuần 45 (02/11 - 08/11/2026)",
+        theme: "Mở rộng thí điểm Khoa Ung Bướu & Tích hợp cổng thiết bị đo sinh hiệu mới",
+        items: [
+          {
+            id: 1,
+            major: "🏥 Thí điểm Lâm Sàng - Khoa Ung Bướu",
+            minor: "Triển khai thử nghiệm bảng câu hỏi theo dõi tác dụng phụ cho 15 bệnh nhân Ung bướu sau hóa trị",
+            collaborator: "BS. Trưởng Khoa Ung Bướu + CSKH Seta",
+            startDate: "02/11/2026",
+            deadline: "05/11/2026",
+            cost: 5000000,
+            proposal: "Khoa Ung bướu cử 01 điều dưỡng chuyên trách phối hợp trực nhật ký phản ứng thuốc",
+            status: "planning"
+          },
+          {
+            id: 2,
+            major: "🏢 Công Nghệ AI & Vận Hành App",
+            minor: "Tích hợp API kết nối máy đo huyết áp Omron Bluetooth thế hệ mới và kiểm tra độ trễ đồng bộ",
+            collaborator: "Tech Lead Seta + Phòng CNTT Viện A",
+            startDate: "03/11/2026",
+            deadline: "06/11/2026",
+            cost: 8000000,
+            proposal: "Phòng CNTT mở port firewall cho dải IP máy chủ truyền dữ liệu sinh hiệu",
+            status: "planning"
+          },
+          {
+            id: 3,
+            major: "📊 Quản Trị & Giao Ban Tiến Độ",
+            minor: "Họp sơ kết tuần 1 thí điểm cùng đại diện 3 khoa lâm sàng & Phòng KHTH",
+            collaborator: "Ban Giám Đốc Viện A + Ban Lãnh Đạo Seta",
+            startDate: "06/11/2026",
+            deadline: "06/11/2026",
+            cost: 3500000,
+            proposal: "Bố trí phòng họp trực tuyến kết hợp trực tiếp tại Hội trường Bệnh viện A",
+            status: "planning"
+          }
+        ]
+      },
+      {
+        id: "2026-W43",
+        weekNum: 43,
+        year: 2026,
+        startDate: "2026-10-19",
+        endDate: "2026-10-25",
+        title: "Tuần 43 (19/10 - 25/10/2026)",
+        theme: "Chuẩn bị hạ tầng máy chủ, hoàn thiện cẩm nang và thẩm định danh mục bệnh lý",
+        items: [
+          {
+            id: 1,
+            major: "🏥 Thí điểm Lâm Sàng - Hội Chẩn",
+            minor: "Thẩm định danh mục bệnh lý và form nhập chỉ số sinh hiệu cùng Phòng KHTH & 3 Khoa",
+            collaborator: "Phòng KHTH + Bác sĩ Trưởng 3 Khoa",
+            startDate: "19/10/2026",
+            deadline: "22/10/2026",
+            cost: 5000000,
+            proposal: "Đã hoàn thành ký biên bản thống nhất ngưỡng cảnh báo vàng/đỏ",
+            status: "done"
+          },
+          {
+            id: 2,
+            major: "🏢 Công Nghệ AI & Vận Hành App",
+            minor: "Hoàn thiện bản cài đặt App Seta Longevity v1.0 đưa lên TestFlight và Google Play Store",
+            collaborator: "Kỹ sư Tech & AI Seta",
+            startDate: "20/10/2026",
+            deadline: "24/10/2026",
+            cost: 15000000,
+            proposal: "Đã được Apple & Google duyệt phát hành thành công",
+            status: "done"
+          },
+          {
+            id: 3,
+            major: "🏢 Chăm Sóc Khách Hàng & Đào Tạo",
+            minor: "In ấn 200 cuốn Cẩm nang hướng dẫn sử dụng cho bệnh nhân và nhân viên y tế",
+            collaborator: "CSKH Seta + Phòng KHTH",
+            startDate: "21/10/2026",
+            deadline: "24/10/2026",
+            cost: 7200000,
+            proposal: "Đã bàn giao 100 cuốn tại kho phòng KHTH Viện A",
+            status: "done"
+          }
+        ]
+      }
+    ];
+
     // Template with 2 parallel projects: Hospital A & Internal Seta
     const SETA_PARALLEL_TEMPLATE = {
       activeFilter: "all",
       selectedProjectId: 1, // Default: Hospital A
       selectedMemberId: null,
+      selectedWeekId: "2026-W44",
+      weeklyPlans: DEFAULT_WEEKLY_PLANS,
       quickType: "planned",
       editingTaskId: null,
       modalSubtasksCache: [],
@@ -1138,6 +1716,12 @@
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         try { state = Object.assign(state, JSON.parse(raw)); } catch(e){}
+      }
+      if (!state.weeklyPlans || !state.weeklyPlans.length) {
+        state.weeklyPlans = JSON.parse(JSON.stringify(DEFAULT_WEEKLY_PLANS));
+      }
+      if (!state.selectedWeekId) {
+        state.selectedWeekId = "2026-W44";
       }
     }
     function saveState() {
@@ -1650,6 +2234,9 @@
 
       // Render Progress Curve Chart
       renderProgressCurveChart(hPct, iPct);
+
+      // Render Weekly Action Plan (Excel Sheet)
+      renderWeeklyPlanSection();
     }
 
     // Chart Mode State: 'stage' or 'scurve'
@@ -1981,6 +2568,461 @@
       }
     }
 
+    /* --- BẢNG TỔNG HỢP KẾ HOẠCH DỰ KIẾN THEO TUẦN (EXCEL ACTION PLAN) --- */
+    let editingWeeklyItemId = null;
+
+    function formatVND(val) {
+      if (val === null || val === undefined || val === '') return '0 ₫';
+      if (typeof val === 'number') {
+        return val.toLocaleString('vi-VN') + ' ₫';
+      }
+      const num = parseInt(String(val).replace(/\D/g, ''));
+      if (!isNaN(num) && num > 0) {
+        return num.toLocaleString('vi-VN') + ' ₫';
+      }
+      return String(val);
+    }
+
+    function parseNumericCost(val) {
+      if (typeof val === 'number') return val;
+      const num = parseInt(String(val).replace(/\D/g, ''));
+      return isNaN(num) ? 0 : num;
+    }
+
+    function getCurrentWeeklyPlan() {
+      if (!state.weeklyPlans || !state.weeklyPlans.length) {
+        state.weeklyPlans = JSON.parse(JSON.stringify(DEFAULT_WEEKLY_PLANS));
+      }
+      let plan = state.weeklyPlans.find(w => w.id === state.selectedWeekId);
+      if (!plan) {
+        plan = state.weeklyPlans[0];
+        state.selectedWeekId = plan.id;
+      }
+      return plan;
+    }
+
+    function renderWeeklyPlanSection() {
+      const plan = getCurrentWeeklyPlan();
+      if (!plan) return;
+
+      // 1. Week picker dropdown
+      const picker = document.getElementById("excel-week-picker");
+      if (picker) {
+        picker.innerHTML = "";
+        const sortedWeeks = [...state.weeklyPlans].sort((a,b) => {
+          if (b.year !== a.year) return b.year - a.year;
+          return b.weekNum - a.weekNum;
+        });
+
+        sortedWeeks.forEach(w => {
+          const isCurrent = (w.weekNum === 44 && w.year === 2026);
+          const label = `${w.title || ('Tuần ' + w.weekNum + '/' + w.year)} ${isCurrent ? '⭐ [Tuần này]' : ''}`;
+          picker.innerHTML += `<option value="${w.id}" ${w.id === plan.id ? 'selected' : ''}>${label}</option>`;
+        });
+      }
+
+      // 2. Header text & badge
+      const badge = document.getElementById("excel-week-active-badge");
+      if (badge) {
+        const startShort = plan.startDate ? plan.startDate.slice(5) : '';
+        const endShort = plan.endDate ? plan.endDate.slice(5) : '';
+        badge.innerText = `Tuần ${plan.weekNum} / ${plan.year} (${startShort} - ${endShort})`;
+      }
+      const themeText = document.getElementById("excel-week-theme-text");
+      if (themeText) {
+        themeText.innerHTML = `<strong>Tiêu điểm tuần:</strong> ${plan.theme || 'Kế hoạch triển khai trọng điểm'}`;
+      }
+
+      // 3. KPI summary metrics
+      const items = plan.items || [];
+      const totalCount = items.length;
+      let totalCost = 0;
+      let doneCount = 0;
+      let proposalCount = 0;
+
+      items.forEach(it => {
+        totalCost += parseNumericCost(it.cost);
+        if (it.status === 'done') doneCount++;
+        if (it.proposal && it.proposal.trim() && it.proposal.trim() !== '-') proposalCount++;
+      });
+
+      const pct = totalCount ? Math.round((doneCount / totalCount) * 100) : 0;
+
+      const elTotal = document.getElementById("wk-kpi-total");
+      const elCost = document.getElementById("wk-kpi-cost");
+      const elPct = document.getElementById("wk-kpi-pct");
+      const elProp = document.getElementById("wk-kpi-proposals");
+
+      if (elTotal) elTotal.innerText = `${totalCount} việc`;
+      if (elCost) elCost.innerText = formatVND(totalCost);
+      if (elPct) elPct.innerText = `${pct}% (${doneCount}/${totalCount})`;
+      if (elProp) elProp.innerText = `${proposalCount} kiến nghị`;
+
+      // 4. Render Table Rows
+      const tbody = document.getElementById("excel-weekly-tbody");
+      if (!tbody) return;
+      tbody.innerHTML = "";
+
+      if (!items.length) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="10" style="text-align:center; padding:32px 16px; color:#64748b;">
+              <div style="font-size:1.6rem; margin-bottom:6px;">📋</div>
+              <div style="font-weight:700; color:#334155;">Chưa có hạng mục kế hoạch nào cho ${plan.title || ('Tuần ' + plan.weekNum)}</div>
+              <div style="font-size:0.75rem; margin-top:4px;">Bấm nút <strong>"+ Thêm dòng việc"</strong> ở thanh công cụ phía trên để lập kế hoạch.</div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      items.forEach((it, idx) => {
+        let majorClass = 'general';
+        const majLower = (it.major || '').toLowerCase();
+        if (majLower.includes('khoa') || majLower.includes('bệnh viện') || majLower.includes('lâm sàng') || majLower.includes('khth') || majLower.includes('bva') || majLower.includes('tim mạch') || majLower.includes('nội tiết') || majLower.includes('ung bướu')) {
+          majorClass = 'hosp';
+        } else if (majLower.includes('seta') || majLower.includes('ai') || majLower.includes('app') || majLower.includes('cskh') || majLower.includes('nội bộ')) {
+          majorClass = 'internal';
+        }
+
+        let stClass = 'doing';
+        let stText = '🔵 Đang làm';
+        if (it.status === 'done') {
+          stClass = 'done';
+          stText = '🟢 Hoàn thành';
+        } else if (it.status === 'planning') {
+          stClass = 'planning';
+          stText = '🟡 Dự kiến';
+        } else if (it.status === 'postponed') {
+          stClass = 'postponed';
+          stText = '⚪ Tạm hoãn';
+        }
+
+        const costDisplay = formatVND(it.cost);
+        const proposalHtml = it.proposal && it.proposal.trim() && it.proposal.trim() !== '-'
+          ? `<span style="color:#b45309; font-weight:600;">📌 ${it.proposal}</span>`
+          : `<span style="color:#94a3b8; font-style:italic;">-</span>`;
+
+        tbody.innerHTML += `
+          <tr>
+            <td style="text-align:center; font-weight:700; color:#64748b; background:#fbfcfe;">${idx + 1}</td>
+            <td>
+              <span class="excel-badge-major ${majorClass}">${it.major || 'Chung'}</span>
+            </td>
+            <td>
+              <strong style="color:#0f172a;">${it.minor || ''}</strong>
+            </td>
+            <td>
+              <span style="display:flex; align-items:center; gap:4px; font-weight:600; color:#1e293b;">
+                👤 ${it.collaborator || 'Chưa gán'}
+              </span>
+            </td>
+            <td style="white-space:nowrap; color:#475569;">
+              ${it.startDate || '-'}
+            </td>
+            <td style="white-space:nowrap; font-weight:600; color:#dc2626;">
+              ${it.deadline || '-'}
+            </td>
+            <td style="text-align:right;">
+              <span class="excel-cost-val">${costDisplay}</span>
+            </td>
+            <td>
+              ${proposalHtml}
+            </td>
+            <td style="text-align:center;">
+              <span class="excel-status-pill ${stClass}" onclick="cycleWeeklyItemStatus('${plan.id}', ${it.id})" title="Nhấp để đổi trạng thái nhanh">
+                ${stText}
+              </span>
+            </td>
+            <td style="text-align:center; white-space:nowrap;">
+              <button class="btn-icon" style="padding:2px 4px; font-size:0.8rem;" title="Chỉnh sửa dòng" onclick="openNewWeeklyItemModal(${it.id})">✏️</button>
+              <button class="btn-icon del" style="padding:2px 4px; font-size:0.8rem;" title="Xóa dòng" onclick="deleteWeeklyItem(${it.id})">🗑️</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function onWeekPickerChange(weekId) {
+      state.selectedWeekId = weekId;
+      saveState();
+      renderWeeklyPlanSection();
+    }
+
+    function navigateWeeklyPlan(delta) {
+      if (!state.weeklyPlans || !state.weeklyPlans.length) return;
+      const sortedWeeks = [...state.weeklyPlans].sort((a,b) => {
+        if (b.year !== a.year) return b.year - a.year;
+        return b.weekNum - a.weekNum;
+      });
+      const curIdx = sortedWeeks.findIndex(w => w.id === state.selectedWeekId);
+      if (curIdx === -1) return;
+      const targetIdx = curIdx - delta;
+      if (targetIdx >= 0 && targetIdx < sortedWeeks.length) {
+        state.selectedWeekId = sortedWeeks[targetIdx].id;
+        saveState();
+        renderWeeklyPlanSection();
+      } else {
+        showToast(delta < 0 ? "Đã đến tuần lưu trữ cũ nhất!" : "Đã đến tuần kế hoạch mới nhất!");
+      }
+    }
+
+    function goToCurrentWeek() {
+      const current = state.weeklyPlans.find(w => w.weekNum === 44 && w.year === 2026);
+      if (current) {
+        state.selectedWeekId = current.id;
+      } else if (state.weeklyPlans.length) {
+        state.selectedWeekId = state.weeklyPlans[0].id;
+      }
+      saveState();
+      renderWeeklyPlanSection();
+      showToast("📍 Đã chuyển về Tuần 44 (Hiện tại)!");
+    }
+
+    function cycleWeeklyItemStatus(weekId, itemId) {
+      const plan = state.weeklyPlans.find(w => w.id === weekId);
+      if (!plan || !plan.items) return;
+      const it = plan.items.find(x => x.id === itemId);
+      if (!it) return;
+
+      const order = ['planning', 'doing', 'done', 'postponed'];
+      const nextIdx = (order.indexOf(it.status || 'doing') + 1) % order.length;
+      it.status = order[nextIdx];
+
+      saveState();
+      renderWeeklyPlanSection();
+      const statusNames = { planning: 'Dự kiến', doing: 'Đang tiến hành', done: 'Đã hoàn thành', postponed: 'Tạm hoãn' };
+      showToast(`Đã chuyển trạng thái: ${statusNames[it.status]}`);
+    }
+
+    function openNewWeeklyItemModal(itemId = null) {
+      editingWeeklyItemId = itemId;
+      const plan = getCurrentWeeklyPlan();
+      const titleEl = document.getElementById("weekly-item-modal-title");
+
+      if (itemId !== null) {
+        const it = plan.items.find(x => x.id === itemId);
+        if (!it) return;
+        if (titleEl) titleEl.innerText = `Chỉnh Sửa Hạng Mục - Tuần ${plan.weekNum}`;
+        document.getElementById("wk-item-major").value = it.major || "";
+        document.getElementById("wk-item-minor").value = it.minor || "";
+        document.getElementById("wk-item-collab").value = it.collaborator || "";
+        document.getElementById("wk-item-cost").value = it.cost !== undefined ? it.cost : "";
+        document.getElementById("wk-item-start").value = it.startDate || "";
+        document.getElementById("wk-item-deadline").value = it.deadline || "";
+        document.getElementById("wk-item-proposal").value = it.proposal || "";
+        document.getElementById("wk-item-status").value = it.status || "doing";
+      } else {
+        if (titleEl) titleEl.innerText = `Thêm Hạng Mục Kế Hoạch - Tuần ${plan.weekNum}`;
+        document.getElementById("wk-item-major").value = "🏥 Thí điểm Lâm Sàng - Khoa Tim Mạch";
+        document.getElementById("wk-item-minor").value = "";
+        document.getElementById("wk-item-collab").value = "";
+        document.getElementById("wk-item-cost").value = "";
+        document.getElementById("wk-item-start").value = plan.startDate || "";
+        document.getElementById("wk-item-deadline").value = plan.endDate || "";
+        document.getElementById("wk-item-proposal").value = "";
+        document.getElementById("wk-item-status").value = "doing";
+      }
+
+      document.getElementById("weekly-item-modal").classList.add("open");
+    }
+
+    function closeWeeklyItemModal() {
+      document.getElementById("weekly-item-modal").classList.remove("open");
+      editingWeeklyItemId = null;
+    }
+
+    function saveWeeklyItemModal() {
+      const plan = getCurrentWeeklyPlan();
+      if (!plan) return;
+      if (!plan.items) plan.items = [];
+
+      const major = document.getElementById("wk-item-major").value.trim() || "Chung";
+      const minor = document.getElementById("wk-item-minor").value.trim();
+      if (!minor) {
+        alert("Vui lòng nhập nội dung cụ thể của hạng mục nhỏ!");
+        return;
+      }
+      const collaborator = document.getElementById("wk-item-collab").value.trim() || "Chưa phân công";
+      const costRaw = document.getElementById("wk-item-cost").value.trim();
+      const costNum = parseNumericCost(costRaw);
+      const cost = costNum > 0 ? costNum : (costRaw || 0);
+      const startDate = document.getElementById("wk-item-start").value.trim() || "-";
+      const deadline = document.getElementById("wk-item-deadline").value.trim() || "-";
+      const proposal = document.getElementById("wk-item-proposal").value.trim() || "";
+      const status = document.getElementById("wk-item-status").value;
+
+      if (editingWeeklyItemId !== null) {
+        const it = plan.items.find(x => x.id === editingWeeklyItemId);
+        if (it) {
+          it.major = major;
+          it.minor = minor;
+          it.collaborator = collaborator;
+          it.cost = cost;
+          it.startDate = startDate;
+          it.deadline = deadline;
+          it.proposal = proposal;
+          it.status = status;
+          showToast("Đã cập nhật hạng mục kế hoạch!");
+        }
+      } else {
+        const newId = plan.items.length ? Math.max(...plan.items.map(x => x.id)) + 1 : 1;
+        plan.items.push({
+          id: newId,
+          major,
+          minor,
+          collaborator,
+          cost,
+          startDate,
+          deadline,
+          proposal,
+          status
+        });
+        showToast("Đã thêm mới hạng mục vào kế hoạch tuần!");
+      }
+
+      closeWeeklyItemModal();
+      saveState();
+      renderWeeklyPlanSection();
+    }
+
+    function deleteWeeklyItem(itemId) {
+      const plan = getCurrentWeeklyPlan();
+      if (!plan || !plan.items) return;
+      const it = plan.items.find(x => x.id === itemId);
+      if (!it) return;
+
+      if (confirm(`Bạn có chắc chắn muốn xóa hạng mục:\n"${it.minor}" khỏi kế hoạch tuần?`)) {
+        plan.items = plan.items.filter(x => x.id !== itemId);
+        saveState();
+        renderWeeklyPlanSection();
+        showToast("Đã xóa hạng mục thành công!");
+      }
+    }
+
+    function openCreateWeekModal() {
+      const maxWeek = state.weeklyPlans.reduce((max, w) => Math.max(max, w.weekNum), 44);
+      const nextWeekNum = maxWeek + 1;
+      document.getElementById("new-week-num").value = nextWeekNum;
+      document.getElementById("new-week-year").value = 2026;
+      document.getElementById("new-week-theme").value = `Triển khai nhiệm vụ trọng tâm Tuần ${nextWeekNum}`;
+      document.getElementById("new-week-copy-unfinished").checked = true;
+
+      const curPlan = getCurrentWeeklyPlan();
+      if (curPlan && curPlan.endDate) {
+        try {
+          const lastEnd = new Date(curPlan.endDate);
+          const nextStart = new Date(lastEnd);
+          nextStart.setDate(lastEnd.getDate() + 1);
+          const nextEnd = new Date(nextStart);
+          nextEnd.setDate(nextStart.getDate() + 6);
+
+          document.getElementById("new-week-start").value = nextStart.toISOString().slice(0, 10);
+          document.getElementById("new-week-end").value = nextEnd.toISOString().slice(0, 10);
+        } catch(e) {}
+      }
+
+      document.getElementById("create-week-modal").classList.add("open");
+    }
+
+    function closeCreateWeekModal() {
+      document.getElementById("create-week-modal").classList.remove("open");
+    }
+
+    function saveCreateWeekModal() {
+      const weekNum = parseInt(document.getElementById("new-week-num").value) || 45;
+      const year = parseInt(document.getElementById("new-week-year").value) || 2026;
+      const startDate = document.getElementById("new-week-start").value || "2026-11-02";
+      const endDate = document.getElementById("new-week-end").value || "2026-11-08";
+      const theme = document.getElementById("new-week-theme").value.trim() || `Kế hoạch tuần ${weekNum}`;
+      const copyUnfinished = document.getElementById("new-week-copy-unfinished").checked;
+
+      const weekId = `${year}-W${String(weekNum).padStart(2,'0')}`;
+
+      if (state.weeklyPlans.some(w => w.id === weekId)) {
+        alert(`Tuần ${weekNum} năm ${year} (${weekId}) đã tồn tại trong danh sách!`);
+        return;
+      }
+
+      let copiedItems = [];
+      if (copyUnfinished) {
+        const curPlan = getCurrentWeeklyPlan();
+        if (curPlan && curPlan.items) {
+          const unfinished = curPlan.items.filter(x => x.status !== 'done');
+          copiedItems = unfinished.map((it, idx) => ({
+            id: idx + 1,
+            major: it.major,
+            minor: it.minor,
+            collaborator: it.collaborator,
+            startDate: startDate,
+            deadline: endDate,
+            cost: it.cost,
+            proposal: it.proposal ? `(Chuyển từ Tuần ${curPlan.weekNum}) ${it.proposal}` : `Chuyển tiếp từ Tuần ${curPlan.weekNum}`,
+            status: it.status
+          }));
+        }
+      }
+
+      const newPlan = {
+        id: weekId,
+        weekNum,
+        year,
+        startDate,
+        endDate,
+        title: `Tuần ${weekNum} (${startDate.slice(5)} - ${endDate.slice(5)}/${year})`,
+        theme,
+        items: copiedItems
+      };
+
+      state.weeklyPlans.push(newPlan);
+      state.selectedWeekId = weekId;
+
+      closeCreateWeekModal();
+      saveState();
+      renderWeeklyPlanSection();
+      showToast(`Đã tạo Tuần ${weekNum} mới với ${copiedItems.length} việc chuyển tiếp!`);
+    }
+
+    function exportWeeklyPlanToExcel() {
+      const plan = getCurrentWeeklyPlan();
+      if (!plan) return;
+
+      let csv = "\uFEFF"; // UTF-8 BOM
+      csv += `BÁO CÁO KẾ HOẠCH HÀNH ĐỘNG ${plan.title || ('TUẦN ' + plan.weekNum + '/' + plan.year)}\n`;
+      csv += `Chủ đề trọng tâm:,"${(plan.theme || '').replace(/"/g, '""')}"\n`;
+      csv += `Thời gian:,"${plan.startDate || ''} đến ${plan.endDate || ''}"\n\n`;
+
+      csv += "STT,Hạng mục công việc lớn,Hạng mục nhỏ (Nhiệm vụ cụ thể),Người/Đơn vị phối hợp,Thời gian tiến hành,Thời hạn yêu cầu hoàn thành,Chi phí dự kiến (VNĐ),Đề xuất phối hợp & Hỗ trợ,Trạng thái\n";
+
+      const statusMap = {
+        planning: 'Dự kiến',
+        doing: 'Đang tiến hành',
+        done: 'Đã hoàn thành',
+        postponed: 'Tạm hoãn'
+      };
+
+      (plan.items || []).forEach((it, idx) => {
+        const stt = idx + 1;
+        const major = `"${(it.major || '').replace(/"/g, '""')}"`;
+        const minor = `"${(it.minor || '').replace(/"/g, '""')}"`;
+        const collab = `"${(it.collaborator || '').replace(/"/g, '""')}"`;
+        const start = `"${(it.startDate || '').replace(/"/g, '""')}"`;
+        const deadline = `"${(it.deadline || '').replace(/"/g, '""')}"`;
+        const costStr = `"${formatVND(it.cost).replace(/"/g, '""')}"`;
+        const prop = `"${(it.proposal || '').replace(/"/g, '""')}"`;
+        const st = `"${statusMap[it.status] || it.status || ''}"`;
+
+        csv += `${stt},${major},${minor},${collab},${start},${deadline},${costStr},${prop},${st}\n`;
+      });
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `Ke_Hoach_Tuan_${plan.weekNum}_${plan.year}_Seta_Longevity.csv`;
+      a.click();
+      showToast(`Đã xuất file Excel Kế hoạch Tuần ${plan.weekNum}!`);
+    }
+
     // Modal Task Logic
     function openNewTaskModal() {
       state.editingTaskId = null;
@@ -2180,6 +3222,8 @@
             state.projects = parsed.projects;
             state.tasks = parsed.tasks;
             if (Array.isArray(parsed.members)) state.members = parsed.members;
+            if (Array.isArray(parsed.weeklyPlans)) state.weeklyPlans = parsed.weeklyPlans;
+            if (parsed.selectedWeekId) state.selectedWeekId = parsed.selectedWeekId;
             saveState();
             render();
             showToast("Đã khôi phục dữ liệu thành công!");
